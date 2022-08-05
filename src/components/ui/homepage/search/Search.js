@@ -8,8 +8,22 @@ import {
   FaDog,
   FaInfo,
 } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Search = () => {
+  const [value, setValue] = useState("");
+  const [showDiv, setShowDiv] = useState(false);
+  const isModalOpen = useSelector((state) => state.modal.isOpen);
+
+  useEffect(() => {
+    if (value.length >= 1) {
+      setShowDiv(true);
+    } else {
+      setShowDiv(false);
+    }
+  }, [value]);
+
   const handleFilter = (e) => {
     console.log(e.target.closest("li"));
   };
@@ -22,12 +36,22 @@ const Search = () => {
           <FaMapMarkerAlt />
         </div>
 
-        <form>
-          <input
-            type="search"
-            className="searchbar"
-            placeholder="Marseille, France"
-          />
+        <form style={{ position: `${isModalOpen ? "static" : "relative"}` }}>
+          <FormList>
+            <input
+              type="search"
+              className="searchbar"
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="Marseille, France"
+            />
+            {showDiv && (
+              <div className="search-response">
+                <p>
+                  <span>8</span> resultat trouvé
+                </p>
+              </div>
+            )}
+          </FormList>
         </form>
         <button type="submit">Rechercher</button>
         <button type="submit" className="responsive">
@@ -101,7 +125,7 @@ const SearchBar = styled.div`
   width: 350px;
   margin-top: 0.8rem;
   background-color: rgb(242, 242, 242);
-  overflow: hidden;
+  /* overflow: hidden; */
   border-radius: 12px;
   display: flex;
   justify-content: space-between;
@@ -119,6 +143,7 @@ const SearchBar = styled.div`
   }
 
   form {
+    /* position: relative; */
     flex: 1;
     display: flex;
     align-items: center;
@@ -127,8 +152,15 @@ const SearchBar = styled.div`
     input {
       width: 100%;
       height: 100%;
-      padding-left: 0.5rem;
+      padding: 0.5rem;
       border: none;
+      transition: 0.3s;
+
+      &:focus {
+        outline: none;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px;
+        border-radius: 3px;
+      }
     }
   }
 
@@ -138,6 +170,8 @@ const SearchBar = styled.div`
     background-color: rgb(0, 101, 252);
     color: rgb(255, 255, 255);
     font-weight: 700;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
   }
 
   .responsive {
@@ -146,6 +180,24 @@ const SearchBar = styled.div`
 
   @media (max-width: 768px) {
     width: auto;
+  }
+`;
+
+const FormList = styled.div`
+  width: 100%;
+
+  .search-response {
+    position: absolute;
+    bottom: -35px;
+    border-radius: 3px;
+    background-color: #e5e5e5;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px;
+    padding: 0.5rem;
+
+    p {
+      font-size: 0.9rem;
+    }
   }
 `;
 

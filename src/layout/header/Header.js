@@ -24,8 +24,6 @@ const Header = () => {
       width,
     };
   }
-  console.log(showLogin);
-  console.log(showSubscribe);
 
   useEffect(() => {
     function handleResize() {
@@ -54,10 +52,10 @@ const Header = () => {
           <Menu>
             <ul>
               <li className="responsive">
-                <Link to="/">Hébergements</Link>
+                <Link to="/accommodation">Hébergements</Link>
               </li>
               <li className="responsive">
-                <Link to="/">Activités</Link>
+                <Link to="/activities">Activités</Link>
               </li>
               <li>
                 <Link
@@ -83,10 +81,10 @@ const Header = () => {
         <MobileMenu>
           <ul>
             <li className="responsive">
-              <Link to="/">Hébergements</Link>
+              <Link to="/accommodation">Hébergements</Link>
             </li>
             <li className="responsive">
-              <Link to="/">Activités</Link>
+              <Link to="/activities">Activités</Link>
             </li>
           </ul>
         </MobileMenu>

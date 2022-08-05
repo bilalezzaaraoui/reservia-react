@@ -401,6 +401,10 @@ const WhiteBloc = styled.div`
     column-gap: 2rem;
     row-gap: 2rem;
 
+    @media (max-width: 1280px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
     @media (max-width: 768px) {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -433,7 +437,7 @@ const WhiteBlocCard = styled.div`
   }
 
   .card-img {
-    height: 180px;
+    height: 120px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     overflow: hidden;
@@ -490,6 +494,10 @@ const WhiteBlocCard = styled.div`
       svg {
         font-size: 0.8rem;
       }
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+      }
     }
   }
 `;
@@ -519,7 +527,8 @@ const GreyBloc = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    /* justify-content: space-around; */
+    padding-top: 1.5rem;
   }
 
   @media (max-width: 768px) {
@@ -535,6 +544,7 @@ const GreyBlocCard = styled.div`
     rgba(0, 0, 0, 0.19) 0px 6px 6px 0px;
   border-radius: 15px;
   transition: 0.3s;
+  margin-bottom: 1.5rem;
 
   &:hover {
     transform: translateY(-5px);
@@ -549,7 +559,8 @@ const GreyBlocCard = styled.div`
       display: flex;
 
       .card-img {
-        width: 40%;
+        min-width: 130px;
+        height: 130px;
         border-bottom-left-radius: 10px;
         border-top-left-radius: 10px;
         overflow: hidden;
@@ -563,58 +574,76 @@ const GreyBlocCard = styled.div`
         }
 
         @media (max-width: 768px) {
-          width: 40%;
+          width: 30%;
           height: auto;
         }
       }
 
       .card-info {
         flex: 1;
-        padding: 1rem;
+        padding: 0.5rem 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
 
         h4 {
           font-size: 0.9rem;
-          margin-bottom: 0.5rem;
         }
 
         p {
           font-size: 0.8rem;
-          margin-bottom: 0.5rem;
+          /* margin-bottom: 0.5rem; */
 
           span {
             font-weight: bold;
           }
         }
 
-        .icon {
-          margin-bottom: 0.5rem;
+        .list-layout {
           display: flex;
+          flex-direction: column;
+          row-gap: 5px;
 
-          div {
-            background-color: rgb(222, 235, 255);
-            margin-right: 5px;
-            padding: 5px;
-            border-radius: 50%;
+          .icon {
+            /* margin-bottom: 0.5rem; */
             display: flex;
-            justify-content: center;
-            align-items: center;
 
+            div {
+              background-color: rgb(222, 235, 255);
+              margin-right: 5px;
+              padding: 5px;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              svg {
+                color: rgb(0, 101, 252);
+                font-size: 0.8rem;
+              }
+            }
+          }
+
+          .stars {
             svg {
-              color: rgb(0, 101, 252);
+              margin-right: 2px;
               font-size: 0.8rem;
             }
           }
         }
 
-        .stars {
-          svg {
-            margin-right: 2px;
-            font-size: 1rem;
-          }
-        }
-
         @media (max-width: 768px) {
           padding: 0.5rem 0 0.5rem 0.5rem;
+        }
+
+        @media (max-width: 1280px) {
+          h4 {
+            margin-bottom: 2px;
+          }
+
+          p {
+            margin-bottom: 2px;
+          }
         }
       }
 

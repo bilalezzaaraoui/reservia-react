@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   subscribe: false,
   login: false,
+  isOpen: false,
 };
 
 const modalSlice = createSlice({
@@ -11,18 +12,22 @@ const modalSlice = createSlice({
   reducers: {
     openSubscribeModal: (state) => {
       state.subscribe = true;
+      state.isOpen = true;
     },
 
     closeSubscribeModal: (state) => {
       state.subscribe = false;
+      state.isOpen = false;
     },
 
     openLoginModal: (state) => {
       state.login = true;
+      state.isOpen = true;
     },
 
     closeLoginModal: (state) => {
       state.login = false;
+      state.isOpen = false;
     },
   },
 });
