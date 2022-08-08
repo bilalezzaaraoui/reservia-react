@@ -25,8 +25,9 @@ const CardActivity = () => {
         </div>
       </div>
       <div className="card-info">
+        <p className="city">Marseille</p>
         <h4>Vieux Port</h4>
-        <p>
+        <p className="price">
           <span>À partir de 90€</span>/personne
         </p>
       </div>
@@ -53,15 +54,24 @@ const Card = styled.li`
   }
 
   .card-info {
-    margin-top: 0.5rem;
+    margin-top: 3px;
     padding-left: 0.3rem;
 
     h4 {
-      font-weight: normal;
+      margin-top: 3px;
+      font-weight: 300;
     }
 
-    p {
-      margin-top: 0.5rem;
+    .city {
+      margin-top: 5px;
+      color: gray;
+      font-size: 0.8rem;
+      font-weight: 300;
+    }
+
+    .price {
+      margin-top: 3px;
+      font-weight: 300;
 
       span {
         font-weight: bold;

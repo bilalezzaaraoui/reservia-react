@@ -1,9 +1,12 @@
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
+  const layout = useSelector((state) => state.isLayoutBig.layout);
+
   return (
     <Container>
-      <Layout>
+      <Layout style={{ width: `${layout ? "70%" : "90%"}` }}>
         <Menu>
           <h4>À propos</h4>
           <ul>
@@ -38,10 +41,13 @@ const Container = styled.footer`
 `;
 
 const Layout = styled.nav`
-  width: 90%;
   padding: 3rem 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+
+  @media (max-width: 1380px) {
+    width: 90% !important;
+  }
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;

@@ -5,10 +5,7 @@ import { Fragment } from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ModalAction } from "../../store/modalSlice/modalSlice";
-import OverlayLogin from "../../components/ui/header/modal/login/OverlayLogin";
 import { createPortal } from "react-dom";
-import OverlaySubscribe from "../../components/ui/header/modal/subscribe/OverlaySubscribe";
-import LoginForm from "../../components/ui/header/modal/login/LoginForm";
 import ModalLayout from "../../components/ui/header/modal/ModalLayout";
 
 const Header = () => {
@@ -17,6 +14,7 @@ const Header = () => {
   const [show, setShow] = useState(false);
   const showLogin = useSelector((state) => state.modal.login);
   const showSubscribe = useSelector((state) => state.modal.subscribe);
+  const layout = useSelector((state) => state.isLayoutBig.layout);
 
   function getWindowDimensions() {
     const { innerWidth: width } = window;
@@ -43,7 +41,7 @@ const Header = () => {
   return (
     <Fragment>
       <Container>
-        <Layout>
+        <Layout style={{ width: `${layout ? "70%" : "90%"}` }}>
           <Logo>
             <Link to="/">
               <img src={logo} alt="logo" />
@@ -115,10 +113,13 @@ const Container = styled.header`
 `;
 
 const Layout = styled.div`
-  width: 90%;
   height: 60px;
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 1380px) {
+    width: 90% !important;
+  }
 `;
 
 const Logo = styled.div`

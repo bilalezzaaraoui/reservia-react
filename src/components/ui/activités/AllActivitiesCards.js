@@ -4,7 +4,7 @@ import CardActivity from "./CardActivity";
 const AllActivitiesCards = () => {
   return (
     <Container>
-      <h3>20 expériences</h3>
+      <Title>20 expériences</Title>
       <ListOfActivities>
         <CardActivity />
         <CardActivity />
@@ -25,6 +25,10 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
+const Title = styled.h3`
+  font-size: 2rem;
+`;
+
 const ListOfActivities = styled.ul`
   list-style: none;
   margin-top: 1.5rem;
@@ -41,7 +45,7 @@ const ListOfActivities = styled.ul`
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 430px) {
     grid-template-columns: repeat(1, 1fr);
   }
 `;
