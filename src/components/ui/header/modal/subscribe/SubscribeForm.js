@@ -1,54 +1,130 @@
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
+import { FaCheck } from "react-icons/fa";
+import { Fragment, useRef, useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../../../firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { UserAction } from "../../../../../store/userSlice/userSlice";
 
 const SubscribeForm = (props) => {
+  const dispatch = useDispatch();
+  const formRef = useRef();
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const isSubscribed = useSelector((state) => state.user.isSubscribed);
+
+  const handleError = (error = "erreur") => {
+    console.log(error);
+    if (
+      error ===
+      "Firebase: Password should be at least 6 characters (auth/weak-password)."
+    ) {
+      setErrorMessage("Le mot de passe est trop faible.");
+    }
+
+    setShowError(true);
+  };
+
+  const formSubscribeHandler = async (e) => {
+    e.preventDefault();
+    const email = formRef.current.email.value;
+    const password = formRef.current.password.value;
+
+    try {
+      const userCrendential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      dispatch(UserAction.showSubMessage());
+    } catch (error) {
+      handleError(error.message);
+    }
+  };
+
+  const handleModal = () => {
+    props.closeModal();
+    dispatch(UserAction.hideSubMessage());
+  };
+
   return (
     <Container>
-      <Head>
-        <CloseBtn onClick={props.closeModal}>
-          <MdClose />
-        </CloseBtn>
-        <h1>S'inscrire</h1>
-      </Head>
-      <Body>
-        <TitleForm>Bienvenue sur Reservia</TitleForm>
-        <Form>
-          <Border>
-            <Double>
-              <Half>
-                <input
-                  type="text"
-                  placeholder="Prénom"
-                  name="prenom"
-                  className="first-input"
-                />
-              </Half>
-              <Half>
-                <input type="text" placeholder="Nom" name="nom" />
-              </Half>
-            </Double>
-            <Single>
-              <input type="email" placeholder="Email" name="email" />
-            </Single>
-            <Single>
-              <input
-                type="password"
-                placeholder="Mot de passe"
-                name="password1"
-              />
-            </Single>
-            <Single>
-              <input
-                type="password"
-                placeholder="Confirmer votre mot de passe"
-                name="password2"
-              />
-            </Single>
-          </Border>
-
-          <button type="submit">Continuer</button>
-        </Form>
-      </Body>
+      {!isSubscribed && (
+        <Fragment>
+          <Head>
+            <CloseBtn onClick={props.closeModal}>
+              <MdClose />
+            </CloseBtn>
+            <h1>S'inscrire</h1>
+          </Head>
+          <Body>
+            <TitleForm>Bienvenue sur Reservia</TitleForm>
+            <Form ref={formRef} onSubmit={formSubscribeHandler}>
+              <Border>
+                <Double>
+                  <Half>
+                    <input
+                      type="text"
+                      placeholder="Prénom"
+                      name="prenom"
+                      className="first-input"
+                      required
+                    />
+                  </Half>
+                  <Half>
+                    <input type="text" placeholder="Nom" name="nom" required />
+                  </Half>
+                </Double>
+                <Single>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    required
+                  />
+                </Single>
+                <Single>
+                  <input
+                    type="password"
+                    placeholder="Mot de passe"
+                    name="password"
+                    required
+                  />
+                </Single>
+              </Border>
+              {showError && <p className="error-message">{errorMessage}</p>}
+              <button type="submit">Continuer</button>
+            </Form>
+          </Body>
+        </Fragment>
+      )}
+      {isSubscribed && (
+        <Fragment>
+          <Head>
+            <CloseBtn onClick={handleModal}>
+              <MdClose />
+            </CloseBtn>
+            <h1>Inscription réussi</h1>
+          </Head>
+          <Body
+            style={{
+              height: "30vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div className="success-message">
+              <div className="logo">
+                <FaCheck />
+              </div>
+              <p>Votre inscription à été prise en compte</p>
+            </div>
+          </Body>
+        </Fragment>
+      )}
     </Container>
   );
 };
@@ -101,6 +177,30 @@ const CloseBtn = styled.div`
 
 const Body = styled.div`
   padding: 1rem 2rem;
+
+  .success-message {
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #c1e894;
+      border-radius: 50px;
+
+      svg {
+        color: #00c603;
+      }
+    }
+
+    p {
+      font-weight: bold;
+    }
+  }
 `;
 const TitleForm = styled.h3``;
 
@@ -121,6 +221,11 @@ const Form = styled.form`
     &:hover {
       transform: scale(1.01);
     }
+  }
+
+  .error-message {
+    color: red;
+    margin-bottom: 1rem;
   }
 `;
 

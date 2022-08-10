@@ -4,6 +4,8 @@ const initialState = {
   subscribe: false,
   login: false,
   isOpen: false,
+  detail: false,
+  detailSlider: false,
 };
 
 const modalSlice = createSlice({
@@ -28,6 +30,22 @@ const modalSlice = createSlice({
     closeLoginModal: (state) => {
       state.login = false;
       state.isOpen = false;
+    },
+
+    openDetailModal: (state) => {
+      state.detail = true;
+    },
+
+    closeDetailModal: (state) => {
+      state.detail = false;
+    },
+
+    openSliderModal: (state) => {
+      state.detailSlider = true;
+    },
+
+    closeSliderModal: (state) => {
+      state.detailSlider = false;
     },
   },
 });

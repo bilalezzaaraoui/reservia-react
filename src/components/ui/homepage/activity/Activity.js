@@ -5,7 +5,7 @@ import FirstImage from "../../../../assets/image/activity/1.jpg";
 const Activity = () => {
   return (
     <Container>
-      <h3>Activités à Marseille</h3>
+      <h3>Activités disponible</h3>
       <Location>
         <Link to="/" className="full">
           <Card>

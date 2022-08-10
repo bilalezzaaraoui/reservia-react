@@ -1,27 +1,63 @@
 import styled from "styled-components";
 import { GiClick } from "react-icons/gi";
+import { useDispatch } from "react-redux";
+import { ModalAction } from "../../../../store/modalSlice/modalSlice";
 
 const SliderDetails = (props) => {
+  const dispatch = useDispatch();
+  const openModal = () => {
+    dispatch(ModalAction.openDetailModal());
+  };
+
+  const openSlider = () => {
+    dispatch(ModalAction.openSliderModal());
+  };
+
   return (
     <Container>
-      <HalfOne>
+      <HalfOne
+        onClick={() => {
+          props.onSaveSlider(0);
+          openSlider();
+        }}
+      >
         <img src={props.images[0]} alt="img" />
       </HalfOne>
       <HalfTwo>
-        <Quarter>
+        <Quarter
+          onClick={() => {
+            props.onSaveSlider(1);
+            openSlider();
+          }}
+        >
           <img src={props.images[1]} alt="img" />
         </Quarter>
-        <Quarter>
+        <Quarter
+          onClick={() => {
+            props.onSaveSlider(2);
+            openSlider();
+          }}
+        >
           <img src={props.images[2]} alt="img" />
         </Quarter>
-        <Quarter>
+        <Quarter
+          onClick={() => {
+            props.onSaveSlider(3);
+            openSlider();
+          }}
+        >
           <img src={props.images[3]} alt="img" />
         </Quarter>
-        <Quarter>
+        <Quarter
+          onClick={() => {
+            props.onSaveSlider(4);
+            openSlider();
+          }}
+        >
           <img src={props.images[4]} alt="img" />
         </Quarter>
       </HalfTwo>
-      <Button>
+      <Button onClick={openModal}>
         <GiClick />
         <span>Afficher toutes les photos</span>
       </Button>

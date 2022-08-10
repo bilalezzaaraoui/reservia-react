@@ -13,7 +13,7 @@ const Hebergement = () => {
   return (
     <Container>
       <WhiteBloc>
-        <h3 className="title">Hébergements à Marseille</h3>
+        <h3 className="title">Hébergements disponible</h3>
         <ul className="list">
           <WhiteBlocCard>
             <Link to="/">

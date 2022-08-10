@@ -1,7 +1,59 @@
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
+import { useRef, useState } from "react";
+import {
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { auth } from "../../../../../firebase";
 
 const LoginForm = (props) => {
+  const formRef = useRef();
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleError = (error = "erreur") => {
+    console.log(error);
+    if (error === "Firebase: Error (auth/wrong-password).") {
+      setErrorMessage("Le mot de passe est incorrect.");
+    }
+
+    if (error === "Firebase: Error (auth/user-not-found).") {
+      setErrorMessage("L'utilisateur n'existe pas.");
+    }
+
+    setShowError(true);
+  };
+
+  const formConnectHandler = async (e) => {
+    e.preventDefault();
+    const email = formRef.current.email.value;
+    const password = formRef.current.password.value;
+
+    try {
+      const userCrendential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      console.log(userCrendential.user);
+      // setUser(userCrendential.user);
+    } catch (error) {
+      handleError(error.message);
+    }
+  };
+
+  // const setUser = (user) => {
+  //   dispatch(
+  //     userActions.setUserLoginDetails({
+  //       name: user.displayName,
+  //       email: user.email,
+  //       photo: user.photoURL,
+  //     })
+  //   );
+  // };
+
   return (
     <Container>
       <Head>
@@ -12,20 +64,21 @@ const LoginForm = (props) => {
       </Head>
       <Body>
         <h3>Bienvenue sur Reservia</h3>
-        <Form>
+        <Form ref={formRef} onSubmit={formConnectHandler}>
           <Border>
             <Single>
-              <input type="email" placeholder="Email" name="email" />
+              <input type="email" placeholder="Email" name="email" required />
             </Single>
             <Single>
               <input
                 type="password"
                 placeholder="Mot de passe"
-                name="password1"
+                name="password"
+                required
               />
             </Single>
           </Border>
-
+          {showError && <p className="error-message">{errorMessage}</p>}
           <button type="submit">Continuer</button>
         </Form>
       </Body>
@@ -100,6 +153,11 @@ const Form = styled.form`
     &:hover {
       transform: scale(1.01);
     }
+  }
+
+  .error-message {
+    color: red;
+    margin-bottom: 1rem;
   }
 `;
 

@@ -1,6 +1,18 @@
 import styled from "styled-components";
+import NumberOfBuyers from "../form/numberOfBuyers/NumberOfBuyers";
+import DatePickerComps from "../form/dataPicker/DatePickerComps";
+import { useState } from "react";
 
-const Info = () => {
+const Info = (props) => {
+  const [nbDays, setNbDays] = useState(0);
+
+  const saveDateHandler = (numberOfNight) => {
+    const result = numberOfNight;
+    if (result > 0) {
+      setNbDays(result);
+    }
+  };
+
   return (
     <Container>
       <FirstChild>
@@ -40,20 +52,8 @@ const Info = () => {
           </p>
           <form>
             <div className="border">
-              <div className="layout">
-                <div>
-                  <label htmlFor="arrive">Arrivée</label>
-                  <input type="date" name="arrive" />
-                </div>
-                <div>
-                  <label htmlFor="depart">Départ</label>
-                  <input type="date" name="depart" />
-                </div>
-              </div>
-              <div className="number">
-                <label htmlFor="Voyageurs">Voyageurs</label>
-                <input type="number" name="Voyageurs" />
-              </div>
+              <DatePickerComps onSaveDaysNumber={saveDateHandler} />
+              <NumberOfBuyers maxClient={props.maxClient} />
             </div>
             <button type="submit">Réserver</button>
           </form>
@@ -61,16 +61,32 @@ const Info = () => {
             Aucun montant ne vous sera débité pour le moment
           </p>
           <Price>
-            <span className="price-underline">1 400€ x 5 nuits</span>
-            <span className="price-not-underline">8400 €</span>
+            <span className="price-underline">
+              {nbDays <= 0 && "Logement"}
+              {nbDays > 0 &&
+                `${props.price}€ x ${
+                  nbDays <= 1 ? `${nbDays} nuit` : `${nbDays} nuits`
+                }`}
+            </span>
+            <span className="price-not-underline">
+              {nbDays > 0 ? `${props.price * nbDays}` : "0"} €
+            </span>
           </Price>
           <Price>
             <span className="price-underline">Frais de service</span>
-            <span className="price-not-underline">0 €</span>
+            <span className="price-not-underline">
+              {nbDays > 0 ? `${nbDays * props.service}` : "0"} €
+            </span>
           </Price>
           <Total>
-            <span className="total">total</span>
-            <span className="total-amount">7000 €</span>
+            <span>total</span>
+            <span>
+              {" "}
+              {nbDays > 0
+                ? `${props.price * nbDays + nbDays * props.service}`
+                : "0"}{" "}
+              €
+            </span>
           </Total>
         </Box>
       </SecondChild>
@@ -80,14 +96,18 @@ const Info = () => {
 
 const Container = styled.div`
   display: flex;
-  height: 600px;
   column-gap: 1rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 const FirstChild = styled.div`
   width: 60%;
   height: 100%;
-  padding: 1rem 1rem 1rem 0;
+  padding: 1rem 3rem 1rem 0;
 
   .title,
   .info,
@@ -99,12 +119,22 @@ const FirstChild = styled.div`
   .description-1,
   .description-2 {
     font-weight: 300;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 1rem 0;
   }
 `;
 
 const SecondChild = styled.div`
   width: 40%;
   height: 100%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Box = styled.div`
@@ -123,52 +153,18 @@ const Box = styled.div`
   }
 
   form {
+    position: relative;
     .border {
       margin: 1rem 0;
       border: 1px solid #c9c9c9;
       overflow: hidden;
       border-radius: 10px;
-
-      .layout {
-        display: flex;
-
-        div {
-          width: 50%;
-          padding: 5px 10px;
-          border-bottom: 1px solid #c9c9c9;
-
-          &:nth-child(1) {
-            border-right: 1px solid #c9c9c9;
-          }
-
-          label {
-            font-size: 0.8rem;
-            font-weight: bold;
-          }
-
-          input {
-            border: none;
-          }
-        }
-      }
-
-      .number {
-        display: flex;
-        flex-direction: column;
-        padding: 5px 10px;
-
-        label {
-          font-size: 0.8rem;
-          font-weight: bold;
-        }
-        input {
-          margin-top: 5px;
-        }
-      }
     }
 
     button {
-      width: 100%;
+      display: block;
+      margin: 0 auto;
+      width: 90%;
       background-color: rgb(0, 101, 252);
       padding: 7px 0;
       color: white;
@@ -188,8 +184,30 @@ const Box = styled.div`
 
 const Price = styled.div`
   display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0;
+
+  .price-underline {
+    text-decoration: underline;
+    font-weight: 300;
+  }
+
+  .price-not-underline {
+    font-weight: 300;
+  }
 `;
 
-const Total = styled.div``;
+const Total = styled.div`
+  border-top: 1px solid rgb(221, 221, 221) !important;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+
+  span {
+    font-weight: 500;
+    font-size: 1.1rem;
+    text-transform: capitalize;
+  }
+`;
 
 export default Info;
