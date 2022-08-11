@@ -46,6 +46,7 @@ const NumberOfBuyers = (props) => {
     dispatch({ type: "total" });
   }, []);
 
+  console.log(state.count < props.maxClient);
   return (
     <Layout>
       <Number

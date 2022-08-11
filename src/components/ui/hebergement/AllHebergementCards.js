@@ -38,7 +38,7 @@ const ListOfActivities = styled.ul`
   column-gap: 3rem;
   row-gap: 2rem;
 
-  @media (max-width: 1420px) {
+  @media (max-width: 1700px) {
     grid-template-columns: repeat(4, 1fr);
   }
 

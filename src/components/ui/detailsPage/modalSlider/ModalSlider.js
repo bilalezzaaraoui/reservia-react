@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { FaArrowLeft } from "react-icons/fa";
 import Slider from "react-slick";
@@ -22,7 +22,9 @@ const ModalSlider = ({ id = 0, closeModal, images }) => {
 
   console.log(id);
 
-  //   handleOnClick(id);
+  useEffect(() => {
+    handleOnClick(id);
+  }, [id]);
 
   return (
     <Fragment>
@@ -31,7 +33,7 @@ const ModalSlider = ({ id = 0, closeModal, images }) => {
           <FaArrowLeft onClick={closeModal} />
         </Head>
         <SliderLayout>
-          <ContainerSlider {...settings} ref={sliderRef} slickGoTo={id}>
+          <ContainerSlider {...settings} ref={sliderRef}>
             {images.map((index, key) => (
               <Wrap key={key}>
                 <img src={index} alt="Img de l'hébergement" />
@@ -57,7 +59,7 @@ const Container = styled.div`
 
 const Head = styled.div`
   width: 100%;
-  padding: 1rem 2rem 0;
+  padding: 1rem 2rem;
   z-index: 200;
 
   svg {
@@ -71,7 +73,7 @@ const SliderLayout = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: green;
+  background-color: #444948;
 `;
 
 const ContainerSlider = styled(Slider)`
@@ -109,25 +111,26 @@ const ContainerSlider = styled(Slider)`
     height: 100%;
   }
 
-  .slick-prev {
+  /* .slick-prev {
     left: 8rem;
   }
   .slick-next {
     right: 8rem;
-  }
+  } */
 `;
 
 const Wrap = styled.div`
   width: 100%;
-  height: auto;
+  height: 60vh;
   position: relative;
   display: flex !important;
   justify-content: center;
+  align-items: center;
 
   img {
     display: inline-block;
-    max-width: 100%;
-    max-height: 100%;
+    /* max-width: 100%;
+    max-height: 100%; */
   }
 `;
 

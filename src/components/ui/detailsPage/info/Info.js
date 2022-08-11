@@ -48,7 +48,7 @@ const Info = (props) => {
       <SecondChild>
         <Box>
           <p className="title">
-            <span>1 400 €</span> nuit
+            <span>{props.price} €</span> nuit
           </p>
           <form>
             <div className="border">
