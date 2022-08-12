@@ -18,14 +18,15 @@ const Info = (props) => {
   return (
     <Container>
       <FirstChild>
-        <h3 className="title">{props.title}</h3>
+        <h3 className="title">{props.logement}</h3>
         <p className="info">
           <span>{props.maxClient} voyageurs</span> -{" "}
           <span>{props.maxBedroom} chambres</span> -{" "}
           <span>{props.maxBed} lits</span> -{" "}
           <span>{props.maxRestroom} salle de bain</span>
         </p>
-        <p className="description-1">{props.description}</p>
+        <p className="description-1">{props.description1}</p>
+        <p className="description-1">{props.description2}</p>
       </FirstChild>
       <SecondChild>
         <Box>

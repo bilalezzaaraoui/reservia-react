@@ -18,6 +18,7 @@ const ModalSlider = ({ id = 0, closeModal, images }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    // variableWidth: true,
   };
 
   console.log(id);
@@ -111,6 +112,13 @@ const ContainerSlider = styled(Slider)`
     height: 100%;
   }
 
+  .slick-slide {
+    visibility: hidden;
+  }
+
+  .slick-current {
+    visibility: visible !important;
+  }
   /* .slick-prev {
     left: 8rem;
   }
@@ -128,7 +136,8 @@ const Wrap = styled.div`
   align-items: center;
 
   img {
-    display: inline-block;
+    object-fit: contain;
+    /* display: inline-block; */
     /* max-width: 100%;
     max-height: 100%; */
   }

@@ -68,7 +68,9 @@ const DetailPage = () => {
               maxBedroom={data.numberOfBedroom}
               maxBed={data.numberOfBed}
               maxRestroom={data.numberOfRestroom}
-              description={data.description}
+              logement={data.logement}
+              description1={data.description1}
+              description2={data.description2}
             />
           </LayoutMobile>
         </Container>
