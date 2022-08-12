@@ -42,8 +42,15 @@ const DatePickerComps = (props) => {
   useEffect(() => {
     if (dateIn.length > 1 && dateOut.length > 1) {
       props.onSaveDaysNumber(datediff(parseDate(dateIn), parseDate(dateOut)));
+      console.log("numero ok");
+    } else {
+      props.onSaveDaysNumber(0);
+      console.log("numero 0");
     }
   }, [dateIn, dateOut]);
+
+  console.log(dateIn);
+  console.log(dateOut);
 
   return (
     <Layout>
@@ -57,6 +64,7 @@ const DatePickerComps = (props) => {
           value={dateIn}
           onChange={(e) => {
             setDateIn(e.target.value);
+            setDateOut("");
           }}
         />
       </div>

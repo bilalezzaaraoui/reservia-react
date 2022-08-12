@@ -38,6 +38,8 @@ const SubscribeForm = (props) => {
         password
       );
 
+      console.log(userCrendential);
+
       dispatch(UserAction.showSubMessage());
     } catch (error) {
       handleError(error.message);

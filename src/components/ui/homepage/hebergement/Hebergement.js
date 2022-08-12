@@ -1,21 +1,47 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import StarsList from "./starsList/StarsList";
-import {
-  FaChartLine,
-  FaMoneyBillWave,
-  FaChild,
-  FaHeart,
-  FaDog,
-} from "react-icons/fa";
+import FilterList from "./filterList/FilterList";
+import { FaChartLine } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Hebergement = () => {
+  const hebergementOriginal = useSelector((state) => state.hebergement.data);
+
   return (
     <Container>
       <WhiteBloc>
         <h3 className="title">Hébergements disponible</h3>
         <ul className="list">
-          <WhiteBlocCard>
+          {hebergementOriginal.length >= 1 &&
+            hebergementOriginal.map((item, index) => (
+              <WhiteBlocCard key={index}>
+                <Link to={`/accommodation/${item.id}`}>
+                  <div
+                    className="card-img"
+                    style={{
+                      backgroundImage: `url('${item.images[0]}')`,
+                    }}
+                  ></div>
+                  <div className="card-info">
+                    <h4>{item.title}</h4>
+                    <p>{item.city}</p>
+                    <p>
+                      Nuit à partir de <span>{item.pricePerNight}€</span>
+                    </p>
+                    <div className="list-flex">
+                      <ul className="icon">
+                        {<FilterList filter={item.filter} />}
+                      </ul>
+                      <ul className="stars-list-dev">
+                        <StarsList number={item.stars} />
+                      </ul>
+                    </div>
+                  </div>
+                </Link>
+              </WhiteBlocCard>
+            ))}
+          {/* <WhiteBlocCard>
             <Link to="/">
               <div
                 className="card-img"
@@ -32,18 +58,33 @@ const Hebergement = () => {
                 </p>
                 <div className="list-flex">
                   <ul className="icon">
-                    <div>
-                      <FaMoneyBillWave />
-                    </div>
-                    <div>
-                      <FaChild />
-                    </div>
-                    <div>
-                      <FaHeart />
-                    </div>
-                    <div>
-                      <FaDog />
-                    </div>
+                    {<FilterList filter={["love", "dog", "money", "family"]} />}
+                  </ul>
+                  <ul className="stars-list-dev">
+                    <StarsList number="5" />
+                  </ul>
+                </div>
+              </div>
+            </Link>
+          </WhiteBlocCard>{" "} */}
+          {/*   <WhiteBlocCard>
+            <Link to="/">
+              <div
+                className="card-img"
+                style={{
+                  backgroundImage:
+                    "url('https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/1.jpg?alt=media&token=17c88a59-1d53-43a7-9c41-65e65a7c6c88')",
+                }}
+              ></div>
+              <div className="card-info">
+                <h4>Auberge la Cannebière</h4>
+                <p>Marseille</p>
+                <p>
+                  Nuit à partir de <span>25€</span>
+                </p>
+                <div className="list-flex">
+                  <ul className="icon">
+                    {<FilterList filter={["love", "dog", "money", "family"]} />}
                   </ul>
                   <ul className="stars-list-dev">
                     <StarsList number="5" />
@@ -69,18 +110,7 @@ const Hebergement = () => {
                 </p>
                 <div className="list-flex">
                   <ul className="icon">
-                    <div>
-                      <FaMoneyBillWave />
-                    </div>
-                    <div>
-                      <FaChild />
-                    </div>
-                    <div>
-                      <FaHeart />
-                    </div>
-                    <div>
-                      <FaDog />
-                    </div>
+                    {<FilterList filter={["love", "dog", "money", "family"]} />}
                   </ul>
                   <ul className="stars-list-dev">
                     <StarsList number="5" />
@@ -106,18 +136,7 @@ const Hebergement = () => {
                 </p>
                 <div className="list-flex">
                   <ul className="icon">
-                    <div>
-                      <FaMoneyBillWave />
-                    </div>
-                    <div>
-                      <FaChild />
-                    </div>
-                    <div>
-                      <FaHeart />
-                    </div>
-                    <div>
-                      <FaDog />
-                    </div>
+                    {<FilterList filter={["love", "dog", "money", "family"]} />}
                   </ul>
                   <ul className="stars-list-dev">
                     <StarsList number="5" />
@@ -143,18 +162,7 @@ const Hebergement = () => {
                 </p>
                 <div className="list-flex">
                   <ul className="icon">
-                    <div>
-                      <FaMoneyBillWave />
-                    </div>
-                    <div>
-                      <FaChild />
-                    </div>
-                    <div>
-                      <FaHeart />
-                    </div>
-                    <div>
-                      <FaDog />
-                    </div>
+                    {<FilterList filter={["love", "dog", "money", "family"]} />}
                   </ul>
                   <ul className="stars-list-dev">
                     <StarsList number="5" />
@@ -180,18 +188,7 @@ const Hebergement = () => {
                 </p>
                 <div className="list-flex">
                   <ul className="icon">
-                    <div>
-                      <FaMoneyBillWave />
-                    </div>
-                    <div>
-                      <FaChild />
-                    </div>
-                    <div>
-                      <FaHeart />
-                    </div>
-                    <div>
-                      <FaDog />
-                    </div>
+                    {<FilterList filter={["love", "dog", "money", "family"]} />}
                   </ul>
                   <ul className="stars-list-dev">
                     <StarsList number="5" />
@@ -199,44 +196,7 @@ const Hebergement = () => {
                 </div>
               </div>
             </Link>
-          </WhiteBlocCard>{" "}
-          <WhiteBlocCard>
-            <Link to="/">
-              <div
-                className="card-img"
-                style={{
-                  backgroundImage:
-                    "url('https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/1.jpg?alt=media&token=17c88a59-1d53-43a7-9c41-65e65a7c6c88')",
-                }}
-              ></div>
-              <div className="card-info">
-                <h4>Auberge la Cannebière</h4>
-                <p>Marseille</p>
-                <p>
-                  Nuit à partir de <span>25€</span>
-                </p>
-                <div className="list-flex">
-                  <ul className="icon">
-                    <div>
-                      <FaMoneyBillWave />
-                    </div>
-                    <div>
-                      <FaChild />
-                    </div>
-                    <div>
-                      <FaHeart />
-                    </div>
-                    <div>
-                      <FaDog />
-                    </div>
-                  </ul>
-                  <ul className="stars-list-dev">
-                    <StarsList number="5" />
-                  </ul>
-                </div>
-              </div>
-            </Link>
-          </WhiteBlocCard>
+          </WhiteBlocCard> */}
         </ul>
       </WhiteBloc>
       <GreyBloc>
@@ -245,7 +205,7 @@ const Hebergement = () => {
           <FaChartLine />
         </div>
         <ul className="card-list">
-          <GreyBlocCard>
+          {/* <GreyBlocCard>
             <Link to="/">
               <div className="flex-layout">
                 <div
@@ -263,18 +223,11 @@ const Hebergement = () => {
                   </p>
                   <div className="list-layout">
                     <ul className="icon">
-                      <div>
-                        <FaMoneyBillWave />
-                      </div>
-                      <div>
-                        <FaChild />
-                      </div>
-                      <div>
-                        <FaHeart />
-                      </div>
-                      <div>
-                        <FaDog />
-                      </div>
+                      {
+                        <FilterList
+                          filter={["love", "dog", "money", "family"]}
+                        />
+                      }
                     </ul>
                     <ul className="stars">
                       <StarsList number="5" />
@@ -302,18 +255,11 @@ const Hebergement = () => {
                   </p>
                   <div className="list-layout">
                     <ul className="icon">
-                      <div>
-                        <FaMoneyBillWave />
-                      </div>
-                      <div>
-                        <FaChild />
-                      </div>
-                      <div>
-                        <FaHeart />
-                      </div>
-                      <div>
-                        <FaDog />
-                      </div>
+                      {
+                        <FilterList
+                          filter={["love", "dog", "money", "family"]}
+                        />
+                      }
                     </ul>
                     <ul className="stars">
                       <StarsList number="5" />
@@ -341,18 +287,11 @@ const Hebergement = () => {
                   </p>
                   <div className="list-layout">
                     <ul className="icon">
-                      <div>
-                        <FaMoneyBillWave />
-                      </div>
-                      <div>
-                        <FaChild />
-                      </div>
-                      <div>
-                        <FaHeart />
-                      </div>
-                      <div>
-                        <FaDog />
-                      </div>
+                      {
+                        <FilterList
+                          filter={["love", "dog", "money", "family"]}
+                        />
+                      }
                     </ul>
                     <ul className="stars">
                       <StarsList number="5" />
@@ -361,7 +300,7 @@ const Hebergement = () => {
                 </div>
               </div>
             </Link>
-          </GreyBlocCard>
+          </GreyBlocCard> */}
         </ul>
       </GreyBloc>
     </Container>

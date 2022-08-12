@@ -4,6 +4,7 @@ import AllActivities from "../../pages/allActivities/AllActivities";
 import AllHouse from "../../pages/allHouse/AllHouse";
 import DetailPage from "../../pages/detailPage/DetailPage";
 import Panier from "../../pages/panier/Panier";
+import ActivityDetails from "../../pages/activityDetails/ActivityDetails";
 
 const Router = () => {
   return (
@@ -12,6 +13,7 @@ const Router = () => {
       <Route path="/accommodation" element={<AllHouse />} />
       <Route path="/accommodation/:id" element={<DetailPage />} />
       <Route path="/activities" element={<AllActivities />} />
+      <Route path="/activity/:id" element={<ActivityDetails />} />
       <Route path="/panier/:id" element={<Panier />} />
     </Routes>
   );

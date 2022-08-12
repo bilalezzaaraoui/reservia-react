@@ -32,6 +32,7 @@ const ModalLayout = (props) => {
   }
 };
 const Container = styled.div`
+  z-index: 200;
   position: fixed;
   width: 100vw;
   height: 100vh;

@@ -1,23 +1,49 @@
 import styled from "styled-components";
 import CardActivity from "./CardActivity";
+import { useState, useEffect } from "react";
+import db from "../../../firebase";
 
 const AllActivitiesCards = () => {
-  return (
-    <Container>
-      <Title>20 expériences</Title>
-      <ListOfActivities>
-        <CardActivity />
-        <CardActivity />
-        <CardActivity />
-        <CardActivity />
-        <CardActivity />
-        <CardActivity />
-        <CardActivity />
-        <CardActivity />
-        <CardActivity />
-      </ListOfActivities>
-    </Container>
-  );
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const searchData = async () => {
+      let activities = [];
+      db.collection("activities").onSnapshot((snapshot) => {
+        snapshot.docs.map((doc) => {
+          activities = [...activities, { id: doc.id, ...doc.data() }];
+        });
+
+        setData(activities);
+      });
+    };
+
+    searchData();
+  }, []);
+
+  console.log(data);
+  if (data) {
+    return (
+      <Container>
+        <Title>{`${data.length}`} expériences</Title>
+        <ListOfActivities>
+          {data.map((item, index) => (
+            <CardActivity
+              key={index}
+              id={item.id}
+              image={item.images[0]}
+              video={item.video}
+              city={item.city}
+              title={item.title}
+              price={item.price}
+            />
+          ))}
+        </ListOfActivities>
+      </Container>
+    );
+  } else {
+    return;
+  }
 };
 
 const Container = styled.div`

@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { GiClick } from "react-icons/gi";
 import { useDispatch } from "react-redux";
 import { ModalAction } from "../../../../store/modalSlice/modalSlice";
+import { useEffect, useState } from "react";
 
 const SliderDetails = (props) => {
   const dispatch = useDispatch();
+  const [data, setData] = useState();
   const openModal = () => {
     dispatch(ModalAction.openDetailModal());
   };
@@ -13,56 +15,66 @@ const SliderDetails = (props) => {
     dispatch(ModalAction.openSliderModal());
   };
 
-  return (
-    <Container>
-      <HalfOne
-        onClick={() => {
-          props.onSaveSlider(0);
-          openSlider();
-        }}
-      >
-        <img src={props.images[0]} alt="img" />
-      </HalfOne>
-      <HalfTwo>
-        <Quarter
+  // useEffect(() => {
+  //   setData(props.images);
+  // }, []);
+
+  console.log(props.images);
+
+  if (props.images !== undefined && props.images.length >= 1) {
+    return (
+      <Container>
+        <HalfOne
           onClick={() => {
-            props.onSaveSlider(1);
+            props.onSaveSlider(0);
             openSlider();
           }}
         >
-          <img src={props.images[1]} alt="img" />
-        </Quarter>
-        <Quarter
-          onClick={() => {
-            props.onSaveSlider(2);
-            openSlider();
-          }}
-        >
-          <img src={props.images[2]} alt="img" />
-        </Quarter>
-        <Quarter
-          onClick={() => {
-            props.onSaveSlider(3);
-            openSlider();
-          }}
-        >
-          <img src={props.images[3]} alt="img" />
-        </Quarter>
-        <Quarter
-          onClick={() => {
-            props.onSaveSlider(4);
-            openSlider();
-          }}
-        >
-          <img src={props.images[4]} alt="img" />
-        </Quarter>
-      </HalfTwo>
-      <Button onClick={openModal}>
-        <GiClick />
-        <span>Afficher toutes les photos</span>
-      </Button>
-    </Container>
-  );
+          <img src={`${props.images[0]}`} alt="img" />
+        </HalfOne>
+        <HalfTwo>
+          <Quarter
+            onClick={() => {
+              props.onSaveSlider(1);
+              openSlider();
+            }}
+          >
+            <img src={`${props.images[1]}`} alt="img" />
+          </Quarter>
+          <Quarter
+            onClick={() => {
+              props.onSaveSlider(2);
+              openSlider();
+            }}
+          >
+            <img src={`${props.images[2]}`} alt="img" />
+          </Quarter>
+          <Quarter
+            onClick={() => {
+              props.onSaveSlider(3);
+              openSlider();
+            }}
+          >
+            <img src={`${props.images[3]}`} alt="img" />
+          </Quarter>
+          <Quarter
+            onClick={() => {
+              props.onSaveSlider(4);
+              openSlider();
+            }}
+          >
+            <img src={`${props.images[4]}`} alt="img" />
+          </Quarter>
+        </HalfTwo>
+        <Button onClick={openModal}>
+          <GiClick />
+          <span>Afficher toutes les photos</span>
+        </Button>
+      </Container>
+    );
+  } else {
+    return;
+  }
 };
 
 const Container = styled.div`

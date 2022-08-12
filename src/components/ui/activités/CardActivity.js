@@ -1,37 +1,42 @@
 import styled from "styled-components";
 import { useState } from "react";
-import FirstImage from "../../../assets/image/activity/1.jpg";
-import FirstVideo from "../../../assets/video/1.webm";
+import { Link } from "react-router-dom";
 
-const CardActivity = () => {
+const CardActivity = (props) => {
   const [state, setState] = useState(false);
+  console.log(props);
 
   return (
-    <Card>
-      <div
-        className="card-img"
-        style={{ backgroundImage: `url(${FirstImage})` }}
-        onMouseEnter={() => {
-          setState(true);
-        }}
-        onMouseLeave={() => {
-          setState(false);
-        }}
-      >
-        <div className="card-video" style={state ? null : { display: "none" }}>
-          <video autoPlay controls muted loop={true} playsInline={true}>
-            <source src={FirstVideo} type="video/mp4" />
-          </video>
+    <Link to={`/activity/${props.id}`}>
+      <Card>
+        <div
+          className="card-img"
+          style={{ backgroundImage: `url(${props.image})` }}
+          onMouseEnter={() => {
+            setState(true);
+          }}
+          onMouseLeave={() => {
+            setState(false);
+          }}
+        >
+          <div
+            className="card-video"
+            style={state ? null : { display: "none" }}
+          >
+            <video autoPlay controls muted loop={true} playsInline={true}>
+              <source src={`${props.video}`} type="video/mp4" />
+            </video>
+          </div>
         </div>
-      </div>
-      <div className="card-info">
-        <p className="city">Marseille</p>
-        <h4>Vieux Port</h4>
-        <p className="price">
-          <span>À partir de 90€</span>/personne
-        </p>
-      </div>
-    </Card>
+        <div className="card-info">
+          <p className="city">{props.city}</p>
+          <h4>{props.title}</h4>
+          <p className="price">
+            <span>À partir de {props.price}€</span>/personne
+          </p>
+        </div>
+      </Card>
+    </Link>
   );
 };
 

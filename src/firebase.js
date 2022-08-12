@@ -18,11 +18,11 @@ const firebaseConfig = {
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-// const db = firebaseApp.firestore();
+const db = firebaseApp.firestore();
 const auth = getAuth(firebaseApp);
 // const provider = new firebase.auth.GoogleAuthProvider();
-connectAuthEmulator(auth, "http://localhost:9099");
+// connectAuthEmulator(auth, "http://localhost:9099");
 // const storage = firebase.storage();
 
 export { auth };
-// export default db;
+export default db;

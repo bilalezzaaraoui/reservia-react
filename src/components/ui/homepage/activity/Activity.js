@@ -7,11 +7,12 @@ const Activity = () => {
     <Container>
       <h3>Activités disponible</h3>
       <Location>
-        <Link to="/" className="full">
+        {/* <Link to="/" className="full">
           <Card>
             <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
             <InfoDiv>
               <h4>Vieux Port</h4>
+              <p>Marseille</p>
             </InfoDiv>
           </Card>
         </Link>
@@ -20,6 +21,7 @@ const Activity = () => {
             <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
             <InfoDiv>
               <h4>Vieux Port</h4>
+              <p>Marseille</p>
             </InfoDiv>
           </Card>
         </Link>
@@ -28,6 +30,7 @@ const Activity = () => {
             <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
             <InfoDiv>
               <h4>Vieux Port</h4>
+              <p>Marseille</p>
             </InfoDiv>
           </Card>
         </Link>
@@ -36,6 +39,7 @@ const Activity = () => {
             <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
             <InfoDiv>
               <h4>Vieux Port</h4>
+              <p>Marseille</p>
             </InfoDiv>
           </Card>
         </Link>
@@ -44,6 +48,7 @@ const Activity = () => {
             <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
             <InfoDiv>
               <h4>Vieux Port</h4>
+              <p>Marseille</p>
             </InfoDiv>
           </Card>
         </Link>
@@ -52,49 +57,10 @@ const Activity = () => {
             <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
             <InfoDiv>
               <h4>Vieux Port</h4>
+              <p>Marseille</p>
             </InfoDiv>
           </Card>
-        </Link>
-        {/* <div class="card-location loc-2">
-          <a href="#">
-            <div class="loc-img loc-img-2"></div>
-            <div class="loc-info info-2">
-              <h4>Fort de Pomègues</h4>
-            </div>
-          </a>
-        </div>
-        <div class="card-location loc-3">
-          <a href="#">
-            <div class="loc-img loc-img-3"></div>
-            <div class="loc-info info-3">
-              <h4>Îles du Frioul</h4>
-            </div>
-          </a>
-        </div>
-        <div class="card-location loc-4">
-          <a href="#">
-            <div class="loc-img loc-img-4"></div>
-            <div class="loc-info info-4">
-              <h4>Parc National des Calanques</h4>
-            </div>
-          </a>
-        </div>
-        <div class="card-location loc-5">
-          <a href="#">
-            <div class="loc-img loc-img-5"></div>
-            <div class="loc-info info-5">
-              <h4>Notre-Dame-de-la-Garde</h4>
-            </div>
-          </a>
-        </div>
-        <div class="card-location loc-6">
-          <a href="#">
-            <div class="loc-img loc-img-6"></div>
-            <div class="loc-info info-6">
-              <h4>Parc Longchamp</h4>
-            </div>
-          </a>
-        </div> */}
+        </Link> */}
       </Location>
     </Container>
   );
@@ -194,10 +160,17 @@ const ImgDiv = styled.div`
 const InfoDiv = styled.div`
   flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 
   h4 {
-    padding-left: 1rem;
+    padding: 0.5rem 0 0 1rem !important;
+  }
+
+  p {
+    padding: 0.2rem 0 0.5rem 1rem;
+    font-size: 0.8rem;
+    color: #949295;
   }
 `;
 

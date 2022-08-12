@@ -9,10 +9,10 @@ import DetailModal from "../../components/ui/detailsPage/modal/DetailModal";
 import ModalSlider from "../../components/ui/detailsPage/modalSlider/ModalSlider";
 import { useParams } from "react-router-dom";
 import db from "../../firebase";
-import Info from "../../components/ui/detailsPage/info/Info";
+import Info from "../../components/ui/activityDetails/Info";
 import { FaStar } from "react-icons/fa";
 
-const DetailPage = () => {
+const ActivityDetails = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const showDetail = useSelector((state) => state.modal.detail);
@@ -22,7 +22,7 @@ const DetailPage = () => {
 
   useEffect(() => {
     const retrieveData = async () => {
-      db.collection("hebergement").onSnapshot((snapshot) => {
+      db.collection("activities").onSnapshot((snapshot) => {
         snapshot.docs.find((doc) => {
           if (doc.id === params.id) {
             setData({ id: doc.id, ...doc.data() });
@@ -47,11 +47,6 @@ const DetailPage = () => {
           <Header>
             <Title>{data.title}</Title>
             <StarsAndLocation>
-              <BlackStars>
-                <FaStar />
-                <span>{data.stars}</span>
-              </BlackStars>
-
               <Location>{`${data.city},${data.country}`}</Location>
             </StarsAndLocation>
             {/* {data.images !== undefined && (
@@ -61,13 +56,10 @@ const DetailPage = () => {
           </Header>
           <LayoutMobile>
             <Info
-              price={data.pricePerNight}
-              service={10}
+              price={data.price}
               title={data.title}
-              maxClient={data.numberOfClients}
-              maxBedroom={data.numberOfBedroom}
-              maxBed={data.numberOfBed}
-              maxRestroom={data.numberOfRestroom}
+              time={data.time}
+              typeOfTime={data.typeOfTime}
               description={data.description}
             />
           </LayoutMobile>
@@ -154,4 +146,4 @@ const LayoutMobile = styled.div`
   }
 `;
 
-export default DetailPage;
+export default ActivityDetails;

@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { ModalAction } from "../../store/modalSlice/modalSlice";
 import { createPortal } from "react-dom";
 import ModalLayout from "../../components/ui/header/modal/ModalLayout";
+import db from "../../firebase";
+import { HebergementAction } from "../../store/hebergementSlice/hebergementSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -22,6 +24,23 @@ const Header = () => {
       width,
     };
   }
+
+  // let hebergement = [];
+
+  useEffect(() => {
+    const searchData = async () => {
+      let hebergement = [];
+      db.collection("hebergement").onSnapshot((snapshot) => {
+        snapshot.docs.map((doc) => {
+          hebergement = [...hebergement, { id: doc.id, ...doc.data() }];
+        });
+
+        dispatch(HebergementAction.createHebergement(hebergement));
+      });
+    };
+
+    searchData();
+  }, []);
 
   useEffect(() => {
     function handleResize() {
@@ -50,26 +69,26 @@ const Header = () => {
           <Menu>
             <ul>
               <li className="responsive">
-                <Link to="/accommodation">Hébergements</Link>
+                <Link to="/accommodation">
+                  <span>Hébergements</span>
+                </Link>
               </li>
               <li className="responsive">
-                <Link to="/activities">Activités</Link>
-              </li>
-              <li>
-                <Link
-                  to="/"
-                  onClick={() => dispatch(ModalAction.openLoginModal())}
-                >
-                  Se connecter
+                <Link to="/activities">
+                  <span>Activités</span>
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/"
+                <span onClick={() => dispatch(ModalAction.openLoginModal())}>
+                  Se connecter
+                </span>
+              </li>
+              <li>
+                <span
                   onClick={() => dispatch(ModalAction.openSubscribeModal())}
                 >
                   S'inscrire
-                </Link>
+                </span>
               </li>
             </ul>
           </Menu>
@@ -153,7 +172,7 @@ const Menu = styled.div`
       &:hover {
         border-top: 1px solid rgb(0, 101, 252);
 
-        a {
+        span {
           color: rgb(0, 101, 252);
 
           @media (max-width: 780px) {
@@ -162,14 +181,14 @@ const Menu = styled.div`
         }
       }
 
-      a {
+      span {
         font-size: 0.9rem;
         font-weight: 300;
         color: rgb(0, 0, 0);
       }
 
       &:last-child {
-        a {
+        span {
           color: rgb(0, 101, 252);
         }
       }

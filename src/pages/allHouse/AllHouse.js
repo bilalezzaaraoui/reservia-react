@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import AllHebergementCards from "../../components/ui/hebergement/AllHebergementCards";
-
 const AllHouse = () => {
   return (
     <Container>

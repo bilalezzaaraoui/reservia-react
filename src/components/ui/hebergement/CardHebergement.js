@@ -14,7 +14,7 @@ import Img6 from "../../../assets/image/slider/6.webp";
 import Img7 from "../../../assets/image/slider/7.webp";
 import { Link } from "react-router-dom";
 
-const CardHebergement = () => {
+const CardHebergement = (props) => {
   const [state, setState] = useState(false);
 
   const settings = {
@@ -25,30 +25,38 @@ const CardHebergement = () => {
     slidesToScroll: 1,
   };
 
+  console.log(props.images);
+
   const data = [Img1, Img2, Img3, Img4, Img5, Img6, Img7];
 
-  return (
-    <Link to="/">
-      <Card>
-        <SliderLayout>
-          <Container {...settings}>
-            {data.map((index, key) => (
-              <Wrap key={key}>
-                <img src={index} alt="Img de l'hébergement" />
-              </Wrap>
-            ))}
-          </Container>
-        </SliderLayout>
-        <div className="card-info">
-          <p className="location">Badachro, Royaume-Uni</p>
-          <p className="type">Professionnel</p>
-          <p className="price">
-            <span>208 € </span>nuit
-          </p>
-        </div>
-      </Card>
-    </Link>
-  );
+  if (props.images !== undefined && props.images.length >= 1) {
+    return (
+      <Link to={`/accommodation/${props.id}`}>
+        <Card>
+          <SliderLayout>
+            <Container {...settings}>
+              {props.images.map((index, key) => (
+                <Wrap key={key}>
+                  <img src={index} alt="Img de l'hébergement" />
+                </Wrap>
+              ))}
+            </Container>
+          </SliderLayout>
+          <div className="card-info">
+            <p className="location">{`${props.city}, ${props.country}`}</p>
+            <p className="type">
+              {props.type ? "Professionnel" : "Particulier"}
+            </p>
+            <p className="price">
+              <span>{props.price} € </span>nuit
+            </p>
+          </div>
+        </Card>
+      </Link>
+    );
+  } else {
+    return;
+  }
 };
 
 const Card = styled.li`

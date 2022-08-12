@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import NumberOfBuyers from "../form/numberOfBuyers/NumberOfBuyers";
-import DatePickerComps from "../form/dataPicker/DatePickerComps";
+import NumberOfBuyers from "../detailsPage/form/numberOfBuyers/NumberOfBuyers";
+import HoursDatePicker from "./HoursDatePicker";
 import { useState } from "react";
 
 const Info = (props) => {
@@ -14,27 +14,27 @@ const Info = (props) => {
       setNbDays(0);
     }
   };
+  const plural = (number) => {};
 
   return (
     <Container>
       <FirstChild>
         <h3 className="title">{props.title}</h3>
         <p className="info">
-          <span>{props.maxClient} voyageurs</span> -{" "}
-          <span>{props.maxBedroom} chambres</span> -{" "}
-          <span>{props.maxBed} lits</span> -{" "}
-          <span>{props.maxRestroom} salle de bain</span>
+          <span>
+            {props.time} {props.typeOfTime}
+          </span>
         </p>
         <p className="description-1">{props.description}</p>
       </FirstChild>
       <SecondChild>
         <Box>
           <p className="title">
-            <span>{props.price} €</span> nuit
+            <span>{props.price} €</span> personne
           </p>
           <form>
             <div className="border">
-              <DatePickerComps onSaveDaysNumber={saveDateHandler} />
+              <HoursDatePicker />
               <NumberOfBuyers maxClient={props.maxClient} />
             </div>
             <button type="submit">Réserver</button>
@@ -42,24 +42,7 @@ const Info = (props) => {
           <p className="debit">
             Aucun montant ne vous sera débité pour le moment
           </p>
-          <Price>
-            <span className="price-underline">
-              {nbDays <= 0 && "Logement"}
-              {nbDays > 0 &&
-                `${props.price}€ x ${
-                  nbDays <= 1 ? `${nbDays} nuit` : `${nbDays} nuits`
-                }`}
-            </span>
-            <span className="price-not-underline">
-              {nbDays > 0 ? `${props.price * nbDays}` : "0"} €
-            </span>
-          </Price>
-          <Price>
-            <span className="price-underline">Frais de service</span>
-            <span className="price-not-underline">
-              {nbDays > 0 ? `${nbDays * props.service}` : "0"} €
-            </span>
-          </Price>
+
           <Total>
             <span>total</span>
             <span>
@@ -162,26 +145,12 @@ const Box = styled.div`
   }
 `;
 
-const Price = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 1.5rem 0;
-
-  .price-underline {
-    text-decoration: underline;
-    font-weight: 300;
-  }
-
-  .price-not-underline {
-    font-weight: 300;
-  }
-`;
-
 const Total = styled.div`
   border-top: 1px solid rgb(221, 221, 221) !important;
   display: flex;
   justify-content: space-between;
   padding: 1rem 0;
+  margin-top: 1.5rem;
 
   span {
     font-weight: 500;

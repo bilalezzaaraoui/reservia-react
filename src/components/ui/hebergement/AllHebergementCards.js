@@ -1,24 +1,48 @@
 import styled from "styled-components";
 import CardHebergement from "./CardHebergement";
+import { useEffect, useState } from "react";
+import db from "../../../firebase";
 
 const AllHebergementCards = () => {
-  return (
-    <Container>
-      <Title>Classement par popularité</Title>
-      <ListOfActivities>
-        <CardHebergement />
-        <CardHebergement />
-        <CardHebergement />
-        <CardHebergement />
-        <CardHebergement />
-        <CardHebergement />
-        <CardHebergement />
-        <CardHebergement />
-        <CardHebergement />
-        <CardHebergement />
-      </ListOfActivities>
-    </Container>
-  );
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const searchData = async () => {
+      let hebergement = [];
+      db.collection("hebergement").onSnapshot((snapshot) => {
+        snapshot.docs.map((doc) => {
+          hebergement = [...hebergement, { id: doc.id, ...doc.data() }];
+        });
+
+        setData(hebergement);
+      });
+    };
+
+    searchData();
+  }, []);
+  console.log(data);
+  if (data) {
+    return (
+      <Container>
+        <Title>Classement par popularité</Title>
+        <ListOfActivities>
+          {data.map((item, index) => (
+            <CardHebergement
+              key={index}
+              id={item.id}
+              images={item.images}
+              city={item.city}
+              country={item.country}
+              type={item.type}
+              price={item.pricePerNight}
+            />
+          ))}
+        </ListOfActivities>
+      </Container>
+    );
+  } else {
+    return;
+  }
 };
 
 const Container = styled.div`
