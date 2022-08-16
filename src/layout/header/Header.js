@@ -7,8 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { ModalAction } from "../../store/modalSlice/modalSlice";
 import { createPortal } from "react-dom";
 import ModalLayout from "../../components/ui/header/modal/ModalLayout";
-import db from "../../firebase";
-import { HebergementAction } from "../../store/hebergementSlice/hebergementSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -24,23 +22,6 @@ const Header = () => {
       width,
     };
   }
-
-  // let hebergement = [];
-
-  useEffect(() => {
-    const searchData = async () => {
-      let hebergement = [];
-      db.collection("hebergement").onSnapshot((snapshot) => {
-        snapshot.docs.map((doc) => {
-          hebergement = [...hebergement, { id: doc.id, ...doc.data() }];
-        });
-
-        dispatch(HebergementAction.createHebergement(hebergement));
-      });
-    };
-
-    searchData();
-  }, []);
 
   useEffect(() => {
     function handleResize() {

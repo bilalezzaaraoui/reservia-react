@@ -1,0 +1,22 @@
+{
+  "data": {
+    "title": "NO DIET CLUB - Unique food tour à Bordeaux !",
+    "city": "Bordeaux",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/activite%2Factivite-7%2F1.webp?alt=media&token=360ba37e-021a-45ed-8d4c-5cd4ecbb51ec",
+      "https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/activite%2Factivite-7%2F2.webp?alt=media&token=38a7b9b0-c2b2-48fc-abbe-45445a7eb5f0",
+      "https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/activite%2Factivite-7%2F3.webp?alt=media&token=513d1180-add1-4ac8-83eb-fcfb40d7e716",
+      "https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/activite%2Factivite-7%2F4.webp?alt=media&token=298a6983-bf5f-4a83-b79c-d464bd434cb0",
+      "https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/activite%2Factivite-7%2F5.webp?alt=media&token=4734fd89-1b97-44ae-8bf9-b9ff3798e5b4",
+      "https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/activite%2Factivite-7%2F7.webp?alt=media&token=c717687a-5e6e-405b-afc1-381f0a1ab468",
+      "https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/activite%2Factivite-7%2F8.webp?alt=media&token=e8c28f98-f98b-4d19-aeee-019d48abb807"
+    ],
+    "typeOfTime": "h",
+    "video": "",
+    "secondTitle": "Expérience organisée par Claudia, Anthony & Team",
+    "country": "France",
+    "description": "",
+    "price": 55,
+    "time": 4
+  }
+}

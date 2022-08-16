@@ -1,22 +1,11 @@
 import styled from "styled-components";
-import { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-// Image
-import Img1 from "../../../assets/image/slider/1.webp";
-import Img2 from "../../../assets/image/slider/2.webp";
-import Img3 from "../../../assets/image/slider/3.webp";
-import Img4 from "../../../assets/image/slider/4.webp";
-import Img5 from "../../../assets/image/slider/5.webp";
-import Img6 from "../../../assets/image/slider/6.webp";
-import Img7 from "../../../assets/image/slider/7.webp";
 import { Link } from "react-router-dom";
+import FilterList from "../homepage/hebergement/filterList/FilterList";
 
 const CardHebergement = (props) => {
-  const [state, setState] = useState(false);
-
   const settings = {
     dots: true,
     infinite: true,
@@ -24,10 +13,6 @@ const CardHebergement = (props) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-
-  console.log(props.images);
-
-  const data = [Img1, Img2, Img3, Img4, Img5, Img6, Img7];
 
   if (props.images !== undefined && props.images.length >= 1) {
     return (
@@ -50,6 +35,9 @@ const CardHebergement = (props) => {
             <p className="price">
               <span>{props.price} € </span>nuit
             </p>
+            <LayoutFilterList>
+              <FilterList filter={props.filter} />
+            </LayoutFilterList>
           </div>
         </Card>
       </Link>
@@ -148,6 +136,26 @@ const Container = styled(Slider)`
   }
   .slick-next {
     right: 10px;
+  }
+`;
+
+const LayoutFilterList = styled.div`
+  display: flex;
+  column-gap: 5px;
+  margin-top: 5px;
+
+  div {
+    background-color: rgb(222, 235, 255);
+    padding: 5px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      color: rgb(0, 101, 252);
+      font-size: 0.8rem;
+    }
   }
 `;
 

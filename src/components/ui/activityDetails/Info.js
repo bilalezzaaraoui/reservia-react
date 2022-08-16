@@ -2,6 +2,7 @@ import styled from "styled-components";
 import NumberOfBuyers from "../detailsPage/form/numberOfBuyers/NumberOfBuyers";
 import HoursDatePicker from "./HoursDatePicker";
 import { useState } from "react";
+const Plural = (number) => {};
 
 const Info = (props) => {
   const [nbDays, setNbDays] = useState(0);
@@ -14,7 +15,6 @@ const Info = (props) => {
       setNbDays(0);
     }
   };
-  const plural = (number) => {};
 
   return (
     <Container>

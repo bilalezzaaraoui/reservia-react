@@ -1,69 +1,52 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import FirstImage from "../../../../assets/image/activity/1.jpg";
+import { ActivityAction } from "../../../../store/activitySlice/activitySlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import db from "../../../../firebase";
 
 const Activity = () => {
-  return (
-    <Container>
-      <h3>Activités disponible</h3>
-      <Location>
-        {/* <Link to="/" className="full">
-          <Card>
-            <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
-            <InfoDiv>
-              <h4>Vieux Port</h4>
-              <p>Marseille</p>
-            </InfoDiv>
-          </Card>
-        </Link>
-        <Link to="/" className="divised-up">
-          <Card>
-            <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
-            <InfoDiv>
-              <h4>Vieux Port</h4>
-              <p>Marseille</p>
-            </InfoDiv>
-          </Card>
-        </Link>
-        <Link to="/" className="divised-down">
-          <Card>
-            <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
-            <InfoDiv>
-              <h4>Vieux Port</h4>
-              <p>Marseille</p>
-            </InfoDiv>
-          </Card>
-        </Link>
-        <Link to="/" className="full">
-          <Card>
-            <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
-            <InfoDiv>
-              <h4>Vieux Port</h4>
-              <p>Marseille</p>
-            </InfoDiv>
-          </Card>
-        </Link>
-        <Link to="/" className="divised-up">
-          <Card>
-            <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
-            <InfoDiv>
-              <h4>Vieux Port</h4>
-              <p>Marseille</p>
-            </InfoDiv>
-          </Card>
-        </Link>
-        <Link to="/" className="divised-down">
-          <Card>
-            <ImgDiv style={{ backgroundImage: `url(${FirstImage})` }} />
-            <InfoDiv>
-              <h4>Vieux Port</h4>
-              <p>Marseille</p>
-            </InfoDiv>
-          </Card>
-        </Link> */}
-      </Location>
-    </Container>
-  );
+  const dispatch = useDispatch();
+  const activitiesOriginal = useSelector((state) => state.activities.data);
+
+  useEffect(() => {
+    const searchData = async () => {
+      let activities = [];
+      db.collection("activities").onSnapshot((snapshot) => {
+        snapshot.docs.map((doc) => {
+          activities = [...activities, { id: doc.id, ...doc.data() }];
+        });
+
+        dispatch(ActivityAction.createActivity(activities));
+      });
+    };
+
+    searchData();
+  }, []);
+
+  if (activitiesOriginal.length >= 1) {
+    const data = activitiesOriginal.slice(0, 6);
+    return (
+      <Container>
+        <h3>Activités disponible</h3>
+        <Location>
+          {data.map((item, key) => (
+            <Link to={`/activity/${item.id}`} key={key} className="full">
+              <Card>
+                <ImgDiv style={{ backgroundImage: `url(${item.images[0]})` }} />
+                <InfoDiv>
+                  <h4>{item.city}</h4>
+                  <p>{item.country}</p>
+                </InfoDiv>
+              </Card>
+            </Link>
+          ))}
+        </Location>
+      </Container>
+    );
+  } else {
+    return;
+  }
 };
 
 const Container = styled.section`
@@ -89,21 +72,14 @@ const Location = styled.div`
   grid-column-gap: 30px;
   grid-row-gap: 30px;
 
-  .full {
+  a:nth-child(1),
+  a:nth-child(4) {
     grid-row: 1 / span 2;
   }
 
-  .divised-up {
+  a:nth-child(2),
+  a:nth-child(5) {
     grid-row: 1 / span 1;
-
-    h4 {
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-    }
-  }
-
-  .divised-down {
-    grid-row: 2 / span 1;
 
     h4 {
       padding-top: 0.5rem;
@@ -118,21 +94,14 @@ const Location = styled.div`
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
 
-    .full {
+    a:nth-child(1),
+    a:nth-child(4) {
       grid-row: auto;
 
       h4 {
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
       }
-    }
-
-    .divised-up {
-      grid-row: auto;
-    }
-
-    .divised-down {
-      grid-row: auto;
     }
   }
 `;

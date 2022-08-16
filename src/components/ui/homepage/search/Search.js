@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Search = () => {
   const [value, setValue] = useState("");
@@ -24,9 +25,6 @@ const Search = () => {
     }
   }, [value]);
 
-  const handleFilter = (e) => {
-    console.log(e.target.closest("li"));
-  };
   return (
     <Container>
       <h1>Trouvez votre hébergement pour des vacances de rêve</h1>
@@ -61,38 +59,46 @@ const Search = () => {
       <Filter>
         <h3>Filtres</h3>
         <ul>
-          <Tag onClick={handleFilter}>
-            <div className="logo">
-              <FaMoneyBillWave />
-            </div>
-            <div className="type">
-              <span>Économique</span>
-            </div>
-          </Tag>
-          <Tag onClick={handleFilter}>
-            <div className="logo">
-              <FaChild />
-            </div>
-            <div className="type">
-              <span>Familial</span>
-            </div>
-          </Tag>
-          <Tag onClick={handleFilter}>
-            <div className="logo">
-              <FaHeart />
-            </div>
-            <div className="type">
-              <span>Romantique</span>
-            </div>
-          </Tag>
-          <Tag onClick={handleFilter}>
-            <div className="logo">
-              <FaDog />
-            </div>
-            <div className="type">
-              <span>Animaux autorisés</span>
-            </div>
-          </Tag>
+          <Link to="/accommodation/filter=money">
+            <Tag>
+              <div className="logo">
+                <FaMoneyBillWave />
+              </div>
+              <div className="type">
+                <span>Économique</span>
+              </div>
+            </Tag>
+          </Link>
+          <Link to="/accommodation/filter=family">
+            <Tag>
+              <div className="logo">
+                <FaChild />
+              </div>
+              <div className="type">
+                <span>Familial</span>
+              </div>
+            </Tag>
+          </Link>
+          <Link to="/accommodation/filter=love">
+            <Tag>
+              <div className="logo">
+                <FaHeart />
+              </div>
+              <div className="type">
+                <span>Romantique</span>
+              </div>
+            </Tag>
+          </Link>
+          <Link to="/accommodation/filter=dog">
+            <Tag>
+              <div className="logo">
+                <FaDog />
+              </div>
+              <div className="type">
+                <span>Animaux autorisés</span>
+              </div>
+            </Tag>
+          </Link>
         </ul>
       </Filter>
       <Info>

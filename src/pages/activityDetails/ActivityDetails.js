@@ -7,12 +7,13 @@ import { LayoutAction } from "../../store/layoutSlice/layoutSlice";
 import SliderDetails from "../../components/ui/detailsPage/slider/SliderDetails";
 import DetailModal from "../../components/ui/detailsPage/modal/DetailModal";
 import ModalSlider from "../../components/ui/detailsPage/modalSlider/ModalSlider";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import db from "../../firebase";
 import Info from "../../components/ui/activityDetails/Info";
 import { FaStar } from "react-icons/fa";
 
 const ActivityDetails = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
   const showDetail = useSelector((state) => state.modal.detail);
@@ -20,14 +21,25 @@ const ActivityDetails = () => {
   const [number, setNumber] = useState(null);
   const [data, setData] = useState({});
 
+  console.log(params);
+
   useEffect(() => {
     const retrieveData = async () => {
       db.collection("activities").onSnapshot((snapshot) => {
+        let response = null;
+
         snapshot.docs.find((doc) => {
           if (doc.id === params.id) {
-            setData({ id: doc.id, ...doc.data() });
+            response = { id: doc.id, ...doc.data() };
+            // setData({ id: doc.id, ...doc.data() });
           }
         });
+
+        if (response === null) {
+          navigate("/*");
+        } else {
+          setData(response);
+        }
       });
     };
     retrieveData();

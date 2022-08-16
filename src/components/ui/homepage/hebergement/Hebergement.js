@@ -3,308 +3,111 @@ import styled from "styled-components";
 import StarsList from "./starsList/StarsList";
 import FilterList from "./filterList/FilterList";
 import { FaChartLine } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import db from "../../../../firebase";
+import { HebergementAction } from "../../../../store/hebergementSlice/hebergementSlice";
 
 const Hebergement = () => {
+  const dispatch = useDispatch();
   const hebergementOriginal = useSelector((state) => state.hebergement.data);
 
-  return (
-    <Container>
-      <WhiteBloc>
-        <h3 className="title">Hébergements disponible</h3>
-        <ul className="list">
-          {hebergementOriginal.length >= 1 &&
-            hebergementOriginal.map((item, index) => (
-              <WhiteBlocCard key={index}>
+  useEffect(() => {
+    const searchData = async () => {
+      let hebergement = [];
+      db.collection("hebergement").onSnapshot((snapshot) => {
+        snapshot.docs.map((doc) => {
+          hebergement = [...hebergement, { id: doc.id, ...doc.data() }];
+        });
+
+        dispatch(HebergementAction.createHebergement(hebergement));
+      });
+    };
+
+    searchData();
+  }, []);
+
+  if (hebergementOriginal.length >= 1) {
+    const whiteBlocData = hebergementOriginal.slice(0, 6);
+    const greyBlocData = hebergementOriginal.slice(6, 9);
+
+    return (
+      <Container>
+        <WhiteBloc>
+          <h3 className="title">Hébergements disponible</h3>
+          <ul className="list">
+            {whiteBlocData.length >= 1 &&
+              whiteBlocData.map((item, index) => (
+                <WhiteBlocCard key={index}>
+                  <Link to={`/accommodation/${item.id}`}>
+                    <div
+                      className="card-img"
+                      style={{
+                        backgroundImage: `url('${item.images[0]}')`,
+                      }}
+                    ></div>
+                    <div className="card-info">
+                      <h4>{item.title}</h4>
+                      <p>{item.city}</p>
+                      <p>
+                        Nuit à partir de <span>{item.pricePerNight}€</span>
+                      </p>
+                      <div className="list-flex">
+                        <ul className="icon">
+                          {<FilterList filter={item.filter} />}
+                        </ul>
+                        <ul className="stars-list-dev">
+                          <StarsList number={item.stars} />
+                        </ul>
+                      </div>
+                    </div>
+                  </Link>
+                </WhiteBlocCard>
+              ))}
+          </ul>
+        </WhiteBloc>
+        <GreyBloc>
+          <div className="title">
+            <h3>Les plus populaires</h3>
+            <FaChartLine />
+          </div>
+          <ul className="card-list">
+            {greyBlocData.map((item, key) => (
+              <GreyBlocCard key={key}>
                 <Link to={`/accommodation/${item.id}`}>
-                  <div
-                    className="card-img"
-                    style={{
-                      backgroundImage: `url('${item.images[0]}')`,
-                    }}
-                  ></div>
-                  <div className="card-info">
-                    <h4>{item.title}</h4>
-                    <p>{item.city}</p>
-                    <p>
-                      Nuit à partir de <span>{item.pricePerNight}€</span>
-                    </p>
-                    <div className="list-flex">
-                      <ul className="icon">
-                        {<FilterList filter={item.filter} />}
-                      </ul>
-                      <ul className="stars-list-dev">
-                        <StarsList number={item.stars} />
-                      </ul>
+                  <div className="flex-layout">
+                    <div
+                      className="card-img"
+                      style={{
+                        backgroundImage: `url(${item.images[0]})`,
+                      }}
+                    ></div>
+                    <div className="card-info">
+                      <h4>{item.title}</h4>
+                      <p>{item.city}</p>
+                      <p>
+                        Nuit à partir de <span>{item.pricePerNight}€</span>
+                      </p>
+                      <div className="list-layout">
+                        <ul className="icon">
+                          {<FilterList filter={item.filter} />}
+                        </ul>
+                        <ul className="stars">
+                          <StarsList number={item.stars} />
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </Link>
-              </WhiteBlocCard>
+              </GreyBlocCard>
             ))}
-          {/* <WhiteBlocCard>
-            <Link to="/">
-              <div
-                className="card-img"
-                style={{
-                  backgroundImage:
-                    "url('https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/1.jpg?alt=media&token=17c88a59-1d53-43a7-9c41-65e65a7c6c88')",
-                }}
-              ></div>
-              <div className="card-info">
-                <h4>Auberge la Cannebière</h4>
-                <p>Marseille</p>
-                <p>
-                  Nuit à partir de <span>25€</span>
-                </p>
-                <div className="list-flex">
-                  <ul className="icon">
-                    {<FilterList filter={["love", "dog", "money", "family"]} />}
-                  </ul>
-                  <ul className="stars-list-dev">
-                    <StarsList number="5" />
-                  </ul>
-                </div>
-              </div>
-            </Link>
-          </WhiteBlocCard>{" "} */}
-          {/*   <WhiteBlocCard>
-            <Link to="/">
-              <div
-                className="card-img"
-                style={{
-                  backgroundImage:
-                    "url('https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/1.jpg?alt=media&token=17c88a59-1d53-43a7-9c41-65e65a7c6c88')",
-                }}
-              ></div>
-              <div className="card-info">
-                <h4>Auberge la Cannebière</h4>
-                <p>Marseille</p>
-                <p>
-                  Nuit à partir de <span>25€</span>
-                </p>
-                <div className="list-flex">
-                  <ul className="icon">
-                    {<FilterList filter={["love", "dog", "money", "family"]} />}
-                  </ul>
-                  <ul className="stars-list-dev">
-                    <StarsList number="5" />
-                  </ul>
-                </div>
-              </div>
-            </Link>
-          </WhiteBlocCard>{" "}
-          <WhiteBlocCard>
-            <Link to="/">
-              <div
-                className="card-img"
-                style={{
-                  backgroundImage:
-                    "url('https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/1.jpg?alt=media&token=17c88a59-1d53-43a7-9c41-65e65a7c6c88')",
-                }}
-              ></div>
-              <div className="card-info">
-                <h4>Auberge la Cannebière</h4>
-                <p>Marseille</p>
-                <p>
-                  Nuit à partir de <span>25€</span>
-                </p>
-                <div className="list-flex">
-                  <ul className="icon">
-                    {<FilterList filter={["love", "dog", "money", "family"]} />}
-                  </ul>
-                  <ul className="stars-list-dev">
-                    <StarsList number="5" />
-                  </ul>
-                </div>
-              </div>
-            </Link>
-          </WhiteBlocCard>{" "}
-          <WhiteBlocCard>
-            <Link to="/">
-              <div
-                className="card-img"
-                style={{
-                  backgroundImage:
-                    "url('https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/1.jpg?alt=media&token=17c88a59-1d53-43a7-9c41-65e65a7c6c88')",
-                }}
-              ></div>
-              <div className="card-info">
-                <h4>Auberge la Cannebière</h4>
-                <p>Marseille</p>
-                <p>
-                  Nuit à partir de <span>25€</span>
-                </p>
-                <div className="list-flex">
-                  <ul className="icon">
-                    {<FilterList filter={["love", "dog", "money", "family"]} />}
-                  </ul>
-                  <ul className="stars-list-dev">
-                    <StarsList number="5" />
-                  </ul>
-                </div>
-              </div>
-            </Link>
-          </WhiteBlocCard>{" "}
-          <WhiteBlocCard>
-            <Link to="/">
-              <div
-                className="card-img"
-                style={{
-                  backgroundImage:
-                    "url('https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/1.jpg?alt=media&token=17c88a59-1d53-43a7-9c41-65e65a7c6c88')",
-                }}
-              ></div>
-              <div className="card-info">
-                <h4>Auberge la Cannebière</h4>
-                <p>Marseille</p>
-                <p>
-                  Nuit à partir de <span>25€</span>
-                </p>
-                <div className="list-flex">
-                  <ul className="icon">
-                    {<FilterList filter={["love", "dog", "money", "family"]} />}
-                  </ul>
-                  <ul className="stars-list-dev">
-                    <StarsList number="5" />
-                  </ul>
-                </div>
-              </div>
-            </Link>
-          </WhiteBlocCard>{" "}
-          <WhiteBlocCard>
-            <Link to="/">
-              <div
-                className="card-img"
-                style={{
-                  backgroundImage:
-                    "url('https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/1.jpg?alt=media&token=17c88a59-1d53-43a7-9c41-65e65a7c6c88')",
-                }}
-              ></div>
-              <div className="card-info">
-                <h4>Auberge la Cannebière</h4>
-                <p>Marseille</p>
-                <p>
-                  Nuit à partir de <span>25€</span>
-                </p>
-                <div className="list-flex">
-                  <ul className="icon">
-                    {<FilterList filter={["love", "dog", "money", "family"]} />}
-                  </ul>
-                  <ul className="stars-list-dev">
-                    <StarsList number="5" />
-                  </ul>
-                </div>
-              </div>
-            </Link>
-          </WhiteBlocCard> */}
-        </ul>
-      </WhiteBloc>
-      <GreyBloc>
-        <div className="title">
-          <h3>Les plus populaires</h3>
-          <FaChartLine />
-        </div>
-        <ul className="card-list">
-          {/* <GreyBlocCard>
-            <Link to="/">
-              <div className="flex-layout">
-                <div
-                  className="card-img"
-                  style={{
-                    backgroundImage:
-                      "url('https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/1-loisir.jpg?alt=media&token=3348fbbd-b11b-417e-a01b-3f760442ce74')",
-                  }}
-                ></div>
-                <div className="card-info">
-                  <h4>Auberge la Cannebière</h4>
-                  <p>Marseille</p>
-                  <p>
-                    Nuit à partir de <span>25€</span>
-                  </p>
-                  <div className="list-layout">
-                    <ul className="icon">
-                      {
-                        <FilterList
-                          filter={["love", "dog", "money", "family"]}
-                        />
-                      }
-                    </ul>
-                    <ul className="stars">
-                      <StarsList number="5" />
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </GreyBlocCard>
-          <GreyBlocCard>
-            <Link to="/">
-              <div className="flex-layout">
-                <div
-                  className="card-img"
-                  style={{
-                    backgroundImage:
-                      "url('https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/1-loisir.jpg?alt=media&token=3348fbbd-b11b-417e-a01b-3f760442ce74')",
-                  }}
-                ></div>
-                <div className="card-info">
-                  <h4>Auberge la Cannebière</h4>
-                  <p>Marseille</p>
-                  <p>
-                    Nuit à partir de <span>25€</span>
-                  </p>
-                  <div className="list-layout">
-                    <ul className="icon">
-                      {
-                        <FilterList
-                          filter={["love", "dog", "money", "family"]}
-                        />
-                      }
-                    </ul>
-                    <ul className="stars">
-                      <StarsList number="5" />
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </GreyBlocCard>{" "}
-          <GreyBlocCard>
-            <Link to="/">
-              <div className="flex-layout">
-                <div
-                  className="card-img"
-                  style={{
-                    backgroundImage:
-                      "url('https://firebasestorage.googleapis.com/v0/b/reservia-c4dd4.appspot.com/o/1-loisir.jpg?alt=media&token=3348fbbd-b11b-417e-a01b-3f760442ce74')",
-                  }}
-                ></div>
-                <div className="card-info">
-                  <h4>Auberge la Cannebière</h4>
-                  <p>Marseille</p>
-                  <p>
-                    Nuit à partir de <span>25€</span>
-                  </p>
-                  <div className="list-layout">
-                    <ul className="icon">
-                      {
-                        <FilterList
-                          filter={["love", "dog", "money", "family"]}
-                        />
-                      }
-                    </ul>
-                    <ul className="stars">
-                      <StarsList number="5" />
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </GreyBlocCard> */}
-        </ul>
-      </GreyBloc>
-    </Container>
-  );
+          </ul>
+        </GreyBloc>
+      </Container>
+    );
+  } else {
+    return;
+  }
 };
 
 const Container = styled.section`
@@ -375,67 +178,77 @@ const WhiteBlocCard = styled.div`
     transform: translateY(-5px);
   }
 
-  .card-img {
-    height: 120px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  a {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 
-    @media (max-width: 768px) {
+    .card-img {
       height: 120px;
-    }
-  }
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
 
-  .card-info {
-    padding: 0.4rem 0.4rem 0.2rem;
-
-    h4 {
-      font-size: 0.9rem;
-      margin-bottom: 5px;
-    }
-
-    p {
-      font-size: 0.8rem;
-      margin-bottom: 5px;
-
-      span {
-        font-weight: bold;
+      @media (max-width: 768px) {
+        height: 120px;
       }
     }
 
-    .list-flex {
+    .card-info {
+      flex: 1;
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      margin-top: 8px 0;
-      .icon {
-        margin-bottom: 0.5rem;
-        display: flex;
+      padding: 0.4rem 0.4rem 0.2rem;
 
-        div {
-          background-color: rgb(222, 235, 255);
-          margin-right: 5px;
-          padding: 3px;
-          border-radius: 50%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+      h4 {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+      }
 
-          svg {
-            color: rgb(0, 101, 252);
-            font-size: 0.8rem;
-          }
+      p {
+        font-size: 0.8rem;
+        margin-bottom: 5px;
+
+        span {
+          font-weight: bold;
         }
       }
 
-      svg {
-        font-size: 0.8rem;
-      }
+      .list-flex {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 8px 0;
+        .icon {
+          margin-bottom: 0.5rem;
+          display: flex;
 
-      @media (max-width: 768px) {
-        flex-direction: column;
+          div {
+            background-color: rgb(222, 235, 255);
+            margin-right: 5px;
+            padding: 3px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            svg {
+              color: rgb(0, 101, 252);
+              font-size: 0.8rem;
+            }
+          }
+        }
+
+        svg {
+          font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+        }
       }
     }
   }
@@ -499,7 +312,7 @@ const GreyBlocCard = styled.div`
 
       .card-img {
         min-width: 130px;
-        height: 130px;
+        height: auto;
         border-bottom-left-radius: 10px;
         border-top-left-radius: 10px;
         overflow: hidden;

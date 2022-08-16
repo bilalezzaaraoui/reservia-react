@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const CardActivity = (props) => {
   const [state, setState] = useState(false);
-  console.log(props);
 
   return (
     <Link to={`/activity/${props.id}`}>
@@ -19,14 +18,16 @@ const CardActivity = (props) => {
             setState(false);
           }}
         >
-          <div
-            className="card-video"
-            style={state ? null : { display: "none" }}
-          >
-            <video autoPlay controls muted loop={true} playsInline={true}>
-              <source src={`${props.video}`} type="video/mp4" />
-            </video>
-          </div>
+          {props.video && (
+            <div
+              className="card-video"
+              style={state ? null : { display: "none" }}
+            >
+              <video autoPlay controls muted loop={true} playsInline={true}>
+                <source src={`${props.video}`} type="video/mp4" />
+              </video>
+            </div>
+          )}
         </div>
         <div className="card-info">
           <p className="city">{props.city}</p>

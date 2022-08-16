@@ -2,9 +2,12 @@ import styled from "styled-components";
 import CardActivity from "./CardActivity";
 import { useState, useEffect } from "react";
 import db from "../../../firebase";
+import { useParams } from "react-router-dom";
 
 const AllActivitiesCards = () => {
+  const params = useParams();
   const [data, setData] = useState();
+  console.log(params);
 
   useEffect(() => {
     const searchData = async () => {
@@ -21,7 +24,6 @@ const AllActivitiesCards = () => {
     searchData();
   }, []);
 
-  console.log(data);
   if (data) {
     return (
       <Container>
