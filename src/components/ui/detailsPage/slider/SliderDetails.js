@@ -2,11 +2,9 @@ import styled from "styled-components";
 import { GiClick } from "react-icons/gi";
 import { useDispatch } from "react-redux";
 import { ModalAction } from "../../../../store/modalSlice/modalSlice";
-import { useEffect, useState } from "react";
 
 const SliderDetails = (props) => {
   const dispatch = useDispatch();
-  const [data, setData] = useState();
   const openModal = () => {
     dispatch(ModalAction.openDetailModal());
   };
@@ -14,12 +12,6 @@ const SliderDetails = (props) => {
   const openSlider = () => {
     dispatch(ModalAction.openSliderModal());
   };
-
-  // useEffect(() => {
-  //   setData(props.images);
-  // }, []);
-
-  console.log(props.images);
 
   if (props.images !== undefined && props.images.length >= 1) {
     return (
@@ -97,6 +89,8 @@ const HalfOne = styled.div`
   height: 100%;
 
   img {
+    object-fit: cover;
+    object-position: center;
     position: absolute;
     display: block;
     width: 100%;
@@ -129,6 +123,7 @@ const Quarter = styled.div`
   position: relative;
 
   img {
+    object-fit: cover;
     position: absolute;
     display: block;
     width: 100%;

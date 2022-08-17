@@ -2,28 +2,55 @@ import styled from "styled-components";
 import { FaChevronLeft } from "react-icons/fa";
 import LoginForm from "./loginForm/LoginForm";
 import img1 from "../../../../assets/image/sliderDetails/1.webp";
+import { useDispatch, useSelector } from "react-redux";
+import { CartAction } from "../../../../store/cartSlice/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const ShoppingCart = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const cart = useSelector((state) => state.cart);
+
+  console.log(cart.data.productId);
+  const ResetCart = () => {
+    dispatch(CartAction.emptyCart());
+    navigate(`/activity/${cart.data.productId}`);
+  };
   return (
     <Layout>
       <Container>
         <Head>
-          <div className="circle">
+          <div className="circle" onClick={ResetCart}>
             <FaChevronLeft />
           </div>
           <h1>Demande de réservation</h1>
         </Head>
         <Cart>
           <CartOne>
-            <h3>Votre voyage/activité</h3>
+            <h3>
+              Votre{" "}
+              {`${
+                cart.data.typeOfProduct === "activity" ? "activité" : "voyage"
+              }`}
+            </h3>
             <div className="info-layout">
               <div className="info">
                 <span className="title">Dates</span>
                 <span className="sub-title">1-6 nov.</span>
               </div>
               <div className="info">
-                <span className="title">Voyageurs</span>
-                <span className="sub-title">1 voyageur</span>
+                <span className="title">{`${
+                  cart.data.typeOfProduct === "activity"
+                    ? "Participants"
+                    : "Voyageurs"
+                }`}</span>
+                <span className="sub-title">
+                  {`${cart.data.numberOfPeople} ${`${
+                    cart.data.typeOfProduct === "activity"
+                      ? "participants"
+                      : "voyageurs"
+                  }`}`}
+                </span>
               </div>
             </div>
             <div className="login-form">
@@ -37,28 +64,49 @@ const ShoppingCart = () => {
             <LayoutDiv>
               <Description>
                 <div className="image-layout">
-                  <img src={img1} alt="logo" />
+                  <img src={cart.actualProduct.images[0]} alt="logo" />
                 </div>
                 <div className="description-hebergement">
-                  <span className="high">Phare</span>
-                  <span className="low">Lighthouse Apartment Tajer</span>
+                  <span className="high">{cart.actualProduct.city}</span>
+                  <span className="low">{cart.actualProduct.title}</span>
                 </div>
               </Description>
               <Price>
                 <h3>Détails du prix</h3>
                 <div className="info-layout">
                   <div className="info">
+                    <span className="title-first">{`${
+                      cart.data.typeOfProduct === "activity"
+                        ? "Prix/Personne"
+                        : "Prix/Nuit"
+                    }`}</span>
+                    <span className="sub-title">{`${cart.actualProduct.price} €`}</span>
+                  </div>
+                  <div className="info">
                     <span className="title-first">Dates</span>
                     <span className="sub-title">1-6 nov.</span>
                   </div>
                   <div className="info">
-                    <span className="title-second">Voyageurs</span>
-                    <span className="sub-title">1 voyageur</span>
+                    <span className="title-second">{`${
+                      cart.data.typeOfProduct === "activity"
+                        ? "Participants"
+                        : "Voyageurs"
+                    }`}</span>
+
+                    <span className="sub-title">
+                      {`${cart.data.numberOfPeople} ${`${
+                        cart.data.typeOfProduct === "activity"
+                          ? "participants"
+                          : "voyageurs"
+                      }`}`}
+                    </span>
                   </div>
                 </div>
                 <TotalAmount>
                   <span className="total-layout">Total</span>
-                  <span className="total-amount">619,78 €</span>
+                  <span className="total-amount">
+                    {`${cart.data.totalPrice}`} €
+                  </span>
                 </TotalAmount>
               </Price>
             </LayoutDiv>
@@ -90,6 +138,7 @@ const Head = styled.div`
   column-gap: 1rem;
 
   .circle {
+    cursor: pointer;
     width: 40px;
     height: 40px;
     border-radius: 50px;
@@ -170,11 +219,6 @@ const Button = styled.button`
   background: #d1d3d3;
   font-weight: bold;
   cursor: not-allowed;
-  /* transition: 0.3s;
-
-  &:hover {
-    transform: scale(1.01);
-  } */
 `;
 
 const CartTwo = styled.div`
@@ -205,6 +249,7 @@ const Description = styled.div`
     position: relative;
 
     img {
+      object-fit: cover;
       display: inline-block;
       position: absolute;
       width: 100%;

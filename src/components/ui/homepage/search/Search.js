@@ -10,20 +10,42 @@ import {
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Search = () => {
+  const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [showDiv, setShowDiv] = useState(false);
   const isModalOpen = useSelector((state) => state.modal.isOpen);
+  const allHebergement = useSelector((state) => state.hebergement.data);
+  const [result, setResult] = useState(0);
 
   useEffect(() => {
-    if (value.length >= 1) {
-      setShowDiv(true);
+    if (value.trim().length >= 1) {
+      if (!showDiv) {
+        setShowDiv(true);
+      }
+
+      const filterHebergement = allHebergement.filter((item) => {
+        if (item.city.toLowerCase().startsWith(value.toLowerCase())) {
+          return item;
+        }
+      });
+
+      setResult(filterHebergement.length);
     } else {
       setShowDiv(false);
     }
-  }, [value]);
+  }, [value.trim()]);
+
+  const handleForm = (e) => {
+    e.preventDefault();
+
+    console.log(value);
+    console.log(result);
+
+    navigate(`/accommodation/search=${value}`);
+  };
 
   return (
     <Container>
@@ -40,18 +62,25 @@ const Search = () => {
               type="search"
               className="searchbar"
               onChange={(e) => setValue(e.target.value)}
-              placeholder="Marseille, France"
+              placeholder="Ex: Marseille"
             />
             {showDiv && (
               <div className="search-response">
-                <p>
-                  <span>8</span> resultat trouvé
+                <p
+                  onClick={result >= 1 && value.length >= 1 ? handleForm : null}
+                >
+                  <span>{result}</span> resultat trouvé
                 </p>
               </div>
             )}
           </FormList>
         </form>
-        <button type="submit">Rechercher</button>
+        <button
+          type="submit"
+          onClick={result >= 1 && value.length >= 1 ? handleForm : null}
+        >
+          Rechercher
+        </button>
         <button type="submit" className="responsive">
           <FaSearch />
         </button>

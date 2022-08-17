@@ -21,8 +21,6 @@ const ActivityDetails = () => {
   const [number, setNumber] = useState(null);
   const [data, setData] = useState({});
 
-  console.log(params);
-
   useEffect(() => {
     const retrieveData = async () => {
       db.collection("activities").onSnapshot((snapshot) => {
@@ -31,7 +29,6 @@ const ActivityDetails = () => {
         snapshot.docs.find((doc) => {
           if (doc.id === params.id) {
             response = { id: doc.id, ...doc.data() };
-            // setData({ id: doc.id, ...doc.data() });
           }
         });
 
@@ -45,10 +42,6 @@ const ActivityDetails = () => {
     retrieveData();
   }, [params.id]);
 
-  // useEffect(() => {
-  //   dispatch(LayoutAction.renderSmall());
-  // }, []);
-  console.log(data.id);
   const whichNumber = (number) => {
     setNumber(number);
   };
@@ -61,13 +54,12 @@ const ActivityDetails = () => {
             <StarsAndLocation>
               <Location>{`${data.city},${data.country}`}</Location>
             </StarsAndLocation>
-            {/* {data.images !== undefined && (
-            <SliderDetails onSaveSlider={whichNumber} images={data.images} />
-          )} */}
             <SliderDetails onSaveSlider={whichNumber} images={data.images} />
           </Header>
           <LayoutMobile>
             <Info
+              data={data}
+              id={data.id}
               price={data.price}
               title={data.title}
               time={data.time}

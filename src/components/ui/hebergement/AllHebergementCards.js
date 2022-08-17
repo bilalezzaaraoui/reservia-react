@@ -35,6 +35,15 @@ const AllHebergementCards = () => {
           });
 
           setData(filterData);
+        } else if (params.search && typeof params.search === "string") {
+          const target = params.search;
+          const filterData = hebergement.filter((item) => {
+            if (item.city.toLowerCase().startsWith(target.toLowerCase())) {
+              return item;
+            }
+          });
+
+          setData(filterData);
         } else {
           setData(hebergement);
         }

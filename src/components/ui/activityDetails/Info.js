@@ -1,19 +1,54 @@
 import styled from "styled-components";
-import NumberOfBuyers from "../detailsPage/form/numberOfBuyers/NumberOfBuyers";
+import NumberOfBuyers from "./numberOfBuyers/NumberOfBuyers";
 import HoursDatePicker from "./HoursDatePicker";
-import { useState } from "react";
-const Plural = (number) => {};
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { CartAction } from "../../../store/cartSlice/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const Info = (props) => {
-  const [nbDays, setNbDays] = useState(0);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [date, setDate] = useState({});
+  const [people, setPeople] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [isCartAccesible, setIsCartAccesible] = useState(false);
 
-  const saveDateHandler = (numberOfNight) => {
-    const result = numberOfNight;
-    if (result >= 1) {
-      setNbDays(result);
-    } else {
-      setNbDays(0);
+  const saveDateHandler = (whichDate) => {
+    setDate(whichDate);
+  };
+
+  const savePeopleHandler = (howManyPeople) => {
+    setPeople(howManyPeople);
+  };
+
+  useEffect(() => {
+    if (
+      typeof date.infoDate === "string" &&
+      typeof date.infoTime === "string" &&
+      people >= 1
+    ) {
+      const calcTotal = props.price * people;
+      setTotal(calcTotal);
+      setIsCartAccesible(true);
     }
+  }, [date, people]);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    const cartData = {
+      typeOfProduct: "activity",
+      productId: props.id,
+      dateOfTheActivity: date.infoDate,
+      TimeOfTheActivity: date.infoTime,
+      totalPrice: total,
+      numberOfPeople: people,
+    };
+    dispatch(
+      CartAction.fillCart({ data: cartData, actualProduct: props.data })
+    );
+    navigate("/panier");
   };
 
   return (
@@ -30,14 +65,19 @@ const Info = (props) => {
       <SecondChild>
         <Box>
           <p className="title">
-            <span>{props.price} €</span> personne
+            <span>{props.price} € </span>/ Personne
           </p>
           <form>
             <div className="border">
-              <HoursDatePicker />
-              <NumberOfBuyers maxClient={props.maxClient} />
+              <HoursDatePicker onSaveDate={saveDateHandler} />
+              <NumberOfBuyers maxClient={5} onSavePeople={savePeopleHandler} />
             </div>
-            <button type="submit">Réserver</button>
+            <button
+              type="submit"
+              onClick={isCartAccesible ? handleFormSubmit : null}
+            >
+              Réserver
+            </button>
           </form>
           <p className="debit">
             Aucun montant ne vous sera débité pour le moment
@@ -45,13 +85,7 @@ const Info = (props) => {
 
           <Total>
             <span>total</span>
-            <span>
-              {" "}
-              {nbDays > 0
-                ? `${props.price * nbDays + nbDays * props.service}`
-                : "0"}{" "}
-              €
-            </span>
+            <span> {total > 0 ? `${total}  €` : "..."}</span>
           </Total>
         </Box>
       </SecondChild>
@@ -125,6 +159,7 @@ const Box = styled.div`
     }
 
     button {
+      cursor: pointer;
       display: block;
       margin: 0 auto;
       width: 90%;

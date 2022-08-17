@@ -16,11 +16,29 @@ if (mm < 10) {
 today = `${yyyy}-${mm}-${dd}`;
 
 const HoursDatePicker = (props) => {
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    if (date.length >= 3 && time.length >= 3) {
+      props.onSaveDate({
+        infoDate: date,
+        infoTime: time,
+      });
+    }
+  }, [date, time]);
+
   return (
     <Layout>
       <div>
         <label htmlFor="arrive">Arrivée</label>
-        <input type="date" name="arrive" min={today} required />
+        <input
+          type="date"
+          name="arrive"
+          min={today}
+          onChange={(e) => setDate(e.target.value)}
+          required
+        />
       </div>
       <div>
         <label htmlFor="depart">Départ</label>
@@ -29,6 +47,7 @@ const HoursDatePicker = (props) => {
           name="depart"
           min="09:00:00"
           max="18:00:00"
+          onChange={(e) => setTime(e.target.value)}
           required
         />
       </div>
