@@ -67,6 +67,11 @@ const Search = () => {
             {showDiv && (
               <div className="search-response">
                 <p
+                  style={
+                    result >= 1 && value.length >= 1
+                      ? { cursor: "pointer" }
+                      : null
+                  }
                   onClick={result >= 1 && value.length >= 1 ? handleForm : null}
                 >
                   <span>{result}</span> resultat trouvé
@@ -77,6 +82,9 @@ const Search = () => {
         </form>
         <button
           type="submit"
+          style={
+            result >= 1 && value.length >= 1 ? { cursor: "pointer" } : null
+          }
           onClick={result >= 1 && value.length >= 1 ? handleForm : null}
         >
           Rechercher
@@ -160,7 +168,6 @@ const SearchBar = styled.div`
   width: 350px;
   margin-top: 0.8rem;
   background-color: rgb(242, 242, 242);
-  /* overflow: hidden; */
   border-radius: 12px;
   display: flex;
   justify-content: space-between;
@@ -224,14 +231,20 @@ const FormList = styled.div`
   .search-response {
     position: absolute;
     bottom: -35px;
-    border-radius: 3px;
-    background-color: #e5e5e5;
+    border-radius: 2px;
+    background-color: #efefef;
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px;
     padding: 0.5rem;
 
     p {
       font-size: 0.9rem;
+      font-weight: 300;
+
+      span {
+        color: #0065fc;
+        font-weight: bold;
+      }
     }
   }
 `;

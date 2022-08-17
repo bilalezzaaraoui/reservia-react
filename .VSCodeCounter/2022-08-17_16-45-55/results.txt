@@ -1,0 +1,142 @@
+Date : 2022-08-17 16:45:55
+Directory : /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react
+Total : 60 files,  60683 codes, 209 comments, 696 blanks, all 61588 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          5 |     56,091 |          0 |          5 |     56,096 |
+| JavaScript |         48 |      4,485 |        186 |        639 |      5,310 |
+| Markdown   |          2 |         63 |          0 |         44 |        107 |
+| HTML       |          1 |         21 |         23 |          1 |         45 |
+| PostCSS    |          2 |         19 |          0 |          5 |         24 |
+| XML        |          1 |          3 |          0 |          1 |          4 |
+| Log        |          1 |          1 |          0 |          1 |          2 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                    | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                       |         60 |     60,683 |        209 |        696 |     61,588 |
+| public                                                                                                                  |          2 |         46 |         23 |          2 |         71 |
+| src                                                                                                                     |         51 |      4,507 |        186 |        645 |      5,338 |
+| src/assets                                                                                                              |          1 |          3 |          0 |          1 |          4 |
+| src/assets/image                                                                                                        |          1 |          3 |          0 |          1 |          4 |
+| src/assets/image/logo                                                                                                   |          1 |          3 |          0 |          1 |          4 |
+| src/components                                                                                                          |         28 |      3,736 |         37 |        505 |      4,278 |
+| src/components/router                                                                                                   |          1 |         25 |          6 |          1 |         32 |
+| src/components/ui                                                                                                       |         27 |      3,711 |         31 |        504 |      4,246 |
+| src/components/ui/activityDetails                                                                                       |          3 |        597 |          0 |         59 |        656 |
+| src/components/ui/activityDetails/numberOfBuyers                                                                        |          1 |        353 |          0 |         21 |        374 |
+| src/components/ui/activités                                                                                             |          2 |        176 |          0 |         27 |        203 |
+| src/components/ui/detailsPage                                                                                           |          7 |        971 |          2 |        115 |      1,088 |
+| src/components/ui/detailsPage/form                                                                                      |          2 |        453 |          0 |         37 |        490 |
+| src/components/ui/detailsPage/form/dataPicker                                                                           |          1 |        102 |          0 |         17 |        119 |
+| src/components/ui/detailsPage/form/numberOfBuyers                                                                       |          1 |        351 |          0 |         20 |        371 |
+| src/components/ui/detailsPage/info                                                                                      |          1 |        172 |          0 |         23 |        195 |
+| src/components/ui/detailsPage/modal                                                                                     |          2 |         91 |          0 |         16 |        107 |
+| src/components/ui/detailsPage/modalSlider                                                                               |          1 |        115 |          2 |         21 |        138 |
+| src/components/ui/detailsPage/slider                                                                                    |          1 |        140 |          0 |         18 |        158 |
+| src/components/ui/header                                                                                                |          5 |        474 |         12 |         67 |        553 |
+| src/components/ui/header/modal                                                                                          |          5 |        474 |         12 |         67 |        553 |
+| src/components/ui/header/modal/login                                                                                    |          2 |        167 |         10 |         28 |        205 |
+| src/components/ui/header/modal/subscribe                                                                                |          2 |        264 |          0 |         35 |        299 |
+| src/components/ui/hebergement                                                                                           |          2 |        270 |          2 |         39 |        311 |
+| src/components/ui/homepage                                                                                              |          5 |        825 |          5 |        131 |        961 |
+| src/components/ui/homepage/activity                                                                                     |          1 |        126 |          0 |         21 |        147 |
+| src/components/ui/homepage/hebergement                                                                                  |          3 |        410 |          3 |         69 |        482 |
+| src/components/ui/homepage/hebergement/filterList                                                                       |          1 |         26 |          0 |          5 |         31 |
+| src/components/ui/homepage/hebergement/starsList                                                                        |          1 |         22 |          0 |          6 |         28 |
+| src/components/ui/homepage/search                                                                                       |          1 |        289 |          2 |         41 |        332 |
+| src/components/ui/panier                                                                                                |          3 |        398 |         10 |         66 |        474 |
+| src/components/ui/panier/head                                                                                           |          1 |         18 |          0 |          5 |         23 |
+| src/components/ui/panier/shoppingCart                                                                                   |          2 |        380 |         10 |         61 |        451 |
+| src/components/ui/panier/shoppingCart/loginForm                                                                         |          1 |         99 |         10 |         19 |        128 |
+| src/layout                                                                                                              |          3 |        279 |          0 |         42 |        321 |
+| src/layout/footer                                                                                                       |          1 |         68 |          0 |         11 |         79 |
+| src/layout/header                                                                                                       |          1 |        197 |          0 |         28 |        225 |
+| src/pages                                                                                                               |          7 |        258 |        146 |         42 |        446 |
+| src/pages/activityDetails                                                                                               |          1 |         32 |        118 |          4 |        154 |
+| src/pages/allActivities                                                                                                 |          1 |         14 |          0 |          4 |         18 |
+| src/pages/allHouse                                                                                                      |          1 |         14 |          0 |          3 |         17 |
+| src/pages/detailPage                                                                                                    |          1 |        122 |         28 |         15 |        165 |
+| src/pages/error                                                                                                         |          1 |         38 |          0 |          8 |         46 |
+| src/pages/home                                                                                                          |          1 |         17 |          0 |          4 |         21 |
+| src/pages/panier                                                                                                        |          1 |         21 |          0 |          4 |         25 |
+| src/store                                                                                                               |          7 |        164 |          0 |         40 |        204 |
+| src/store/activitySlice                                                                                                 |          1 |         18 |          0 |          5 |         23 |
+| src/store/cartSlice                                                                                                     |          1 |         24 |          0 |          5 |         29 |
+| src/store/hebergementSlice                                                                                              |          1 |         18 |          0 |          5 |         23 |
+| src/store/layoutSlice                                                                                                   |          1 |         18 |          0 |          5 |         23 |
+| src/store/modalSlice                                                                                                    |          1 |         44 |          0 |         12 |         56 |
+| src/store/userSlice                                                                                                     |          1 |         24 |          0 |          5 |         29 |
++-------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                | language   | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/README.md                                                           | Markdown   |         38 |          0 |         33 |         71 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/README.old.md                                                       | Markdown   |         25 |          0 |         11 |         36 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/data.json                                                           | JSON       |         22 |          0 |          1 |         23 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/firebase.json                                                       | JSON       |         10 |          0 |          1 |         11 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/package-lock.json                                                   | JSON       |     55,986 |          0 |          1 |     55,987 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/package.json                                                        | JSON       |         48 |          0 |          1 |         49 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/public/index.html                                                   | HTML       |         21 |         23 |          1 |         45 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/public/manifest.json                                                | JSON       |         25 |          0 |          1 |         26 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/App.css                                                         | PostCSS    |          0 |          0 |          1 |          1 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/App.js                                                          | JavaScript |         11 |          0 |          3 |         14 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/assets/image/logo/Reservia.svg                                  | XML        |          3 |          0 |          1 |          4 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/router/Router.js                                     | JavaScript |         25 |          6 |          1 |         32 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/activityDetails/HoursDatePicker.js                | JavaScript |         71 |          0 |         13 |         84 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/activityDetails/Info.js                           | JavaScript |        173 |          0 |         25 |        198 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/activityDetails/numberOfBuyers/NumberOfBuyers.js  | JavaScript |        353 |          0 |         21 |        374 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/activités/AllActivitiesCards.js                   | JavaScript |         97 |          0 |         16 |        113 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/activités/CardActivity.js                         | JavaScript |         79 |          0 |         11 |         90 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/detailsPage/form/dataPicker/DatePickerComps.js    | JavaScript |        102 |          0 |         17 |        119 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/detailsPage/form/numberOfBuyers/NumberOfBuyers.js | JavaScript |        351 |          0 |         20 |        371 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/detailsPage/info/Info.js                          | JavaScript |        172 |          0 |         23 |        195 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/detailsPage/modal/DetailModal.js                  | JavaScript |         27 |          0 |          4 |         31 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/detailsPage/modal/ImageGrid.js                    | JavaScript |         64 |          0 |         12 |         76 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/detailsPage/modalSlider/ModalSlider.js            | JavaScript |        115 |          2 |         21 |        138 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/detailsPage/slider/SliderDetails.js               | JavaScript |        140 |          0 |         18 |        158 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/header/modal/ModalLayout.js                       | JavaScript |         43 |          2 |          4 |         49 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/header/modal/login/LoginForm.js                   | JavaScript |        152 |         10 |         25 |        187 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/header/modal/login/OverlayLogin.js                | JavaScript |         15 |          0 |          3 |         18 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/header/modal/subscribe/OverlaySubscribe.js        | JavaScript |         14 |          0 |          3 |         17 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/header/modal/subscribe/SubscribeForm.js           | JavaScript |        250 |          0 |         32 |        282 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/hebergement/AllHebergementCards.js                | JavaScript |        127 |          2 |         19 |        148 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/hebergement/CardHebergement.js                    | JavaScript |        143 |          0 |         20 |        163 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/homepage/activity/Activity.js                     | JavaScript |        126 |          0 |         21 |        147 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/homepage/hebergement/Hebergement.js               | JavaScript |        362 |          3 |         58 |        423 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/homepage/hebergement/filterList/FilterList.js     | JavaScript |         26 |          0 |          5 |         31 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/homepage/hebergement/starsList/StarsList.js       | JavaScript |         22 |          0 |          6 |         28 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/homepage/search/Search.js                         | JavaScript |        289 |          2 |         41 |        332 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/panier/head/Head.js                               | JavaScript |         18 |          0 |          5 |         23 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/panier/shoppingCart/ShoppingCart.js               | JavaScript |        281 |          0 |         42 |        323 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/components/ui/panier/shoppingCart/loginForm/LoginForm.js        | JavaScript |         99 |         10 |         19 |        128 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/firebase.js                                                     | JavaScript |         22 |          3 |          4 |         29 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/index.css                                                       | PostCSS    |         19 |          0 |          4 |         23 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/index.js                                                        | JavaScript |         15 |          0 |          3 |         18 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/layout/Layout.js                                                | JavaScript |         14 |          0 |          3 |         17 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/layout/footer/Footer.js                                         | JavaScript |         68 |          0 |         11 |         79 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/layout/header/Header.js                                         | JavaScript |        197 |          0 |         28 |        225 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/pages/activityDetails/ActivityDetails.js                        | JavaScript |         32 |        118 |          4 |        154 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/pages/allActivities/AllActivities.js                            | JavaScript |         14 |          0 |          4 |         18 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/pages/allHouse/AllHouse.js                                      | JavaScript |         14 |          0 |          3 |         17 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/pages/detailPage/DetailPage.js                                  | JavaScript |        122 |         28 |         15 |        165 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/pages/error/Erreur.js                                           | JavaScript |         38 |          0 |          8 |         46 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/pages/home/Home.js                                              | JavaScript |         17 |          0 |          4 |         21 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/pages/panier/Panier.js                                          | JavaScript |         21 |          0 |          4 |         25 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/store/activitySlice/activitySlice.js                            | JavaScript |         18 |          0 |          5 |         23 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/store/cartSlice/cartSlice.js                                    | JavaScript |         24 |          0 |          5 |         29 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/store/hebergementSlice/hebergementSlice.js                      | JavaScript |         18 |          0 |          5 |         23 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/store/index.js                                                  | JavaScript |         18 |          0 |          3 |         21 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/store/layoutSlice/layoutSlice.js                                | JavaScript |         18 |          0 |          5 |         23 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/store/modalSlice/modalSlice.js                                  | JavaScript |         44 |          0 |         12 |         56 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/src/store/userSlice/userSlice.js                                    | JavaScript |         24 |          0 |          5 |         29 |
+| /Users/bilalezzaaraoui/4 BIG PROJECT/reservia-react/ui-debug.log                                                        | Log        |          1 |          0 |          1 |          2 |
+| Total                                                                                                                   |            |     60,683 |        209 |        696 |     61,588 |
++-------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

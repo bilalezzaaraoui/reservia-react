@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { FaChevronLeft } from "react-icons/fa";
 import LoginForm from "./loginForm/LoginForm";
-import img1 from "../../../../assets/image/sliderDetails/1.webp";
 import { useDispatch, useSelector } from "react-redux";
 import { CartAction } from "../../../../store/cartSlice/cartSlice";
 import { useNavigate } from "react-router-dom";

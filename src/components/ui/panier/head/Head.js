@@ -1,10 +1,13 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../../../assets/image/logo/Reservia.svg";
 
 const Head = () => {
   return (
     <Container>
-      <Img src={logo} alt="logo" />
+      <Link to="/">
+        <Img src={logo} alt="logo" />
+      </Link>
     </Container>
   );
 };
@@ -15,6 +18,10 @@ const Container = styled.div`
   box-shadow: rgb(235 235 235) 0px 1px 0px !important;
   display: flex;
   align-items: center;
+
+  a {
+    cursor: pointer;
+  }
 `;
 
 const Img = styled.img``;
