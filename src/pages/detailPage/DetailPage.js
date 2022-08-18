@@ -3,7 +3,6 @@ import { useEffect, Fragment, useState } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalAction } from "../../store/modalSlice/modalSlice";
-import { LayoutAction } from "../../store/layoutSlice/layoutSlice";
 import SliderDetails from "../../components/ui/detailsPage/slider/SliderDetails";
 import DetailModal from "../../components/ui/detailsPage/modal/DetailModal";
 import ModalSlider from "../../components/ui/detailsPage/modalSlider/ModalSlider";
@@ -11,6 +10,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import db from "../../firebase";
 import Info from "../../components/ui/detailsPage/info/Info";
 import { FaStar } from "react-icons/fa";
+import { CartAction } from "../../store/cartSlice/cartSlice";
 
 const DetailPage = () => {
   const navigate = useNavigate();
@@ -40,6 +40,8 @@ const DetailPage = () => {
       });
     };
     retrieveData();
+
+    dispatch(CartAction.emptyCart());
   }, [params.id]);
 
   const whichNumber = (number) => {
@@ -66,6 +68,7 @@ const DetailPage = () => {
           </Header>
           <LayoutMobile>
             <Info
+              data={data}
               price={data.pricePerNight}
               service={10}
               title={data.title}

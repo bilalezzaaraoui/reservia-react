@@ -44,9 +44,9 @@ const NumberOfBuyers = (props) => {
 
   useEffect(() => {
     dispatch({ type: "total" });
-  }, []);
+    props.onSaveNumber(state.count);
+  }, [state.count]);
 
-  console.log(state.count < props.maxClient);
   return (
     <Layout>
       <Number

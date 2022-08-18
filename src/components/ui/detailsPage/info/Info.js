@@ -1,18 +1,57 @@
 import styled from "styled-components";
 import NumberOfBuyers from "../form/numberOfBuyers/NumberOfBuyers";
 import DatePickerComps from "../form/dataPicker/DatePickerComps";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { CartAction } from "../../../../store/cartSlice/cartSlice";
 
 const Info = (props) => {
-  const [nbDays, setNbDays] = useState(0);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [days, setDays] = useState({});
+  const [people, setPeople] = useState(0);
+  const [isCartAccesible, setIsCartAccesible] = useState(false);
 
   const saveDateHandler = (numberOfNight) => {
-    const result = numberOfNight;
+    setDays(numberOfNight);
+  };
+
+  const savePeopleHandler = (numberOfPeople) => {
+    const result = numberOfPeople;
     if (result >= 1) {
-      setNbDays(result);
+      setPeople(result);
     } else {
-      setNbDays(0);
+      setPeople(0);
     }
+  };
+
+  useEffect(() => {
+    if (days.numberOfDays >= 1 && people >= 1) {
+      setIsCartAccesible(true);
+    }
+  }, [days, people]);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    const cartData = {
+      typeOfProduct: "hebergement",
+      id: props.data.id,
+      enterDate: days.enterDate,
+      outDate: days.outDate,
+      numberOfDays: days.numberOfDays,
+      numberOfPeople: people,
+      image: props.data.images[0],
+      city: props.data.city,
+      title: props.data.title,
+      pricePerNight: props.data.pricePerNight,
+      total: props.data.pricePerNight * days.numberOfDays,
+    };
+    console.log(cartData);
+
+    dispatch(CartAction.fillCart(cartData));
+    navigate("/panier");
   };
 
   return (
@@ -36,38 +75,54 @@ const Info = (props) => {
           <form>
             <div className="border">
               <DatePickerComps onSaveDaysNumber={saveDateHandler} />
-              <NumberOfBuyers maxClient={props.maxClient} />
+              <NumberOfBuyers
+                maxClient={props.maxClient}
+                onSaveNumber={savePeopleHandler}
+              />
             </div>
-            <button type="submit">Réserver</button>
+            <button onClick={isCartAccesible ? handleFormSubmit : null}>
+              Réserver
+            </button>
           </form>
           <p className="debit">
             Aucun montant ne vous sera débité pour le moment
           </p>
           <Price>
             <span className="price-underline">
-              {nbDays <= 0 && "Logement"}
-              {nbDays > 0 &&
+              {days.numberOfDays <= 0 && "Logement"}
+              {days.numberOfDays > 0 &&
                 `${props.price}€ x ${
-                  nbDays <= 1 ? `${nbDays} nuit` : `${nbDays} nuits`
+                  days.numberOfDays <= 1
+                    ? `${days.numberOfDays} nuit`
+                    : `${days.numberOfDays} nuits`
                 }`}
             </span>
             <span className="price-not-underline">
-              {nbDays > 0 ? `${props.price * nbDays}` : "0"} €
+              {days.numberOfDays > 0
+                ? `${props.price * days.numberOfDays}`
+                : "0"}{" "}
+              €
             </span>
           </Price>
           <Price>
             <span className="price-underline">Frais de service</span>
             <span className="price-not-underline">
-              {nbDays > 0 ? `${nbDays * props.service}` : "0"} €
+              {days.numberOfDays > 0
+                ? `${days.numberOfDays * props.service}`
+                : "0"}{" "}
+              €
             </span>
           </Price>
           <Total>
             <span>total</span>
             <span>
               {" "}
-              {nbDays > 0
-                ? `${props.price * nbDays + nbDays * props.service}`
-                : "0"}{" "}
+              {days.numberOfDays > 0
+                ? `${
+                    props.price * days.numberOfDays +
+                    days.numberOfDays * props.service
+                  }`
+                : "0"}
               €
             </span>
           </Total>
@@ -143,6 +198,7 @@ const Box = styled.div`
     }
 
     button {
+      cursor: pointer;
       display: block;
       margin: 0 auto;
       width: 90%;

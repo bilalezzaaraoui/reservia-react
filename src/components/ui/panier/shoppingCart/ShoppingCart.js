@@ -8,112 +8,185 @@ import { useNavigate } from "react-router-dom";
 const ShoppingCart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cart = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart.data);
 
-  console.log(cart.data.productId);
   const ResetCart = () => {
     dispatch(CartAction.emptyCart());
-    navigate(`/activity/${cart.data.productId}`);
+    navigate(
+      `${
+        cart.typeOfProduct === "activity"
+          ? `/activity/${cart.id}`
+          : `/accommodation/${cart.id}`
+      }`
+    );
   };
-  return (
-    <Layout>
-      <Container>
-        <Head>
-          <div className="circle" onClick={ResetCart}>
-            <FaChevronLeft />
-          </div>
-          <h1>Demande de réservation</h1>
-        </Head>
-        <Cart>
-          <CartOne>
-            <h3>
-              Votre{" "}
-              {`${
-                cart.data.typeOfProduct === "activity" ? "activité" : "voyage"
-              }`}
-            </h3>
-            <div className="info-layout">
-              <div className="info">
-                <span className="title">Dates</span>
-                <span className="sub-title">1-6 nov.</span>
-              </div>
-              <div className="info">
-                <span className="title">{`${
-                  cart.data.typeOfProduct === "activity"
-                    ? "Participants"
-                    : "Voyageurs"
-                }`}</span>
-                <span className="sub-title">
-                  {`${cart.data.numberOfPeople} ${`${
-                    cart.data.typeOfProduct === "activity"
-                      ? "participants"
-                      : "voyageurs"
-                  }`}`}
-                </span>
-              </div>
-            </div>
-            <div className="login-form">
-              <LoginForm />
-            </div>
-            <div className="connexion">
-              <Button>Payer</Button>
-            </div>
-          </CartOne>
-          <CartTwo>
-            <LayoutDiv>
-              <Description>
-                <div className="image-layout">
-                  <img src={cart.actualProduct.images[0]} alt="logo" />
-                </div>
-                <div className="description-hebergement">
-                  <span className="high">{cart.actualProduct.city}</span>
-                  <span className="low">{cart.actualProduct.title}</span>
-                </div>
-              </Description>
-              <Price>
-                <h3>Détails du prix</h3>
-                <div className="info-layout">
-                  <div className="info">
-                    <span className="title-first">{`${
-                      cart.data.typeOfProduct === "activity"
-                        ? "Prix/Personne"
-                        : "Prix/Nuit"
-                    }`}</span>
-                    <span className="sub-title">{`${cart.actualProduct.price} €`}</span>
-                  </div>
-                  <div className="info">
-                    <span className="title-first">Dates</span>
-                    <span className="sub-title">1-6 nov.</span>
-                  </div>
-                  <div className="info">
-                    <span className="title-second">{`${
-                      cart.data.typeOfProduct === "activity"
-                        ? "Participants"
-                        : "Voyageurs"
-                    }`}</span>
 
-                    <span className="sub-title">
-                      {`${cart.data.numberOfPeople} ${`${
-                        cart.data.typeOfProduct === "activity"
-                          ? "participants"
-                          : "voyageurs"
-                      }`}`}
-                    </span>
-                  </div>
+  if (cart.typeOfProduct === "activity") {
+    return (
+      <Layout>
+        <Container>
+          <Head>
+            <div className="circle" onClick={ResetCart}>
+              <FaChevronLeft />
+            </div>
+            <h1>Demande de réservation</h1>
+          </Head>
+          <Cart>
+            <CartOne>
+              <h3>
+                Votre {`${cart.typeOfProduct === "activity" ? "Activité" : ""}`}
+              </h3>
+              <div className="info-layout">
+                <div className="info">
+                  <span className="title">Dates</span>
+                  <span className="sub-title">{`${cart.dateOfTheActivity} - ${cart.timeOfTheActivity}`}</span>
                 </div>
-                <TotalAmount>
-                  <span className="total-layout">Total</span>
-                  <span className="total-amount">
-                    {`${cart.data.totalPrice}`} €
+                <div className="info">
+                  <span className="title">Participants</span>
+                  <span className="sub-title">
+                    {`${cart.numberOfPeople} ${`${
+                      cart.numberOfPeople >= 2 ? "participants" : "participant"
+                    }`}`}
                   </span>
-                </TotalAmount>
-              </Price>
-            </LayoutDiv>
-          </CartTwo>
-        </Cart>
-      </Container>
-    </Layout>
-  );
+                </div>
+              </div>
+              <div className="login-form">
+                <LoginForm />
+              </div>
+              <div className="connexion">
+                <Button>Payer</Button>
+              </div>
+            </CartOne>
+            <CartTwo>
+              <LayoutDiv>
+                <Description>
+                  <div className="image-layout">
+                    <img src={cart.image} alt="logo" />
+                  </div>
+                  <div className="description-hebergement">
+                    <span className="high">{cart.city}</span>
+                    <span className="low">{cart.title}</span>
+                  </div>
+                </Description>
+                <Price>
+                  <h3>Détails du prix</h3>
+                  <div className="info-layout">
+                    <div className="info">
+                      <span className="title-first">Prix/Personne</span>
+                      <span className="sub-title">{`${cart.price} €`}</span>
+                    </div>
+                    <div className="info">
+                      <span className="title-first">Temps de l'activité</span>
+                      <span className="sub-title">{`${cart.time} ${cart.typeOfTime}`}</span>
+                    </div>
+                    <div className="info">
+                      <span className="title-second">{`${
+                        cart.numberOfPeople >= 2
+                          ? "Participants"
+                          : "Participant"
+                      }`}</span>
+
+                      <span className="sub-title">
+                        {`${cart.numberOfPeople}`}
+                      </span>
+                    </div>
+                  </div>
+                  <TotalAmount>
+                    <span className="total-layout">Total</span>
+                    <span className="total-amount">
+                      {`${cart.totalPrice}`} €
+                    </span>
+                  </TotalAmount>
+                </Price>
+              </LayoutDiv>
+            </CartTwo>
+          </Cart>
+        </Container>
+      </Layout>
+    );
+  } else if (cart.typeOfProduct === "hebergement") {
+    return (
+      <Layout>
+        <Container>
+          <Head>
+            <div className="circle" onClick={ResetCart}>
+              <FaChevronLeft />
+            </div>
+            <h1>Demande de réservation</h1>
+          </Head>
+          <Cart>
+            <CartOne>
+              <h3>
+                Votre{" "}
+                {`${cart.typeOfProduct === "hebergement" ? "hébergement" : ""}`}
+              </h3>
+              <div className="info-layout">
+                <div className="info">
+                  <span className="title">Dates</span>
+                  <span className="sub-title">{`${cart.enterDate} - ${cart.outDate}`}</span>
+                </div>
+                <div className="info">
+                  <span className="title">Voyageurs</span>
+                  <span className="sub-title">
+                    {`${cart.numberOfPeople} ${`${
+                      cart.numberOfPeople >= 2 ? "voyageurs" : "voyageur"
+                    }`}`}
+                  </span>
+                </div>
+              </div>
+              <div className="login-form">
+                <LoginForm />
+              </div>
+              <div className="connexion">
+                <Button>Payer</Button>
+              </div>
+            </CartOne>
+            <CartTwo>
+              <LayoutDiv>
+                <Description>
+                  <div className="image-layout">
+                    <img src={cart.image} alt="logo" />
+                  </div>
+                  <div className="description-hebergement">
+                    <span className="high">{cart.city}</span>
+                    <span className="low">{cart.title}</span>
+                  </div>
+                </Description>
+                <Price>
+                  <h3>Détails du prix</h3>
+                  <div className="info-layout">
+                    <div className="info">
+                      <span className="title-first">Prix/Nuit</span>
+                      <span className="sub-title">{`${cart.pricePerNight} €`}</span>
+                    </div>
+                    <div className="info">
+                      <span className="title-first">Nombre de nuit</span>
+                      <span className="sub-title">{`${cart.numberOfDays}`}</span>
+                    </div>
+                    <div className="info">
+                      <span className="title-second">{`${
+                        cart.numberOfPeople >= 2 ? "Voyageurs" : "Voyageur"
+                      }`}</span>
+
+                      <span className="sub-title">
+                        {`${cart.numberOfPeople}`}
+                      </span>
+                    </div>
+                  </div>
+                  <TotalAmount>
+                    <span className="total-layout">Total</span>
+                    <span className="total-amount">{`${cart.total}`} €</span>
+                  </TotalAmount>
+                </Price>
+              </LayoutDiv>
+            </CartTwo>
+          </Cart>
+        </Container>
+      </Layout>
+    );
+  } else {
+    return;
+  }
 };
 
 const Layout = styled.div`

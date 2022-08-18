@@ -3,14 +3,13 @@ import { useEffect, Fragment, useState } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalAction } from "../../store/modalSlice/modalSlice";
-import { LayoutAction } from "../../store/layoutSlice/layoutSlice";
 import SliderDetails from "../../components/ui/detailsPage/slider/SliderDetails";
 import DetailModal from "../../components/ui/detailsPage/modal/DetailModal";
 import ModalSlider from "../../components/ui/detailsPage/modalSlider/ModalSlider";
 import { useParams, useNavigate } from "react-router-dom";
 import db from "../../firebase";
 import Info from "../../components/ui/activityDetails/Info";
-import { FaStar } from "react-icons/fa";
+import { CartAction } from "../../store/cartSlice/cartSlice";
 
 const ActivityDetails = () => {
   const navigate = useNavigate();
@@ -40,6 +39,8 @@ const ActivityDetails = () => {
       });
     };
     retrieveData();
+
+    dispatch(CartAction.emptyCart());
   }, [params.id]);
 
   const whichNumber = (number) => {
@@ -59,7 +60,6 @@ const ActivityDetails = () => {
           <LayoutMobile>
             <Info
               data={data}
-              id={data.id}
               price={data.price}
               title={data.title}
               time={data.time}

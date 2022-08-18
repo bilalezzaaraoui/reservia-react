@@ -39,15 +39,22 @@ const Info = (props) => {
 
     const cartData = {
       typeOfProduct: "activity",
-      productId: props.id,
+      id: props.data.id,
+      city: props.data.city,
+      country: props.data.country,
+      image: props.data.images[0],
+      price: props.data.price,
+      title: props.data.title,
+      time: props.data.time,
+      typeOfTime: props.data.typeOfTime,
+      data: props.data,
       dateOfTheActivity: date.infoDate,
-      TimeOfTheActivity: date.infoTime,
+      timeOfTheActivity: date.infoTime,
       totalPrice: total,
       numberOfPeople: people,
     };
-    dispatch(
-      CartAction.fillCart({ data: cartData, actualProduct: props.data })
-    );
+    dispatch(CartAction.fillCart(cartData));
+
     navigate("/panier");
   };
 
@@ -72,10 +79,7 @@ const Info = (props) => {
               <HoursDatePicker onSaveDate={saveDateHandler} />
               <NumberOfBuyers maxClient={5} onSavePeople={savePeopleHandler} />
             </div>
-            <button
-              type="submit"
-              onClick={isCartAccesible ? handleFormSubmit : null}
-            >
+            <button onClick={isCartAccesible ? handleFormSubmit : null}>
               Réserver
             </button>
           </form>

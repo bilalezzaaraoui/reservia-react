@@ -21,9 +21,6 @@ const addOneDay = (date) => {
   const nextDay = [todaySplit[0], todaySplit[1], dayFuture].join("-");
   return nextDay;
 };
-const todaySplit = today.split("-");
-const dayFuture = +todaySplit[2] + 1 + "";
-const nextDay = [todaySplit[0], todaySplit[1], dayFuture].join("-");
 
 function parseDate(str) {
   let mdy = str.split("-");
@@ -41,16 +38,15 @@ const DatePickerComps = (props) => {
 
   useEffect(() => {
     if (dateIn.length > 1 && dateOut.length > 1) {
-      props.onSaveDaysNumber(datediff(parseDate(dateIn), parseDate(dateOut)));
-      console.log("numero ok");
+      props.onSaveDaysNumber({
+        enterDate: dateIn,
+        outDate: dateOut,
+        numberOfDays: datediff(parseDate(dateIn), parseDate(dateOut)),
+      });
     } else {
-      props.onSaveDaysNumber(0);
-      console.log("numero 0");
+      props.onSaveDaysNumber({});
     }
   }, [dateIn, dateOut]);
-
-  console.log(dateIn);
-  console.log(dateOut);
 
   return (
     <Layout>
