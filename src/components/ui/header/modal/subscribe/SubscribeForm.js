@@ -1,13 +1,18 @@
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
-import { FaCheck } from "react-icons/fa";
 import { Fragment, useRef, useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../../../firebase";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signOut,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import db, { auth } from "../../../../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAction } from "../../../../../store/userSlice/userSlice";
+import SuccessMessage from "./SuccessMessage";
 
-const SubscribeForm = (props) => {
+const SubscribeForm = ({ closeModal, expiryTimestamp }) => {
   const dispatch = useDispatch();
   const formRef = useRef();
   const [showError, setShowError] = useState(false);
@@ -20,7 +25,7 @@ const SubscribeForm = (props) => {
       error ===
       "Firebase: Password should be at least 6 characters (auth/weak-password)."
     ) {
-      setErrorMessage("Le mot de passe est trop faible.");
+      setErrorMessage("Le mot de passe est trop court.");
     }
 
     setShowError(true);
@@ -28,17 +33,24 @@ const SubscribeForm = (props) => {
 
   const formSubscribeHandler = async (e) => {
     e.preventDefault();
+    const prenom = formRef.current.prenom.value;
+    const nom = formRef.current.nom.value;
     const email = formRef.current.email.value;
     const password = formRef.current.password.value;
 
     try {
-      const userCrendential = await createUserWithEmailAndPassword(
+      const { user } = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
+      const data = { firstname: prenom, lastname: nom, reservation: [] };
 
-      console.log(userCrendential);
+      await setDoc(doc(db, "user", user.uid), data);
+
+      const actualAuth = getAuth();
+
+      await signOut(actualAuth);
 
       dispatch(UserAction.showSubMessage());
     } catch (error) {
@@ -46,17 +58,12 @@ const SubscribeForm = (props) => {
     }
   };
 
-  const handleModal = () => {
-    props.closeModal();
-    dispatch(UserAction.hideSubMessage());
-  };
-
   return (
     <Container>
       {!isSubscribed && (
         <Fragment>
           <Head>
-            <CloseBtn onClick={props.closeModal}>
+            <CloseBtn onClick={closeModal}>
               <MdClose />
             </CloseBtn>
             <h1>S'inscrire</h1>
@@ -103,29 +110,7 @@ const SubscribeForm = (props) => {
         </Fragment>
       )}
       {isSubscribed && (
-        <Fragment>
-          <Head>
-            <CloseBtn onClick={handleModal}>
-              <MdClose />
-            </CloseBtn>
-            <h1>Inscription réussi</h1>
-          </Head>
-          <Body
-            style={{
-              height: "30vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div className="success-message">
-              <div className="logo">
-                <FaCheck />
-              </div>
-              <p>Votre inscription à été prise en compte</p>
-            </div>
-          </Body>
-        </Fragment>
+        <SuccessMessage closeModal={closeModal} response={isSubscribed} />
       )}
     </Container>
   );

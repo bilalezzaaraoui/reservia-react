@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import styled from "styled-components";
-import { createPortal } from "react-dom";
 import LoginForm from "./login/LoginForm";
 import SubscribeForm from "./subscribe/SubscribeForm";
 import OverlaySubscribe from "./subscribe/OverlaySubscribe";
@@ -14,10 +13,6 @@ const ModalLayout = (props) => {
           <OverlayLogin closeModal={() => props.closeModal()} />
           <LoginForm closeModal={() => props.closeModal()} />
         </Container>
-        {/* {createPortal(
-        <OverlaySubscribe closeModal={() => props.closeModal()} />,
-        document.getElementById("overlay")
-      )} */}
       </Fragment>
     );
   } else if (props.type === "subscribe") {

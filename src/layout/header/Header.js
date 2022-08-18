@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import logo from "../../assets/image/logo/Reservia.svg";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Fragment } from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -37,6 +38,22 @@ const Header = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [dimension.width]);
+
+  useEffect(() => {
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        console.log("connecte", user);
+      } else {
+        // User is signed out
+        // ...
+        console.log("déconnecté");
+      }
+    });
+  });
 
   return (
     <Fragment>
