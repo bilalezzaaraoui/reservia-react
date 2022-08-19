@@ -3,11 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isSubscribed: false,
   isConnected: false,
+  isCertifiedConnected: false,
+  // Auth
   id: null,
+  email: null,
+  // Firestore
   prenom: false,
   nom: false,
-  email: null,
-  bookings: {},
+  reservation: [],
 };
 
 const userSlice = createSlice({
@@ -19,6 +22,30 @@ const userSlice = createSlice({
     },
     hideSubMessage: (state) => {
       state.isSubscribed = false;
+    },
+    userIsConnected: (state) => {
+      state.isConnected = true;
+    },
+    userIsDisconnected: (state) => {
+      state.isConnected = false;
+    },
+
+    setUserLoggedIn: (state, action) => {
+      state.id = action.payload.id;
+      state.email = action.payload.email;
+      state.prenom = action.payload.prenom;
+      state.nom = action.payload.nom;
+      state.reservation = action.payload.reservation;
+      state.isCertifiedConnected = true;
+    },
+
+    setUserLoggedOut: (state) => {
+      state.id = null;
+      state.email = null;
+      state.prenom = false;
+      state.nom = false;
+      state.reservation = [];
+      state.isCertifiedConnected = false;
     },
   },
 });

@@ -2,12 +2,16 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import logo from "../../assets/image/logo/Reservia.svg";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import db from "../../firebase";
 import { Fragment } from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ModalAction } from "../../store/modalSlice/modalSlice";
 import { createPortal } from "react-dom";
+import { UserAction } from "../../store/userSlice/userSlice";
 import ModalLayout from "../../components/ui/header/modal/ModalLayout";
+import Profil from "../../components/ui/header/profil/Profil";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,6 +20,10 @@ const Header = () => {
   const showLogin = useSelector((state) => state.modal.login);
   const showSubscribe = useSelector((state) => state.modal.subscribe);
   const layout = useSelector((state) => state.isLayoutBig.layout);
+  const isConnected = useSelector((state) => state.user.isConnected);
+  const isCertifiedConnected = useSelector(
+    (state) => state.user.isCertifiedConnected
+  );
 
   function getWindowDimensions() {
     const { innerWidth: width } = window;
@@ -23,7 +31,7 @@ const Header = () => {
       width,
     };
   }
-
+  console.log(isCertifiedConnected);
   useEffect(() => {
     function handleResize() {
       setDimension(getWindowDimensions());
@@ -42,18 +50,42 @@ const Header = () => {
   useEffect(() => {
     const auth = getAuth();
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        console.log("connecte", user);
+    onAuthStateChanged(auth, async (user) => {
+      if (isConnected) {
+        if (user) {
+          // console.log(user);
+          // setUser()
+          // console.log(user);
+          const userInfo = {
+            id: user.uid,
+            email: user.providerData[0].email,
+          };
+
+          const docRef = doc(db, "user", userInfo.id);
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            const userData = docSnap.data();
+
+            dispatch(
+              UserAction.setUserLoggedIn({
+                id: userInfo.id,
+                email: userInfo.email,
+                prenom: userData.firstname,
+                nom: userData.lastname,
+                reservation: userData.reservation,
+              })
+            );
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+        }
       } else {
-        // User is signed out
-        // ...
-        console.log("déconnecté");
+        // Je Sign out
       }
     });
-  });
+  }, [isConnected]);
 
   return (
     <Fragment>
@@ -64,31 +96,73 @@ const Header = () => {
               <img src={logo} alt="logo" />
             </Link>
           </Logo>
-          <Menu>
-            <ul>
-              <li className="responsive">
+          <Menu
+            style={
+              isCertifiedConnected
+                ? { display: "flex", alignItems: "center", columnGap: "1.5rem" }
+                : null
+            }
+          >
+            <ul className="parent-list">
+              <li
+                className="responsive list"
+                style={
+                  isCertifiedConnected
+                    ? { alignItems: "center" }
+                    : { alignItems: "flex-end" }
+                }
+              >
                 <Link to="/accommodation">
                   <span>Hébergements</span>
                 </Link>
               </li>
-              <li className="responsive">
+              <li
+                className="responsive list"
+                style={
+                  isCertifiedConnected
+                    ? { alignItems: "center" }
+                    : { alignItems: "flex-end" }
+                }
+              >
                 <Link to="/activities">
                   <span>Activités</span>
                 </Link>
               </li>
-              <li>
-                <span onClick={() => dispatch(ModalAction.openLoginModal())}>
-                  Se connecter
-                </span>
-              </li>
-              <li>
-                <span
-                  onClick={() => dispatch(ModalAction.openSubscribeModal())}
-                >
-                  S'inscrire
-                </span>
-              </li>
+
+              {!isCertifiedConnected && (
+                <Fragment>
+                  <li
+                    className="list"
+                    style={
+                      isCertifiedConnected
+                        ? { alignItems: "center" }
+                        : { alignItems: "flex-end" }
+                    }
+                  >
+                    <span
+                      onClick={() => dispatch(ModalAction.openLoginModal())}
+                    >
+                      Se connecter
+                    </span>
+                  </li>
+                  <li
+                    className="list"
+                    style={
+                      isCertifiedConnected
+                        ? { alignItems: "center" }
+                        : { alignItems: "flex-end" }
+                    }
+                  >
+                    <span
+                      onClick={() => dispatch(ModalAction.openSubscribeModal())}
+                    >
+                      S'inscrire
+                    </span>
+                  </li>
+                </Fragment>
+              )}
             </ul>
+            {isCertifiedConnected && <Profil />}
           </Menu>
         </Layout>
       </Container>
@@ -153,17 +227,16 @@ const Logo = styled.div`
 `;
 
 const Menu = styled.div`
-  ul {
+  .parent-list {
     list-style: none;
     display: flex;
     height: 100%;
     align-items: flex-end;
     gap: 1.5rem;
 
-    li {
+    .list {
       height: 100%;
       display: flex;
-      align-items: flex-end;
       padding: 0 0.5rem;
       transition: 0.1s ease-in-out;
 
@@ -195,14 +268,14 @@ const Menu = styled.div`
 
   @media (max-width: 768px) {
     .responsive {
-      display: none;
+      display: none !important;
     }
 
-    ul {
+    .parent-list {
       gap: 1rem;
-      li {
+      .list {
         padding: 0;
-        align-items: center;
+        align-items: center !important;
       }
     }
   }

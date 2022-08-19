@@ -9,6 +9,9 @@ const ShoppingCart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart.data);
+  const isCertifiedConnected = useSelector(
+    (state) => state.user.isCertifiedConnected
+  );
 
   const ResetCart = () => {
     dispatch(CartAction.emptyCart());
@@ -50,8 +53,18 @@ const ShoppingCart = () => {
                   </span>
                 </div>
               </div>
-              <div className="login-form">
-                <LoginForm />
+              <div
+                className="login-form"
+                style={
+                  !isCertifiedConnected
+                    ? {
+                        borderTop: "1px solid rgb(235 235 235)",
+                        padding: "1rem 0",
+                      }
+                    : null
+                }
+              >
+                {!isCertifiedConnected && <LoginForm />}
               </div>
               <div className="connexion">
                 <Button>Payer</Button>
@@ -105,6 +118,7 @@ const ShoppingCart = () => {
       </Layout>
     );
   } else if (cart.typeOfProduct === "hebergement") {
+    console.log(isCertifiedConnected);
     return (
       <Layout>
         <Container>
@@ -135,7 +149,7 @@ const ShoppingCart = () => {
                 </div>
               </div>
               <div className="login-form">
-                <LoginForm />
+                {!isCertifiedConnected && <LoginForm />}
               </div>
               <div className="connexion">
                 <Button>Payer</Button>
@@ -265,11 +279,6 @@ const CartOne = styled.div`
         font-weight: 300;
       }
     }
-  }
-
-  .login-form {
-    border-top: 1px solid rgb(235 235 235);
-    padding: 1rem 0;
   }
 
   .connexion {

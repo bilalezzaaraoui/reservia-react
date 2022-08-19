@@ -6,8 +6,14 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { auth } from "../../../../../firebase";
+import { useDispatch } from "react-redux";
+import { UserAction } from "../../../../../store/userSlice/userSlice";
+import { ModalAction } from "../../../../../store/modalSlice/modalSlice";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = (props) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formRef = useRef();
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -31,14 +37,13 @@ const LoginForm = (props) => {
     const password = formRef.current.password.value;
 
     try {
-      const userCrendential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
 
-      console.log(userCrendential.user);
-      // setUser(userCrendential.user);
+      if (typeof user.accessToken === "string") {
+        dispatch(UserAction.userIsConnected());
+        dispatch(ModalAction.closeLoginModal());
+        navigate("/");
+      }
     } catch (error) {
       handleError(error.message);
     }

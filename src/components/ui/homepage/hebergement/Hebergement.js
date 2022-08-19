@@ -16,6 +16,7 @@ const Hebergement = () => {
     const searchData = async () => {
       let hebergement = [];
       db.collection("hebergement").onSnapshot((snapshot) => {
+        // eslint-disable-next-line array-callback-return
         snapshot.docs.map((doc) => {
           hebergement = [...hebergement, { id: doc.id, ...doc.data() }];
         });
@@ -25,6 +26,7 @@ const Hebergement = () => {
     };
 
     searchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (hebergementOriginal.length >= 1) {
@@ -37,33 +39,35 @@ const Hebergement = () => {
           <h3 className="title">Hébergements disponible</h3>
           <ul className="list">
             {whiteBlocData.length >= 1 &&
-              whiteBlocData.map((item, index) => (
-                <WhiteBlocCard key={index}>
-                  <Link to={`/accommodation/${item.id}`}>
-                    <div
-                      className="card-img"
-                      style={{
-                        backgroundImage: `url('${item.images[0]}')`,
-                      }}
-                    ></div>
-                    <div className="card-info">
-                      <h4>{item.title}</h4>
-                      <p>{item.city}</p>
-                      <p>
-                        Nuit à partir de <span>{item.pricePerNight}€</span>
-                      </p>
-                      <div className="list-flex">
-                        <ul className="icon">
-                          {<FilterList filter={item.filter} />}
-                        </ul>
-                        <ul className="stars-list-dev">
-                          <StarsList number={item.stars} />
-                        </ul>
+              whiteBlocData.map((item, index) => {
+                return (
+                  <WhiteBlocCard key={index}>
+                    <Link to={`/accommodation/${item.id}`}>
+                      <div
+                        className="card-img"
+                        style={{
+                          backgroundImage: `url("${item.images[0]}")`,
+                        }}
+                      ></div>
+                      <div className="card-info">
+                        <h4>{item.title}</h4>
+                        <p>{item.city}</p>
+                        <p>
+                          Nuit à partir de <span>{item.pricePerNight}€</span>
+                        </p>
+                        <div className="list-flex">
+                          <ul className="icon">
+                            {<FilterList filter={item.filter} />}
+                          </ul>
+                          <ul className="stars-list-dev">
+                            <StarsList number={item.stars} />
+                          </ul>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                </WhiteBlocCard>
-              ))}
+                    </Link>
+                  </WhiteBlocCard>
+                );
+              })}
           </ul>
         </WhiteBloc>
         <GreyBloc>
@@ -72,35 +76,37 @@ const Hebergement = () => {
             <FaChartLine />
           </div>
           <ul className="card-list">
-            {greyBlocData.map((item, key) => (
-              <GreyBlocCard key={key}>
-                <Link to={`/accommodation/${item.id}`}>
-                  <div className="flex-layout">
-                    <div
-                      className="card-img"
-                      style={{
-                        backgroundImage: `url(${item.images[0]})`,
-                      }}
-                    ></div>
-                    <div className="card-info">
-                      <h4>{item.title}</h4>
-                      <p>{item.city}</p>
-                      <p>
-                        Nuit à partir de <span>{item.pricePerNight}€</span>
-                      </p>
-                      <div className="list-layout">
-                        <ul className="icon">
-                          {<FilterList filter={item.filter} />}
-                        </ul>
-                        <ul className="stars">
-                          <StarsList number={item.stars} />
-                        </ul>
+            {greyBlocData.map((item, key) => {
+              return (
+                <GreyBlocCard key={key}>
+                  <Link to={`/accommodation/${item.id}`}>
+                    <div className="flex-layout">
+                      <div
+                        className="card-img"
+                        style={{
+                          backgroundImage: `url(${item.images[0]})`,
+                        }}
+                      ></div>
+                      <div className="card-info">
+                        <h4>{item.title}</h4>
+                        <p>{item.city}</p>
+                        <p>
+                          Nuit à partir de <span>{item.pricePerNight}€</span>
+                        </p>
+                        <div className="list-layout">
+                          <ul className="icon">
+                            {<FilterList filter={item.filter} />}
+                          </ul>
+                          <ul className="stars">
+                            <StarsList number={item.stars} />
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              </GreyBlocCard>
-            ))}
+                  </Link>
+                </GreyBlocCard>
+              );
+            })}
           </ul>
         </GreyBloc>
       </Container>
