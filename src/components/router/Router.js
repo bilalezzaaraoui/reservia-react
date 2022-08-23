@@ -7,9 +7,14 @@ import Panier from "../../pages/panier/Panier";
 import ActivityDetails from "../../pages/activityDetails/ActivityDetails";
 import Erreur from "../../pages/error/Erreur";
 import { useSelector } from "react-redux";
+import ReservationPage from "../../pages/reservation/ReservationPage";
+import ModifyInfoPage from "../../pages/modifyInfo/ModifyInfoPage";
 
 const Router = () => {
   const isCartFull = useSelector((state) => state.cart.isCartFull);
+  const isCertifiedConnected = useSelector(
+    (state) => state.user.isCertifiedConnected
+  );
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -19,11 +24,32 @@ const Router = () => {
       <Route path="/accommodation/:id" element={<DetailPage />} />
       <Route path="/activities" element={<AllActivities />} />
       <Route path="/activity/:id" element={<ActivityDetails />} />
+      <Route path="/*" element={<Erreur />} />
+      {/* Protected Routes */}
       <Route
         path="/panier"
         element={isCartFull ? <Panier /> : <Navigate replace to="/" />}
       />
-      <Route path="/*" element={<Erreur />} />
+      <Route
+        path="/mes-reservation"
+        element={
+          isCertifiedConnected ? (
+            <ReservationPage />
+          ) : (
+            <Navigate replace to="/" />
+          )
+        }
+      />{" "}
+      <Route
+        path="/modifier-mes-infos-personnelles"
+        element={
+          isCertifiedConnected ? (
+            <ModifyInfoPage />
+          ) : (
+            <Navigate replace to="/" />
+          )
+        }
+      />
     </Routes>
   );
 };

@@ -20,10 +20,8 @@ const Header = () => {
   const showLogin = useSelector((state) => state.modal.login);
   const showSubscribe = useSelector((state) => state.modal.subscribe);
   const layout = useSelector((state) => state.isLayoutBig.layout);
-  const isConnected = useSelector((state) => state.user.isConnected);
-  const isCertifiedConnected = useSelector(
-    (state) => state.user.isCertifiedConnected
-  );
+  const user = useSelector((state) => state.user);
+  const isCartFull = useSelector((state) => state.cart.isCartFull);
 
   function getWindowDimensions() {
     const { innerWidth: width } = window;
@@ -31,7 +29,6 @@ const Header = () => {
       width,
     };
   }
-  console.log(isCertifiedConnected);
   useEffect(() => {
     function handleResize() {
       setDimension(getWindowDimensions());
@@ -50,42 +47,34 @@ const Header = () => {
   useEffect(() => {
     const auth = getAuth();
 
-    onAuthStateChanged(auth, async (user) => {
-      if (isConnected) {
-        if (user) {
-          // console.log(user);
-          // setUser()
-          // console.log(user);
-          const userInfo = {
-            id: user.uid,
-            email: user.providerData[0].email,
-          };
+    onAuthStateChanged(auth, async (actualUser) => {
+      if (actualUser) {
+        const userInfo = {
+          id: actualUser.uid,
+          email: actualUser.providerData[0].email,
+        };
 
-          const docRef = doc(db, "user", userInfo.id);
-          const docSnap = await getDoc(docRef);
+        const docRef = doc(db, "user", userInfo.id);
+        const docSnap = await getDoc(docRef);
 
-          if (docSnap.exists()) {
-            const userData = docSnap.data();
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
 
-            dispatch(
-              UserAction.setUserLoggedIn({
-                id: userInfo.id,
-                email: userInfo.email,
-                prenom: userData.firstname,
-                nom: userData.lastname,
-                reservation: userData.reservation,
-              })
-            );
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-          }
+          dispatch(
+            UserAction.setUserLoggedIn({
+              id: userInfo.id,
+              email: userInfo.email,
+              prenom: userData.firstname,
+              nom: userData.lastname,
+              reservation: userData.reservation,
+            })
+          );
+        } else {
+          console.log("No such document!");
         }
-      } else {
-        // Je Sign out
       }
     });
-  }, [isConnected]);
+  }, []);
 
   return (
     <Fragment>
@@ -98,7 +87,7 @@ const Header = () => {
           </Logo>
           <Menu
             style={
-              isCertifiedConnected
+              user.isCertifiedConnected
                 ? { display: "flex", alignItems: "center", columnGap: "1.5rem" }
                 : null
             }
@@ -107,7 +96,7 @@ const Header = () => {
               <li
                 className="responsive list"
                 style={
-                  isCertifiedConnected
+                  user.isCertifiedConnected
                     ? { alignItems: "center" }
                     : { alignItems: "flex-end" }
                 }
@@ -119,7 +108,7 @@ const Header = () => {
               <li
                 className="responsive list"
                 style={
-                  isCertifiedConnected
+                  user.isCertifiedConnected
                     ? { alignItems: "center" }
                     : { alignItems: "flex-end" }
                 }
@@ -129,12 +118,12 @@ const Header = () => {
                 </Link>
               </li>
 
-              {!isCertifiedConnected && (
+              {!user.isCertifiedConnected && (
                 <Fragment>
                   <li
                     className="list"
                     style={
-                      isCertifiedConnected
+                      user.isCertifiedConnected
                         ? { alignItems: "center" }
                         : { alignItems: "flex-end" }
                     }
@@ -148,7 +137,7 @@ const Header = () => {
                   <li
                     className="list"
                     style={
-                      isCertifiedConnected
+                      user.isCertifiedConnected
                         ? { alignItems: "center" }
                         : { alignItems: "flex-end" }
                     }
@@ -162,7 +151,7 @@ const Header = () => {
                 </Fragment>
               )}
             </ul>
-            {isCertifiedConnected && <Profil />}
+            {user.isCertifiedConnected && <Profil />}
           </Menu>
         </Layout>
       </Container>

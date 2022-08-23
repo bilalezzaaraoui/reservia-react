@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { FaChevronLeft } from "react-icons/fa";
 import LoginForm from "./loginForm/LoginForm";
+import db from "../../../../firebase";
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { CartAction } from "../../../../store/cartSlice/cartSlice";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +25,57 @@ const ShoppingCart = () => {
           : `/accommodation/${cart.id}`
       }`
     );
+  };
+
+  const handleBuying = async (type) => {
+    try {
+      const auth = getAuth();
+      const userRef = doc(db, "user", auth.currentUser.uid);
+
+      if (type === "hebergement") {
+        const sendCard = {
+          city: cart.city,
+          enterDate: cart.enterDate,
+          id: cart.id,
+          image: cart.image,
+          numberOfDays: cart.numberOfDays,
+          numberOfPeople: cart.numberOfPeople,
+          outDate: cart.outDate,
+          title: cart.title,
+          total: cart.total,
+          typeOfProduct: "hebergement",
+        };
+
+        await updateDoc(userRef, {
+          reservation: arrayUnion(sendCard),
+        });
+      }
+
+      if (type === "activity") {
+        const sendCard = {
+          city: cart.city,
+          dateOfTheActivity: cart.dateOfTheActivity,
+          id: cart.id,
+          image: cart.image,
+          numberOfPeople: cart.numberOfPeople,
+          timeOfTheActivity: cart.timeOfTheActivity,
+          title: cart.title,
+          totalPrice: cart.totalPrice,
+          typeOfProduct: cart.typeOfProduct,
+        };
+
+        await updateDoc(userRef, {
+          reservation: arrayUnion(sendCard),
+        });
+      }
+
+      navigate("/mes-reservation");
+      dispatch(CartAction.emptyCart());
+    } catch (err) {
+      console.log();
+    }
+
+    console.log();
   };
 
   if (cart.typeOfProduct === "activity") {
@@ -67,7 +121,16 @@ const ShoppingCart = () => {
                 {!isCertifiedConnected && <LoginForm />}
               </div>
               <div className="connexion">
-                <Button>Payer</Button>
+                <Button
+                  onClick={() => handleBuying("activity")}
+                  style={
+                    isCertifiedConnected
+                      ? { background: "rgb(0,101,252)", cursor: "pointer" }
+                      : { background: "#d1d3d3", cursor: "not-allowed" }
+                  }
+                >
+                  Payer
+                </Button>
               </div>
             </CartOne>
             <CartTwo>
@@ -118,7 +181,6 @@ const ShoppingCart = () => {
       </Layout>
     );
   } else if (cart.typeOfProduct === "hebergement") {
-    console.log(isCertifiedConnected);
     return (
       <Layout>
         <Container>
@@ -152,7 +214,16 @@ const ShoppingCart = () => {
                 {!isCertifiedConnected && <LoginForm />}
               </div>
               <div className="connexion">
-                <Button>Payer</Button>
+                <Button
+                  onClick={() => handleBuying("hebergement")}
+                  style={
+                    isCertifiedConnected
+                      ? { background: "rgb(0,101,252)", cursor: "pointer" }
+                      : { background: "#d1d3d3", cursor: "not-allowed" }
+                  }
+                >
+                  Payer
+                </Button>
               </div>
             </CartOne>
             <CartTwo>
@@ -298,8 +369,8 @@ const Button = styled.button`
   border-radius: 10px;
   color: white;
   background: #d1d3d3;
-  font-weight: bold;
   cursor: not-allowed;
+  font-weight: bold;
 `;
 
 const CartTwo = styled.div`

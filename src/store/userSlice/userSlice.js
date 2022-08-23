@@ -47,6 +47,18 @@ const userSlice = createSlice({
       state.reservation = [];
       state.isCertifiedConnected = false;
     },
+
+    setNewPrenom: (state, action) => {
+      state.prenom = action.payload;
+    },
+
+    setNewNom: (state, action) => {
+      state.nom = action.payload;
+    },
+
+    setNewEmail: (state, action) => {
+      state.email = action.payload;
+    },
   },
 });
 

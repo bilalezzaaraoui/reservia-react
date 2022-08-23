@@ -1,12 +1,24 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
+import { UserAction } from "../../../../store/userSlice/userSlice";
 
 const Profil = (props) => {
+  const dispatch = useDispatch();
   const prenom = useSelector((state) => state.user.prenom);
   const [show, setShow] = useState(false);
+  const reservation = useSelector((state) => state.user.reservation);
+
+  const handleLogout = async () => {
+    const actualAuth = getAuth();
+    await signOut(actualAuth);
+    dispatch(UserAction.userIsDisconnected());
+    dispatch(UserAction.setUserLoggedOut());
+  };
+
   return (
     <Container>
       <Btn onClick={() => setShow(!show)}>
@@ -14,20 +26,20 @@ const Profil = (props) => {
         <GiHamburgerMenu />
       </Btn>
       {show && (
-        <Dropdown>
+        <Dropdown onMouseLeave={() => setShow(false)}>
           <ul>
             <li>
-              <Link to="/">
-                Mes réservation <b>(6)</b>
+              <Link to="/mes-reservation">
+                Mes réservation <b>({reservation.length})</b>
               </Link>
             </li>
             <li>
-              <Link to="/">
+              <Link to="/modifier-mes-infos-personnelles">
                 Modifier mes informations <br /> personnelles
               </Link>
             </li>
             <li>
-              <Link to="/">Se deconnecter</Link>
+              <span onClick={handleLogout}>Se deconnecter</span>
             </li>
           </ul>
         </Dropdown>
@@ -65,10 +77,11 @@ const Container = styled.div`
 `;
 
 const Dropdown = styled.div`
+  z-index: 2000;
   top: 40px;
   right: 0;
   position: absolute;
-
+  background-color: white;
   width: max-content;
   border-radius: 5px;
   box-shadow: 0 2px 16px rgb(0, 0, 0, 12%);
@@ -81,13 +94,16 @@ const Dropdown = styled.div`
     row-gap: 1rem;
     padding: 0 1rem;
 
-    li a {
-      display: block;
-      font-weight: 300;
-      transition: 0.3s;
+    li {
+      a,
+      span {
+        display: block;
+        font-weight: 300;
+        transition: 0.3s;
 
-      &:hover {
-        color: rgb(0, 101, 252);
+        &:hover {
+          color: rgb(0, 101, 252);
+        }
       }
     }
   }
