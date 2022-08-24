@@ -59,6 +59,14 @@ const userSlice = createSlice({
     setNewEmail: (state, action) => {
       state.email = action.payload;
     },
+
+    deleteOneReservation: (state, action) => {
+      state.reservation = action.payload;
+    },
+
+    setInitialState: (state) => {
+      state = initialState;
+    },
   },
 });
 

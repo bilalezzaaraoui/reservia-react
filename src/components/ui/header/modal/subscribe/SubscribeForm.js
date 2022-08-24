@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 import { Fragment, useRef, useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  signOut,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import db, { auth } from "../../../../../firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,10 +43,6 @@ const SubscribeForm = ({ closeModal, expiryTimestamp }) => {
       const data = { firstname: prenom, lastname: nom, reservation: [] };
 
       await setDoc(doc(db, "user", user.uid), data);
-
-      const actualAuth = getAuth();
-
-      await signOut(actualAuth);
 
       dispatch(UserAction.showSubMessage());
     } catch (error) {

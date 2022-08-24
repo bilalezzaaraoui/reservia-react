@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import HebergementCollapse from "../../components/ui/reservationPage/HebergementCollapse";
+import ActivityCollapse from "../../components/ui/reservationPage/ActivityCollapse";
 
 const ReservationPage = () => {
   const reservation = useSelector((state) => state.user.reservation);
-  if (typeof reservation !== "undefined" || reservation.length >= 1) {
+  if (reservation.length >= 1) {
     const hebergementFiltered = reservation.filter((item) => {
       if (item.typeOfProduct === "hebergement") return item;
     });
@@ -14,8 +16,8 @@ const ReservationPage = () => {
 
     return (
       <Container>
-        {/* <HebergementCollapse data={hebergementFiltered} />
-        <ActivityCollapse data={activitiesFiltered} /> */}
+        <HebergementCollapse data={hebergementFiltered} />
+        <ActivityCollapse data={activitiesFiltered} />
       </Container>
     );
   } else {
@@ -35,6 +37,7 @@ const ReservationPage = () => {
 
 const Container = styled.div`
   flex: 1;
+  margin-bottom: 2rem;
 `;
 
 const Message = styled.h1`

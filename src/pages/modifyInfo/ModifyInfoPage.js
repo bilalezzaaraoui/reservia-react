@@ -5,10 +5,11 @@ import {
   getAuth,
   updateEmail,
   updatePassword,
+  deleteUser,
   EmailAuthProvider,
   reauthenticateWithCredential,
 } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { BsFillEyeFill } from "react-icons/bs";
 import db from "../../firebase";
 import { useNavigate } from "react-router-dom";
@@ -56,6 +57,27 @@ const ModifyInfoPage = () => {
       input.type = "password";
       svg.style.color = "#3d3d3d";
     }
+  };
+
+  const handleUserDelete = async () => {
+    const auth = getAuth();
+    const credential = EmailAuthProvider.credential(
+      auth.currentUser.email,
+      prompt("Veuillez confirmer votre mot de passe")
+    );
+
+    const request = await reauthenticateWithCredential(
+      auth.currentUser,
+      credential
+    );
+
+    await deleteDoc(doc(db, "user", auth.currentUser.uid));
+
+    await deleteUser(request.user);
+
+    dispatch(UserAction.setInitialState());
+
+    window.location.reload();
   };
 
   const updateInfo = async (e) => {
@@ -208,8 +230,10 @@ const ModifyInfoPage = () => {
         >
           Envoyer
         </Button>
-        <DeleteAccount>Supprimer mon compte</DeleteAccount>
       </form>
+      <DeleteAccount onClick={handleUserDelete}>
+        Supprimer mon compte
+      </DeleteAccount>
     </Container>
   );
 };
@@ -220,17 +244,34 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    form {
+      width: 100%;
+      padding: 0 1rem;
+      margin-bottom: 1rem;
+    }
+  }
 `;
 
 const Title = styled.h1`
   text-align: center;
   font-size: 1.5rem;
   color: #4b4c4f;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+  }
 `;
 
 const FlexLayout = styled.div`
   display: flex;
   column-gap: 1rem;
+
+  @media (max-width: 495px) {
+    display: block;
+  }
 
   div {
     width: 50%;
@@ -240,6 +281,10 @@ const FlexLayout = styled.div`
     padding: 0.8rem 1rem;
     margin-top: 1rem;
     border-radius: 10px;
+
+    @media (max-width: 495px) {
+      width: 100%;
+    }
 
     label {
       font-weight: 300;
@@ -286,7 +331,6 @@ const Button = styled.button`
 
 const DeleteAccount = styled.button`
   display: block;
-  margin: auto;
   background: none;
   border: none;
   cursor: pointer;
@@ -294,6 +338,10 @@ const DeleteAccount = styled.button`
   margin-top: 1rem;
   color: #ed4949;
   transition: 0.3s;
+
+  @media (max-width: 768px) {
+    margin: 0 0 1rem 0;
+  }
 
   &:hover {
     color: #c92a2f;

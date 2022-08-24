@@ -30,6 +30,7 @@ const ShoppingCart = () => {
   const handleBuying = async (type) => {
     try {
       const auth = getAuth();
+      console.log(auth.currentUser);
       const userRef = doc(db, "user", auth.currentUser.uid);
 
       if (type === "hebergement") {

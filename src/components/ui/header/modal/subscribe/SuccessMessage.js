@@ -6,13 +6,14 @@ import { useDispatch } from "react-redux";
 import { UserAction } from "../../../../../store/userSlice/userSlice";
 import { useTimer } from "react-timer-hook";
 import { useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 
 const SuccessMessage = ({ closeModal, response }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 10); // 10 seconds timer
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 5); // 5 seconds timer
 
   const { seconds } = useTimer({
     expiryTimestamp,
@@ -26,6 +27,15 @@ const SuccessMessage = ({ closeModal, response }) => {
   const handleModal = () => {
     closeModal();
     dispatch(UserAction.hideSubMessage());
+    const actualAuth = getAuth();
+
+    signOut(actualAuth)
+      .then(() => {
+        dispatch(UserAction.setInitialState());
+      })
+      .then(() => {
+        window.location.reload();
+      });
   };
 
   return (
