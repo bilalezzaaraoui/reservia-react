@@ -9,19 +9,21 @@ const ModalLayout = (props) => {
   if (props.type === "login") {
     return (
       <Fragment>
-        <Container>
-          <OverlayLogin closeModal={() => props.closeModal()} />
+        {/* <Container> */}
+        <OverlayLogin>
           <LoginForm closeModal={() => props.closeModal()} />
-        </Container>
+        </OverlayLogin>
+        {/* </Container> */}
       </Fragment>
     );
   } else if (props.type === "subscribe") {
     return (
       <Fragment>
-        <Container>
-          <OverlaySubscribe closeModal={() => props.closeModal()} />
+        {/* <Container> */}
+        <OverlaySubscribe>
           <SubscribeForm closeModal={() => props.closeModal()} />
-        </Container>
+        </OverlaySubscribe>
+        {/* </Container> */}
       </Fragment>
     );
   }

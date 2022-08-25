@@ -109,8 +109,6 @@ const SubscribeForm = ({ closeModal, expiryTimestamp }) => {
 };
 
 const Container = styled.div`
-  position: fixed;
-  margin: auto;
   width: 30vw;
   box-shadow: rgba(0, 0, 0, 0.8) 2px 4px 8px 0px;
   background-color: white;
@@ -223,11 +221,11 @@ const Double = styled.div`
 const Half = styled.div`
   width: 50%;
   height: 100%;
-  background-color: red;
 
   .first-input {
     border-right: 1px solid #c9c9c9;
   }
+
   input {
     width: 100%;
     height: 100%;

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 let today = new Date();
 let dd = today.getDate();
@@ -14,6 +16,26 @@ if (mm < 10) {
 }
 
 today = `${yyyy}-${mm}-${dd}`;
+
+const addOneDay = (date) => {
+  const todaySplit = date.split("-");
+  const dayFuture = +todaySplit[2] + 1 + "";
+  const nextDay = [todaySplit[0], todaySplit[1], dayFuture].join("-");
+  return nextDay;
+};
+
+const formatDate = (date) => {
+  let month = (date.getMonth() + 1).toString();
+  let day = date.getDate().toString();
+  const year = date.getFullYear();
+  if (month.length < 2) {
+    month = "0" + month;
+  }
+  if (day.length < 2) {
+    day = "0" + day;
+  }
+  return [year, month, day].join("-");
+};
 
 const HoursDatePicker = (props) => {
   const [date, setDate] = useState("");
@@ -30,17 +52,23 @@ const HoursDatePicker = (props) => {
 
   return (
     <Layout>
-      <div>
+      <div className="date-layout">
         <label htmlFor="arrive">Arrivée</label>
-        <input
-          type="date"
-          name="arrive"
-          min={today}
-          onChange={(e) => setDate(e.target.value)}
-          required
+        <DatePicker
+          dateFormat="dd/MM/yyyy"
+          selected={
+            typeof date === "string" && date.length >= 1
+              ? new Date(date)
+              : new Date(addOneDay(today))
+          }
+          minDate={new Date(addOneDay(today))}
+          onChange={(date) => {
+            const newDate = formatDate(date);
+            setDate(newDate);
+          }}
         />
       </div>
-      <div>
+      <div className="date-layout">
         <label htmlFor="depart">Départ</label>
         <input
           type="time"
@@ -58,7 +86,7 @@ const HoursDatePicker = (props) => {
 const Layout = styled.div`
   display: flex;
 
-  div {
+  .date-layout {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -75,8 +103,14 @@ const Layout = styled.div`
     }
 
     input {
+      width: 100%;
       border: none;
     }
+  }
+
+  .react-datepicker__day--disabled {
+    background-color: transparent;
+    font-weight: normal;
   }
 `;
 

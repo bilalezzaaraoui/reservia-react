@@ -95,10 +95,6 @@ const HalfOne = styled.div`
     display: block;
     width: 100%;
     height: 100%;
-
-    @media (max-width: 430px) {
-      width: auto;
-    }
   }
 
   @media (max-width: 780px) {

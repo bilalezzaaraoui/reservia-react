@@ -42,6 +42,11 @@ const Container = styled.div`
 
 const Message = styled.h1`
   color: rgb(0, 101, 252);
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export default ReservationPage;

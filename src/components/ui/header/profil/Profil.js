@@ -29,12 +29,15 @@ const Profil = (props) => {
         <Dropdown onMouseLeave={() => setShow(false)}>
           <ul>
             <li>
-              <Link to="/mes-reservation">
+              <Link to="/mes-reservation" onClick={() => setShow(false)}>
                 Mes réservation <b>({reservation.length})</b>
               </Link>
             </li>
             <li>
-              <Link to="/modifier-mes-infos-personnelles">
+              <Link
+                to="/modifier-mes-infos-personnelles"
+                onClick={() => setShow(false)}
+              >
                 Modifier mes informations <br /> personnelles
               </Link>
             </li>

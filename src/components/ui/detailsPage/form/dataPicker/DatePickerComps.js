@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 let today = new Date();
 let dd = today.getDate();
@@ -19,6 +21,7 @@ const addOneDay = (date) => {
   const todaySplit = date.split("-");
   const dayFuture = +todaySplit[2] + 1 + "";
   const nextDay = [todaySplit[0], todaySplit[1], dayFuture].join("-");
+  // console.log(nextDay);
   return nextDay;
 };
 
@@ -35,6 +38,9 @@ function datediff(first, second) {
 const DatePickerComps = (props) => {
   const [dateIn, setDateIn] = useState("");
   const [dateOut, setDateOut] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  // console.log(dateIn);
+  console.log(dateOut);
 
   useEffect(() => {
     if (dateIn.length > 1 && dateOut.length > 1) {
@@ -48,11 +54,24 @@ const DatePickerComps = (props) => {
     }
   }, [dateIn, dateOut]);
 
+  const formatDate = (date) => {
+    let month = (date.getMonth() + 1).toString();
+    let day = date.getDate().toString();
+    const year = date.getFullYear();
+    if (month.length < 2) {
+      month = "0" + month;
+    }
+    if (day.length < 2) {
+      day = "0" + day;
+    }
+    return [year, month, day].join("-");
+  };
+
   return (
     <Layout>
-      <div>
+      <div className="date-layout">
         <label htmlFor="arrive">Arrivée</label>
-        <input
+        {/* <input
           type="date"
           name="arrive"
           min={today}
@@ -62,11 +81,25 @@ const DatePickerComps = (props) => {
             setDateIn(e.target.value);
             setDateOut("");
           }}
+        /> */}
+        <DatePicker
+          dateFormat="dd/MM/yyyy"
+          selected={
+            typeof dateIn === "string" && dateIn.length >= 1
+              ? new Date(dateIn)
+              : new Date(addOneDay(today))
+          }
+          minDate={new Date(addOneDay(today))}
+          onChange={(date) => {
+            const newDate = formatDate(date);
+            setDateIn(newDate);
+            setDateOut(addOneDay(newDate));
+          }}
         />
       </div>
-      <div>
+      <div className="date-layout">
         <label htmlFor="depart">Départ</label>
-        <input
+        {/* <input
           type="date"
           name="depart"
           min={dateIn.length > 1 ? addOneDay(dateIn) : today}
@@ -80,6 +113,23 @@ const DatePickerComps = (props) => {
               alert("Veuillez d'abord choisir une date d'arrivée.");
             }
           }}
+        /> */}
+        <DatePicker
+          dateFormat="dd/MM/yyyy"
+          selected={
+            typeof dateOut === "string" && dateOut.length >= 1
+              ? new Date(dateOut)
+              : new Date(addOneDay(addOneDay(today)))
+          }
+          minDate={
+            typeof dateIn === "string" && dateIn.length >= 1
+              ? new Date(addOneDay(dateIn))
+              : new Date(addOneDay(addOneDay(today)))
+          }
+          onChange={(date) => {
+            const newDate = formatDate(date);
+            setDateOut(newDate);
+          }}
         />
       </div>
     </Layout>
@@ -89,7 +139,7 @@ const DatePickerComps = (props) => {
 const Layout = styled.div`
   display: flex;
 
-  div {
+  .date-layout {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -106,8 +156,14 @@ const Layout = styled.div`
     }
 
     input {
+      width: 100%;
       border: none;
     }
+  }
+
+  .react-datepicker__day--disabled {
+    background-color: transparent;
+    font-weight: normal;
   }
 `;
 

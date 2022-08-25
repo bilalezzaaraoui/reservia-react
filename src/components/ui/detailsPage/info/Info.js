@@ -80,7 +80,10 @@ const Info = (props) => {
                 onSaveNumber={savePeopleHandler}
               />
             </div>
-            <button onClick={isCartAccesible ? handleFormSubmit : null}>
+            <button
+              className="btn-rerservation"
+              onClick={isCartAccesible ? handleFormSubmit : null}
+            >
               Réserver
             </button>
           </form>
@@ -151,6 +154,10 @@ const FirstChild = styled.div`
   .info,
   .description-1 {
     margin: 1rem 0;
+
+    @media (max-width: 430px) {
+      margin: 0.7rem 0;
+    }
   }
 
   .description-1 {
@@ -180,6 +187,10 @@ const Box = styled.div`
   box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
   margin-top: 2rem;
 
+  @media (max-width: 430px) {
+    margin-top: 0;
+  }
+
   .title {
     font-weight: 300;
     span {
@@ -197,7 +208,7 @@ const Box = styled.div`
       border-radius: 10px;
     }
 
-    button {
+    .btn-rerservation {
       cursor: pointer;
       display: block;
       margin: 0 auto;

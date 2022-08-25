@@ -119,7 +119,8 @@ const Title = styled.h1`
 
   @media (max-width: 430px) {
     width: 90%;
-    margin: 1rem auto;
+    margin: 0.5rem auto 0;
+    font-size: 1rem;
   }
 `;
 
@@ -127,6 +128,12 @@ const StarsAndLocation = styled.div`
   display: flex;
   column-gap: 0.5rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 430px) {
+    margin-bottom: 0;
+    margin-top: 1rem;
+    padding-left: 1rem;
+  }
 `;
 
 const BlackStars = styled.div`

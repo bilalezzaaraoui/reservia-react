@@ -49,16 +49,6 @@ const LoginForm = (props) => {
     }
   };
 
-  // const setUser = (user) => {
-  //   dispatch(
-  //     userActions.setUserLoginDetails({
-  //       name: user.displayName,
-  //       email: user.email,
-  //       photo: user.photoURL,
-  //     })
-  //   );
-  // };
-
   return (
     <Container>
       <Head>
@@ -92,8 +82,6 @@ const LoginForm = (props) => {
 };
 
 const Container = styled.div`
-  position: fixed;
-  margin: auto;
   width: 30vw;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.8) 2px 4px 8px 0px;
@@ -102,6 +90,7 @@ const Container = styled.div`
   overflow: hidden;
 
   @media (max-width: 768px) {
+    bottom: 0;
     width: 100vw;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;

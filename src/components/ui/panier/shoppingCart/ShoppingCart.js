@@ -27,6 +27,11 @@ const ShoppingCart = () => {
     );
   };
 
+  const euroDate = (date) => {
+    const euro = date.split("-");
+    return `${euro[2]}/${euro[1]}/${euro[0]}`;
+  };
+
   const handleBuying = async (type) => {
     try {
       const auth = getAuth();
@@ -97,7 +102,9 @@ const ShoppingCart = () => {
               <div className="info-layout">
                 <div className="info">
                   <span className="title">Dates</span>
-                  <span className="sub-title">{`${cart.dateOfTheActivity} - ${cart.timeOfTheActivity}`}</span>
+                  <span className="sub-title">{`${euroDate(
+                    cart.dateOfTheActivity
+                  )} - ${cart.timeOfTheActivity}`}</span>
                 </div>
                 <div className="info">
                   <span className="title">Participants</span>
@@ -200,7 +207,9 @@ const ShoppingCart = () => {
               <div className="info-layout">
                 <div className="info">
                   <span className="title">Dates</span>
-                  <span className="sub-title">{`${cart.enterDate} - ${cart.outDate}`}</span>
+                  <span className="sub-title">{`${euroDate(
+                    cart.enterDate
+                  )} - ${euroDate(cart.outDate)}`}</span>
                 </div>
                 <div className="info">
                   <span className="title">Voyageurs</span>
@@ -295,6 +304,10 @@ const Head = styled.div`
   align-items: center;
   column-gap: 1rem;
 
+  @media (max-width: 768px) {
+    padding: 1rem 0;
+  }
+
   .circle {
     cursor: pointer;
     width: 40px;
@@ -312,6 +325,10 @@ const Head = styled.div`
 
   h1 {
     font-weight: 400;
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
   }
 `;
 
@@ -432,6 +449,12 @@ const Price = styled.div`
   h3 {
     margin: 1.5rem 0;
     font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    h3 {
+      margin: 0.5rem 0;
+    }
   }
 
   .info-layout {

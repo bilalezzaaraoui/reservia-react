@@ -49,8 +49,8 @@ const ModalSlider = ({ id = 0, closeModal, images }) => {
 
 const Container = styled.div`
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: white;
   z-index: 400;
   display: flex;
