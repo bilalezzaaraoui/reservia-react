@@ -40,6 +40,8 @@ const formatDate = (date) => {
 const HoursDatePicker = (props) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  console.log(date);
+  console.log(time);
 
   useEffect(() => {
     if (date.length >= 3 && time.length >= 3) {
@@ -49,6 +51,10 @@ const HoursDatePicker = (props) => {
       });
     }
   }, [date, time]);
+
+  useEffect(() => {
+    setDate(addOneDay(today));
+  }, []);
 
   return (
     <Layout>
