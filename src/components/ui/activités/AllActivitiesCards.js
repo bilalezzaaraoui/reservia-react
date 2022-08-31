@@ -2,6 +2,7 @@ import styled from "styled-components";
 import CardActivity from "./CardActivity";
 import { useState, useEffect } from "react";
 import db from "../../../firebase";
+import LoadingContainer from "../loadingContainer/LoadingContainer";
 
 const AllActivitiesCards = () => {
   const [data, setData] = useState();
@@ -66,13 +67,13 @@ const AllActivitiesCards = () => {
       </Container>
     );
   } else {
-    return;
+    return <LoadingContainer />;
   }
 };
 
 const Container = styled.div`
   width: 90%;
-  margin: 0 auto;
+  margin: 2rem auto;
 `;
 
 const Title = styled.h3`

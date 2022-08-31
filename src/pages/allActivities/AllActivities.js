@@ -11,7 +11,7 @@ const AllActivities = () => {
 
 const Container = styled.main`
   flex: 1;
-  margin: 2rem 0;
+  display: flex;
 `;
 
 export default AllActivities;

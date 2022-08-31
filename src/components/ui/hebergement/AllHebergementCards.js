@@ -3,6 +3,7 @@ import CardHebergement from "./CardHebergement";
 import { useEffect, useState } from "react";
 import db from "../../../firebase";
 import { useParams } from "react-router-dom";
+import LoadingContainer from "../loadingContainer/LoadingContainer";
 
 const AllHebergementCards = () => {
   const params = useParams();
@@ -101,13 +102,13 @@ const AllHebergementCards = () => {
       </Container>
     );
   } else {
-    return;
+    return <LoadingContainer />;
   }
 };
 
 const Container = styled.div`
   width: 90%;
-  margin: 0 auto;
+  margin: 2rem auto;
 `;
 
 const ListOfActivities = styled.ul`

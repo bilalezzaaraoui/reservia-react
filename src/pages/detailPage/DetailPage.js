@@ -11,6 +11,7 @@ import db from "../../firebase";
 import Info from "../../components/ui/detailsPage/info/Info";
 import { FaStar } from "react-icons/fa";
 import { CartAction } from "../../store/cartSlice/cartSlice";
+import LoadingContainer from "../../components/ui/loadingContainer/LoadingContainer";
 
 const DetailPage = () => {
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ const DetailPage = () => {
       </Fragment>
     );
   } else {
-    return;
+    return <LoadingContainer />;
   }
 };
 

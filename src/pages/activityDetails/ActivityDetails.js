@@ -10,6 +10,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import db from "../../firebase";
 import Info from "../../components/ui/activityDetails/Info";
 import { CartAction } from "../../store/cartSlice/cartSlice";
+import LoadingContainer from "../../components/ui/loadingContainer/LoadingContainer";
 
 const ActivityDetails = () => {
   const navigate = useNavigate();
@@ -88,7 +89,7 @@ const ActivityDetails = () => {
       </Fragment>
     );
   } else {
-    return;
+    return <LoadingContainer />;
   }
 };
 
