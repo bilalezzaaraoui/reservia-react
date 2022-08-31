@@ -28,6 +28,8 @@ const Info = (props) => {
       typeof date.infoTime === "string" &&
       people >= 1
     ) {
+      console.log(date);
+      console.log(people);
       const calcTotal = props.price * people;
       setTotal(calcTotal);
       setIsCartAccesible(true);

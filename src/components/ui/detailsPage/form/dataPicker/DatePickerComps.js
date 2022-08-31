@@ -17,12 +17,23 @@ if (mm < 10) {
 
 today = `${yyyy}-${mm}-${dd}`;
 
-const addOneDay = (date) => {
-  const todaySplit = date.split("-");
-  const dayFuture = +todaySplit[2] + 1 + "";
-  const nextDay = [todaySplit[0], todaySplit[1], dayFuture].join("-");
-  // console.log(nextDay);
-  return nextDay;
+const formatDate = (date) => {
+  let month = (date.getMonth() + 1).toString();
+  let day = date.getDate().toString();
+  const year = date.getFullYear();
+  if (month.length < 2) {
+    month = "0" + month;
+  }
+  if (day.length < 2) {
+    day = "0" + day;
+  }
+  return [year, month, day].join("-");
+};
+
+const addOneAnotherDay = (date, numberOfDays) => {
+  const newDate = new Date(date);
+  newDate.setDate(newDate.getDate() + numberOfDays);
+  return newDate;
 };
 
 function parseDate(str) {
@@ -36,99 +47,55 @@ function datediff(first, second) {
 }
 
 const DatePickerComps = (props) => {
-  const [dateIn, setDateIn] = useState("");
-  const [dateOut, setDateOut] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
-  // console.log(dateIn);
-  console.log(dateOut);
+  const [dateIn, setDateIn] = useState(addOneAnotherDay(today, 1));
+  const [dateOut, setDateOut] = useState(addOneAnotherDay(dateIn, 1));
 
   useEffect(() => {
-    if (dateIn.length > 1 && dateOut.length > 1) {
+    if (dateIn >= dateOut) {
+      setDateOut(addOneAnotherDay(dateIn, 1));
+    }
+
+    if (dateIn.toString().length > 3 && dateOut.toString().length > 3) {
       props.onSaveDaysNumber({
-        enterDate: dateIn,
-        outDate: dateOut,
-        numberOfDays: datediff(parseDate(dateIn), parseDate(dateOut)),
+        enterDate: formatDate(dateIn),
+        outDate: formatDate(dateOut),
+        numberOfDays: datediff(
+          parseDate(formatDate(dateIn)),
+          parseDate(formatDate(dateOut))
+        ),
       });
     } else {
       props.onSaveDaysNumber({});
     }
   }, [dateIn, dateOut]);
 
-  const formatDate = (date) => {
-    let month = (date.getMonth() + 1).toString();
-    let day = date.getDate().toString();
-    const year = date.getFullYear();
-    if (month.length < 2) {
-      month = "0" + month;
-    }
-    if (day.length < 2) {
-      day = "0" + day;
-    }
-    return [year, month, day].join("-");
-  };
-
   return (
     <Layout>
       <div className="date-layout">
         <label htmlFor="arrive">Arrivée</label>
-        {/* <input
-          type="date"
-          name="arrive"
-          min={today}
-          required
-          value={dateIn}
-          onChange={(e) => {
-            setDateIn(e.target.value);
-            setDateOut("");
-          }}
-        /> */}
         <DatePicker
           dateFormat="dd/MM/yyyy"
-          selected={
-            typeof dateIn === "string" && dateIn.length >= 1
-              ? new Date(dateIn)
-              : new Date(addOneDay(today))
-          }
-          minDate={new Date(addOneDay(today))}
+          selected={dateIn}
+          minDate={addOneAnotherDay(today, 1)}
           onChange={(date) => {
             const newDate = formatDate(date);
-            setDateIn(newDate);
-            setDateOut(addOneDay(newDate));
+            setDateIn(new Date(newDate));
+
+            if (dateIn >= dateOut) {
+              setDateOut(addOneAnotherDay(newDate, 1));
+            }
           }}
         />
       </div>
       <div className="date-layout">
         <label htmlFor="depart">Départ</label>
-        {/* <input
-          type="date"
-          name="depart"
-          min={dateIn.length > 1 ? addOneDay(dateIn) : today}
-          required
-          value={dateOut}
-          onChange={(e) => {
-            if (dateIn.length >= 1) {
-              setDateOut(e.target.value);
-            } else {
-              setDateOut("");
-              alert("Veuillez d'abord choisir une date d'arrivée.");
-            }
-          }}
-        /> */}
         <DatePicker
           dateFormat="dd/MM/yyyy"
-          selected={
-            typeof dateOut === "string" && dateOut.length >= 1
-              ? new Date(dateOut)
-              : new Date(addOneDay(addOneDay(today)))
-          }
-          minDate={
-            typeof dateIn === "string" && dateIn.length >= 1
-              ? new Date(addOneDay(dateIn))
-              : new Date(addOneDay(addOneDay(today)))
-          }
+          selected={dateIn >= dateOut ? addOneAnotherDay(dateIn, 1) : dateOut}
+          minDate={addOneAnotherDay(dateIn, 1)}
           onChange={(date) => {
             const newDate = formatDate(date);
-            setDateOut(newDate);
+            setDateOut(new Date(newDate));
           }}
         />
       </div>

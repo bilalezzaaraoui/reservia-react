@@ -17,13 +17,6 @@ if (mm < 10) {
 
 today = `${yyyy}-${mm}-${dd}`;
 
-const addOneDay = (date) => {
-  const todaySplit = date.split("-");
-  const dayFuture = +todaySplit[2] + 1 + "";
-  const nextDay = [todaySplit[0], todaySplit[1], dayFuture].join("-");
-  return nextDay;
-};
-
 const formatDate = (date) => {
   let month = (date.getMonth() + 1).toString();
   let day = date.getDate().toString();
@@ -38,23 +31,19 @@ const formatDate = (date) => {
 };
 
 const HoursDatePicker = (props) => {
-  const [date, setDate] = useState("");
+  const addOneDay = new Date();
+  addOneDay.setDate(addOneDay.getDate() + 1);
+  const [date, setDate] = useState(addOneDay);
   const [time, setTime] = useState("");
-  console.log(date);
-  console.log(time);
 
   useEffect(() => {
-    if (date.length >= 3 && time.length >= 3) {
+    if (formatDate(date).toString().length >= 3 && time.length >= 3) {
       props.onSaveDate({
-        infoDate: date,
+        infoDate: formatDate(date),
         infoTime: time,
       });
     }
   }, [date, time]);
-
-  useEffect(() => {
-    setDate(addOneDay(today));
-  }, []);
 
   return (
     <Layout>
@@ -62,15 +51,11 @@ const HoursDatePicker = (props) => {
         <label htmlFor="arrive">Arrivée</label>
         <DatePicker
           dateFormat="dd/MM/yyyy"
-          selected={
-            typeof date === "string" && date.length >= 1
-              ? new Date(date)
-              : new Date(addOneDay(today))
-          }
-          minDate={new Date(addOneDay(today))}
+          selected={date}
+          minDate={addOneDay}
           onChange={(date) => {
             const newDate = formatDate(date);
-            setDate(newDate);
+            setDate(new Date(newDate));
           }}
         />
       </div>
