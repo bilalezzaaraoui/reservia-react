@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   data: {},
   isCartFull: false,
+  orderSuccesful: false,
 };
 
 const cartSlice = createSlice({
@@ -16,6 +17,12 @@ const cartSlice = createSlice({
     emptyCart: (state) => {
       state.data = {};
       state.isCartFull = false;
+    },
+    orderPageOpen: (state) => {
+      state.orderSuccesful = true;
+    },
+    orderPageClosed: (state) => {
+      state.orderSuccesful = false;
     },
   },
 });

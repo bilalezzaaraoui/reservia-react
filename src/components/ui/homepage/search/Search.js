@@ -61,6 +61,7 @@ const Search = () => {
             <input
               type="search"
               className="searchbar"
+              id="search"
               onChange={(e) => setValue(e.target.value)}
               placeholder="Ex: Marseille"
             />

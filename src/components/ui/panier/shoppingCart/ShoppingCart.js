@@ -75,8 +75,8 @@ const ShoppingCart = () => {
         });
       }
 
-      navigate("/mes-reservation");
-      dispatch(CartAction.emptyCart());
+      dispatch(CartAction.orderPageOpen());
+      navigate("/order-successful");
     } catch (err) {
       console.log();
     }

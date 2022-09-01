@@ -9,9 +9,11 @@ import Erreur from "../../pages/error/Erreur";
 import { useSelector } from "react-redux";
 import ReservationPage from "../../pages/reservation/ReservationPage";
 import ModifyInfoPage from "../../pages/modifyInfo/ModifyInfoPage";
+import OrderSuccesfull from "../../pages/orderSuccessful/OrderSuccessful";
 
 const Router = () => {
   const isCartFull = useSelector((state) => state.cart.isCartFull);
+  const isOrderSuccesful = useSelector((state) => state.cart.orderSuccesful);
   const isCertifiedConnected = useSelector(
     (state) => state.user.isCertifiedConnected
   );
@@ -48,6 +50,12 @@ const Router = () => {
           ) : (
             <Navigate replace to="/" />
           )
+        }
+      />
+      <Route
+        path="/order-successful"
+        element={
+          isOrderSuccesful ? <OrderSuccesfull /> : <Navigate replace to="/" />
         }
       />
     </Routes>
