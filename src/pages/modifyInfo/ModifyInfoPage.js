@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -38,8 +39,6 @@ const ModifyInfoPage = () => {
       (emailStore !== email && email.length >= 1) ||
       (password !== "" && password.length >= 1)
     ) {
-      console.log(prenom);
-      console.log(prenomStore);
       setShow(true);
     } else {
       setShow(false);
@@ -85,8 +84,6 @@ const ModifyInfoPage = () => {
     const id = getAuth().currentUser.uid;
     const auth = getAuth();
 
-    console.log(prenom);
-    console.log(prenomStore);
     if (prenom !== prenomStore && prenom.length >= 1) {
       const prenomRef = doc(db, "user", id);
 
@@ -132,7 +129,6 @@ const ModifyInfoPage = () => {
       }
 
       if (password.length >= 1) {
-        console.log(password);
         await updatePassword(auth.currentUser, password);
         setPassword("");
       }

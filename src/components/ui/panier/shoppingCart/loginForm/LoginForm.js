@@ -9,7 +9,6 @@ const LoginForm = (props) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleError = (error = "erreur") => {
-    console.log(error);
     if (error === "Firebase: Error (auth/wrong-password).") {
       setErrorMessage("Le mot de passe est incorrect.");
     }
@@ -27,28 +26,11 @@ const LoginForm = (props) => {
     const password = formRef.current.password.value;
 
     try {
-      const userCrendential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      console.log(userCrendential.user);
-      // setUser(userCrendential.user);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       handleError(error.message);
     }
   };
-
-  // const setUser = (user) => {
-  //   dispatch(
-  //     userActions.setUserLoginDetails({
-  //       name: user.displayName,
-  //       email: user.email,
-  //       photo: user.photoURL,
-  //     })
-  //   );
-  // };
 
   return (
     <Fragment>

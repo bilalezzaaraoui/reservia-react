@@ -10,7 +10,7 @@ const OrderSuccesfull = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 15); // 15 seconds timer
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 10); // 10 seconds timer
 
   const { seconds } = useTimer({
     expiryTimestamp,

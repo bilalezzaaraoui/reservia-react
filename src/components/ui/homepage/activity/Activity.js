@@ -1,9 +1,11 @@
+/* eslint-disable array-callback-return */
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ActivityAction } from "../../../../store/activitySlice/activitySlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import db from "../../../../firebase";
+import LoadingContainer from "../../loadingContainer/LoadingContainer";
 
 const Activity = () => {
   const dispatch = useDispatch();
@@ -22,6 +24,7 @@ const Activity = () => {
     };
 
     searchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (activitiesOriginal.length >= 1) {
@@ -45,7 +48,7 @@ const Activity = () => {
       </Container>
     );
   } else {
-    return;
+    return <LoadingContainer />;
   }
 };
 

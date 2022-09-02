@@ -6,14 +6,13 @@ const Head = () => {
   return (
     <Container>
       <Link to="/">
-        <Img src={logo} alt="logo" />
+        <img src={logo} alt="logo" />
       </Link>
     </Container>
   );
 };
 
 const Container = styled.div`
-  /* height: 80px !important; */
   padding: 0 3rem;
   box-shadow: rgb(235 235 235) 0px 1px 0px !important;
   display: flex;
@@ -27,7 +26,5 @@ const Container = styled.div`
     cursor: pointer;
   }
 `;
-
-const Img = styled.img``;
 
 export default Head;

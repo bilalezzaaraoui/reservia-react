@@ -48,7 +48,6 @@ const Info = (props) => {
       pricePerNight: props.data.pricePerNight,
       total: props.data.pricePerNight * days.numberOfDays,
     };
-    console.log(cartData);
 
     dispatch(CartAction.fillCart(cartData));
     navigate("/panier");

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import db from "../../../../firebase";
 import { HebergementAction } from "../../../../store/hebergementSlice/hebergementSlice";
+import LoadingContainer from "../../loadingContainer/LoadingContainer";
 
 const Hebergement = () => {
   const dispatch = useDispatch();
@@ -112,7 +113,7 @@ const Hebergement = () => {
       </Container>
     );
   } else {
-    return;
+    return <LoadingContainer />;
   }
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import styled from "styled-components";
 import {
   FaSearch,
@@ -36,13 +37,11 @@ const Search = () => {
     } else {
       setShowDiv(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value.trim()]);
 
   const handleForm = (e) => {
     e.preventDefault();
-
-    console.log(value);
-    console.log(result);
 
     navigate(`/accommodation/search=${value}`);
   };
@@ -186,7 +185,6 @@ const SearchBar = styled.div`
   }
 
   form {
-    /* position: relative; */
     flex: 1;
     display: flex;
     align-items: center;

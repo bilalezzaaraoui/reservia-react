@@ -11,6 +11,7 @@ const AllActivitiesCards = () => {
     const searchData = async () => {
       let activities = [];
       db.collection("activities").onSnapshot((snapshot) => {
+        // eslint-disable-next-line array-callback-return
         snapshot.docs.map((doc) => {
           activities = [...activities, { id: doc.id, ...doc.data() }];
         });
@@ -25,7 +26,6 @@ const AllActivitiesCards = () => {
   const orderPrice = (e) => {
     const target = e.target.value;
     if (target === "croissant") {
-      console.log(data);
       const dataFilter = data
         .sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
         .map((item) => item);

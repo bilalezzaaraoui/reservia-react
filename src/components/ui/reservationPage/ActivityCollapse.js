@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const ActivityCollapse = (props) => {
   const [show, setShow] = useState(false);
   const user = useSelector((state) => state.user);
-  console.log(props.data);
+
   return (
     <Container>
       <TitleBanner>

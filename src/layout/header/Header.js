@@ -21,7 +21,6 @@ const Header = () => {
   const showSubscribe = useSelector((state) => state.modal.subscribe);
   const layout = useSelector((state) => state.isLayoutBig.layout);
   const user = useSelector((state) => state.user);
-  const reservation = useSelector((state) => state.user.reservation);
   const isCartFull = useSelector((state) => state.cart.isCartFull);
 
   function getWindowDimensions() {
@@ -30,6 +29,7 @@ const Header = () => {
       width,
     };
   }
+
   useEffect(() => {
     function handleResize() {
       setDimension(getWindowDimensions());
@@ -48,11 +48,8 @@ const Header = () => {
   useEffect(() => {
     const auth = getAuth();
 
-    console.log(auth);
-
     onAuthStateChanged(auth, async (actualUser) => {
       if (actualUser) {
-        console.log("ici firebase");
         const userInfo = {
           id: actualUser.uid,
           email: actualUser.providerData[0].email,
@@ -78,6 +75,7 @@ const Header = () => {
         }
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCartFull]);
 
   return (

@@ -1,6 +1,6 @@
+/* eslint-disable array-callback-return */
 import { Fragment } from "react";
 import { FaMoneyBillWave, FaChild, FaHeart, FaDog } from "react-icons/fa";
-import styled from "styled-components";
 
 const FilterList = ({ filter }) => {
   const stackImage = [

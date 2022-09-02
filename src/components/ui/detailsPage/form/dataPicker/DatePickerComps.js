@@ -2,52 +2,14 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-let today = new Date();
-let dd = today.getDate();
-let mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
-const yyyy = today.getFullYear();
-
-if (dd < 10) {
-  dd = "0" + dd;
-}
-if (mm < 10) {
-  mm = "0" + mm;
-}
-
-today = `${yyyy}-${mm}-${dd}`;
-
-const formatDate = (date) => {
-  let month = (date.getMonth() + 1).toString();
-  let day = date.getDate().toString();
-  const year = date.getFullYear();
-  if (month.length < 2) {
-    month = "0" + month;
-  }
-  if (day.length < 2) {
-    day = "0" + day;
-  }
-  return [year, month, day].join("-");
-};
-
-const addOneAnotherDay = (date, numberOfDays) => {
-  const newDate = new Date(date);
-  newDate.setDate(newDate.getDate() + numberOfDays);
-  return newDate;
-};
-
-function parseDate(str) {
-  let mdy = str.split("-");
-  mdy = [mdy[1], mdy[2], mdy[0]];
-  return new Date(mdy[2], mdy[0] - 1, mdy[1]);
-}
-
-function datediff(first, second) {
-  return Math.round((second - first) / (1000 * 60 * 60 * 24));
-}
+const addOneAnotherDay = require("../../../../../utils/function/addOneAnotherDay");
+const formatDate = require("../../../../../utils/function/formatDate");
+const parseDate = require("../../../../../utils/function/parseDate");
+const todayDate = require("../../../../../utils/function/todayDate");
+const dateDiff = require("../../../../../utils/function/dateDiff");
 
 const DatePickerComps = (props) => {
-  const [dateIn, setDateIn] = useState(addOneAnotherDay(today, 1));
+  const [dateIn, setDateIn] = useState(addOneAnotherDay(todayDate(), 1));
   const [dateOut, setDateOut] = useState(addOneAnotherDay(dateIn, 1));
 
   useEffect(() => {
@@ -59,7 +21,7 @@ const DatePickerComps = (props) => {
       props.onSaveDaysNumber({
         enterDate: formatDate(dateIn),
         outDate: formatDate(dateOut),
-        numberOfDays: datediff(
+        numberOfDays: dateDiff(
           parseDate(formatDate(dateIn)),
           parseDate(formatDate(dateOut))
         ),
@@ -67,6 +29,7 @@ const DatePickerComps = (props) => {
     } else {
       props.onSaveDaysNumber({});
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateIn, dateOut]);
 
   return (
@@ -76,7 +39,7 @@ const DatePickerComps = (props) => {
         <DatePicker
           dateFormat="dd/MM/yyyy"
           selected={dateIn}
-          minDate={addOneAnotherDay(today, 1)}
+          minDate={addOneAnotherDay(todayDate(), 1)}
           onChange={(date) => {
             const newDate = formatDate(date);
             setDateIn(new Date(newDate));

@@ -14,7 +14,7 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: "modal",
+  name: "user",
   initialState,
   reducers: {
     showSubMessage: (state) => {

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const HebergementCollapse = (props) => {
   const [show, setShow] = useState(false);
   const user = useSelector((state) => state.user);
-  //   console.log(user);
+
   return (
     <Container>
       <TitleBanner>

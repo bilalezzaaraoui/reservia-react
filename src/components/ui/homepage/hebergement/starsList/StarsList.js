@@ -1,5 +1,4 @@
 import { FaStar } from "react-icons/fa";
-import styled from "styled-components";
 
 const StarsList = (props) => {
   const number = +props.number;

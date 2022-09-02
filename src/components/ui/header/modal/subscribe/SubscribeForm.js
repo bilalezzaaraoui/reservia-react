@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserAction } from "../../../../../store/userSlice/userSlice";
 import SuccessMessage from "./SuccessMessage";
 
-const SubscribeForm = ({ closeModal, expiryTimestamp }) => {
+const SubscribeForm = ({ closeModal }) => {
   const dispatch = useDispatch();
   const formRef = useRef();
   const [showError, setShowError] = useState(false);

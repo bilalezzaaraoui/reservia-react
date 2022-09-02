@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import FilterList from "../homepage/hebergement/filterList/FilterList";
+import LoadingContainer from "../loadingContainer/LoadingContainer";
 
 const CardHebergement = (props) => {
   const settings = {
@@ -43,7 +44,7 @@ const CardHebergement = (props) => {
       </Link>
     );
   } else {
-    return;
+    return <LoadingContainer />;
   }
 };
 

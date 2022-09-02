@@ -2,33 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-let today = new Date();
-let dd = today.getDate();
-let mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
-const yyyy = today.getFullYear();
-
-if (dd < 10) {
-  dd = "0" + dd;
-}
-if (mm < 10) {
-  mm = "0" + mm;
-}
-
-today = `${yyyy}-${mm}-${dd}`;
-
-const formatDate = (date) => {
-  let month = (date.getMonth() + 1).toString();
-  let day = date.getDate().toString();
-  const year = date.getFullYear();
-  if (month.length < 2) {
-    month = "0" + month;
-  }
-  if (day.length < 2) {
-    day = "0" + day;
-  }
-  return [year, month, day].join("-");
-};
+const formatDate = require("../../../utils/function/formatDate");
 
 const HoursDatePicker = (props) => {
   const addOneDay = new Date();
@@ -43,6 +17,7 @@ const HoursDatePicker = (props) => {
         infoTime: time,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date, time]);
 
   return (

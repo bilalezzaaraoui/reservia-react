@@ -2,11 +2,13 @@ import styled from "styled-components";
 import { FaChevronLeft } from "react-icons/fa";
 import LoginForm from "./loginForm/LoginForm";
 import db from "../../../../firebase";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { CartAction } from "../../../../store/cartSlice/cartSlice";
 import { useNavigate } from "react-router-dom";
+import LoadingContainer from "../../loadingContainer/LoadingContainer";
+const euroDate = require("../../../../utils/function/euroDate");
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
@@ -27,15 +29,9 @@ const ShoppingCart = () => {
     );
   };
 
-  const euroDate = (date) => {
-    const euro = date.split("-");
-    return `${euro[2]}/${euro[1]}/${euro[0]}`;
-  };
-
   const handleBuying = async (type) => {
     try {
       const auth = getAuth();
-      console.log(auth.currentUser);
       const userRef = doc(db, "user", auth.currentUser.uid);
 
       if (type === "hebergement") {
@@ -78,10 +74,8 @@ const ShoppingCart = () => {
       dispatch(CartAction.orderPageOpen());
       navigate("/order-successful");
     } catch (err) {
-      console.log();
+      console.log(err);
     }
-
-    console.log();
   };
 
   if (cart.typeOfProduct === "activity") {
@@ -280,7 +274,7 @@ const ShoppingCart = () => {
       </Layout>
     );
   } else {
-    return;
+    return <LoadingContainer />;
   }
 };
 

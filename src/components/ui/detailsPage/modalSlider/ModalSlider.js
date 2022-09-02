@@ -20,8 +20,6 @@ const ModalSlider = ({ id = 0, closeModal, images }) => {
     slidesToScroll: 1,
   };
 
-  console.log(id);
-
   useEffect(() => {
     handleOnClick(id);
   }, [id]);

@@ -29,5 +29,5 @@ export const renderUi = (ui, options) => {
     );
   };
 
-  return render(ui, { wrapper: Wrapper });
+  render(ui, { wrapper: Wrapper });
 };

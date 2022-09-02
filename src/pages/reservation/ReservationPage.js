@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import HebergementCollapse from "../../components/ui/reservationPage/HebergementCollapse";
@@ -5,6 +6,7 @@ import ActivityCollapse from "../../components/ui/reservationPage/ActivityCollap
 
 const ReservationPage = () => {
   const reservation = useSelector((state) => state.user.reservation);
+
   if (reservation.length >= 1) {
     const hebergementFiltered = reservation.filter((item) => {
       if (item.typeOfProduct === "hebergement") return item;

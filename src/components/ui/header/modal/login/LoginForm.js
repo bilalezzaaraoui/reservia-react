@@ -1,10 +1,7 @@
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 import { useRef, useState } from "react";
-import {
-  signInWithEmailAndPassword,
-  sendEmailVerification,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../../firebase";
 import { useDispatch } from "react-redux";
 import { UserAction } from "../../../../../store/userSlice/userSlice";

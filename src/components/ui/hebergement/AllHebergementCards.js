@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import styled from "styled-components";
 import CardHebergement from "./CardHebergement";
 import { useEffect, useState } from "react";
@@ -7,7 +8,6 @@ import LoadingContainer from "../loadingContainer/LoadingContainer";
 
 const AllHebergementCards = () => {
   const params = useParams();
-  const [original, setOriginal] = useState();
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -17,14 +17,11 @@ const AllHebergementCards = () => {
         snapshot.docs.map((doc) => {
           hebergement = [...hebergement, { id: doc.id, ...doc.data() }];
         });
-        setOriginal(hebergement);
 
         if (params.filter && typeof params.filter === "string") {
           const target = params.filter;
           const filterData = hebergement.filter((item) => {
-            // console.log(item.filter);
             const res = item.filter.find((element) => {
-              // console.log(`${element} === ${target}`);
               if (element === target) {
                 return element;
               }
@@ -52,6 +49,7 @@ const AllHebergementCards = () => {
     };
 
     searchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const orderPrice = (e) => {

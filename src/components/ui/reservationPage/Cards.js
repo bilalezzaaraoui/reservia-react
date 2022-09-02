@@ -1,20 +1,15 @@
+/* eslint-disable array-callback-return */
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { doc, getDoc, updateDoc, arrayRemove } from "firebase/firestore";
 import db from "../../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAction } from "../../../store/userSlice/userSlice";
+const euroDate = require("../../../utils/function/euroDate");
 
 const Cards = ({ item, userId }) => {
   const reservation = useSelector((state) => state.user.reservation);
   const dispatch = useDispatch();
-  console.log(reservation);
-
-  //   console.log(item);
-  const transformDate = (date) => {
-    const splitDate = date.split("-");
-    return `${splitDate[2]}/${splitDate[1]}/${splitDate[0]}`;
-  };
 
   const deleteCard = async () => {
     const docRef = doc(db, "user", userId);
@@ -50,10 +45,8 @@ const Cards = ({ item, userId }) => {
         };
         const indexNumber = await reservation.findIndex(findObj);
         if (typeof indexNumber === "number") {
-          console.log(indexNumber);
           let arr = [...reservation];
           arr.splice(indexNumber, 1);
-          console.log(arr);
           dispatch(UserAction.deleteOneReservation(arr));
         }
       }
@@ -63,7 +56,6 @@ const Cards = ({ item, userId }) => {
   };
 
   if (item.typeOfProduct === "activity") {
-    console.log(item);
     return (
       <Container>
         <Link
@@ -78,7 +70,7 @@ const Cards = ({ item, userId }) => {
         </Link>
         <Info>
           <h3>{item.title}</h3>
-          <p className="date">{`${transformDate(
+          <p className="date">{`${euroDate(
             item.dateOfTheActivity
           )}-${item.timeOfTheActivity.split(":").join("h")}`}</p>
 
@@ -106,9 +98,9 @@ const Cards = ({ item, userId }) => {
         </Link>
         <Info>
           <h3>{item.title}</h3>
-          <p className="date">{`${transformDate(
-            item.enterDate
-          )}-${transformDate(item.outDate)}`}</p>
+          <p className="date">{`${euroDate(item.enterDate)}-${euroDate(
+            item.outDate
+          )}`}</p>
           <p className="info-resa">
             Nombre de voyageurs: {item.numberOfPeople}
           </p>
