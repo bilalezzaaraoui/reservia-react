@@ -9,7 +9,7 @@ import HebergementReducer from "../../store/hebergementSlice/hebergementSlice";
 import ActivitiesReducer from "../../store/activitySlice/activitySlice";
 import CartReducer from "../../store/cartSlice/cartSlice";
 
-export const renderUi = (ui, options) => {
+const renderUi = (ui, options) => {
   const store = configureStore({
     reducer: {
       modal: ModalReducer,
@@ -31,3 +31,5 @@ export const renderUi = (ui, options) => {
 
   render(ui, { wrapper: Wrapper });
 };
+
+module.exports = renderUi;

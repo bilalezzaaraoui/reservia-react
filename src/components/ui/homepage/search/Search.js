@@ -60,6 +60,7 @@ const Search = () => {
             <input
               type="search"
               className="searchbar"
+              data-testid="search-element"
               id="search"
               onChange={(e) => setValue(e.target.value)}
               placeholder="Ex: Marseille"
@@ -72,6 +73,7 @@ const Search = () => {
                       ? { cursor: "pointer" }
                       : null
                   }
+                  data-testid="search-response"
                   onClick={result >= 1 && value.length >= 1 ? handleForm : null}
                 >
                   <span>{result}</span> resultat trouvé

@@ -34,7 +34,12 @@ const Activity = () => {
         <h3>Activités disponible</h3>
         <Location>
           {data.map((item, key) => (
-            <Link to={`/activity/${item.id}`} key={key} className="full">
+            <Link
+              to={`/activity/${item.id}`}
+              key={key}
+              className="full"
+              data-testid="activity-link"
+            >
               <Card>
                 <ImgDiv style={{ backgroundImage: `url(${item.images[0]})` }} />
                 <InfoDiv>

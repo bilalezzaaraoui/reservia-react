@@ -3,10 +3,11 @@ import styled from "styled-components";
 import CardHebergement from "./CardHebergement";
 import { useEffect, useState } from "react";
 import db from "../../../firebase";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LoadingContainer from "../loadingContainer/LoadingContainer";
 
 const AllHebergementCards = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const [data, setData] = useState();
 
@@ -32,7 +33,11 @@ const AllHebergementCards = () => {
             }
           });
 
-          setData(filterData);
+          if (filterData.length >= 1) {
+            setData(filterData);
+          } else {
+            navigate("/*");
+          }
         } else if (params.search && typeof params.search === "string") {
           const target = params.search;
           const filterData = hebergement.filter((item) => {
@@ -41,7 +46,11 @@ const AllHebergementCards = () => {
             }
           });
 
-          setData(filterData);
+          if (filterData.length >= 1) {
+            setData(filterData);
+          } else {
+            navigate("/*");
+          }
         } else {
           setData(hebergement);
         }

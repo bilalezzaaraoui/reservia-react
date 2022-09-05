@@ -30,7 +30,7 @@ const Router = () => {
       {/* Protected Routes */}
       <Route
         path="/panier"
-        element={isCartFull ? <Panier /> : <Navigate replace to="/" />}
+        element={isCartFull ? <Panier /> : <Navigate replace to="/*" />}
       />
       <Route
         path="/mes-reservation"
@@ -38,7 +38,7 @@ const Router = () => {
           isCertifiedConnected ? (
             <ReservationPage />
           ) : (
-            <Navigate replace to="/" />
+            <Navigate replace to="/*" />
           )
         }
       />{" "}
@@ -48,14 +48,14 @@ const Router = () => {
           isCertifiedConnected ? (
             <ModifyInfoPage />
           ) : (
-            <Navigate replace to="/" />
+            <Navigate replace to="/*" />
           )
         }
       />
       <Route
         path="/order-successful"
         element={
-          isOrderSuccesful ? <OrderSuccesfull /> : <Navigate replace to="/" />
+          isOrderSuccesful ? <OrderSuccesfull /> : <Navigate replace to="/*" />
         }
       />
     </Routes>

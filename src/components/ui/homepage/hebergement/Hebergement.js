@@ -42,7 +42,7 @@ const Hebergement = () => {
             {whiteBlocData.length >= 1 &&
               whiteBlocData.map((item, index) => {
                 return (
-                  <WhiteBlocCard key={index}>
+                  <WhiteBlocCard key={index} data-testid="first-bloc">
                     <Link to={`/accommodation/${item.id}`}>
                       <div
                         className="card-img"
@@ -79,7 +79,7 @@ const Hebergement = () => {
           <ul className="card-list">
             {greyBlocData.map((item, key) => {
               return (
-                <GreyBlocCard key={key}>
+                <GreyBlocCard key={key} data-testid="second-bloc-list">
                   <Link to={`/accommodation/${item.id}`}>
                     <div className="flex-layout">
                       <div

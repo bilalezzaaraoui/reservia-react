@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Erreur = () => {
   return (
     <Container>
-      <Title>Erreur 404</Title>
+      <Title className="error-message">Erreur 404</Title>
       <Message>Vous êtes perdu</Message>
       <Link to="/">Retourner à la page d'accueil</Link>
     </Container>
