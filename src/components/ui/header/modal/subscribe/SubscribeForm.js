@@ -58,10 +58,12 @@ const SubscribeForm = ({ closeModal }) => {
             <CloseBtn onClick={closeModal}>
               <MdClose />
             </CloseBtn>
-            <h1>S'inscrire</h1>
+            <h1 className="title-modal-subscribe">S'inscrire</h1>
           </Head>
           <Body>
-            <TitleForm>Bienvenue sur Reservia</TitleForm>
+            <TitleForm className="title-modal-welcome">
+              Bienvenue sur Reservia
+            </TitleForm>
             <Form ref={formRef} onSubmit={formSubscribeHandler}>
               <Border>
                 <Double>
@@ -70,18 +72,25 @@ const SubscribeForm = ({ closeModal }) => {
                       type="text"
                       placeholder="Prénom"
                       name="prenom"
-                      className="first-input"
+                      id="firstname-input"
                       required
                     />
                   </Half>
                   <Half>
-                    <input type="text" placeholder="Nom" name="nom" required />
+                    <input
+                      type="text"
+                      placeholder="Nom"
+                      id="lastname-input"
+                      name="nom"
+                      required
+                    />
                   </Half>
                 </Double>
                 <Single>
                   <input
                     type="email"
                     placeholder="Email"
+                    id="email-input"
                     name="email"
                     required
                   />
@@ -90,13 +99,17 @@ const SubscribeForm = ({ closeModal }) => {
                   <input
                     type="password"
                     placeholder="Mot de passe"
+                    id="password-input"
                     name="password"
                     required
                   />
                 </Single>
               </Border>
               {showError && <p className="error-message">{errorMessage}</p>}
-              <button type="submit">Continuer</button>
+
+              <button type="submit" id="btn-subscribe">
+                Envoyer
+              </button>
             </Form>
           </Body>
         </Fragment>

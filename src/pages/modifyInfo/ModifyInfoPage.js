@@ -76,6 +76,7 @@ const ModifyInfoPage = () => {
 
     dispatch(UserAction.setInitialState());
 
+    navigate("/");
     window.location.reload();
   };
 
@@ -218,6 +219,7 @@ const ModifyInfoPage = () => {
         </FlexLayout>
         <Button
           type="submit"
+          id="btn-modify-info"
           style={
             show
               ? { background: "rgb(0,101,252)", cursor: "pointer" }
@@ -227,7 +229,7 @@ const ModifyInfoPage = () => {
           Envoyer
         </Button>
       </form>
-      <DeleteAccount onClick={handleUserDelete}>
+      <DeleteAccount onClick={handleUserDelete} id="close-account">
         Supprimer mon compte
       </DeleteAccount>
     </Container>

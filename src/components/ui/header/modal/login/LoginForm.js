@@ -52,26 +52,35 @@ const LoginForm = (props) => {
         <CloseBtn onClick={props.closeModal}>
           <MdClose />
         </CloseBtn>
-        <h1>Se connecter</h1>
+        <h1 className="title-modal-login">Se connecter</h1>
       </Head>
       <Body>
-        <h3>Bienvenue sur Reservia</h3>
+        <h3 className="title-modal-welcome">Bienvenue sur Reservia</h3>
         <Form ref={formRef} onSubmit={formConnectHandler}>
           <Border>
             <Single>
-              <input type="email" placeholder="Email" name="email" required />
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                id="email-login"
+                required
+              />
             </Single>
             <Single>
               <input
                 type="password"
                 placeholder="Mot de passe"
+                id="email-password"
                 name="password"
                 required
               />
             </Single>
           </Border>
           {showError && <p className="error-message">{errorMessage}</p>}
-          <button type="submit">Continuer</button>
+          <button type="submit" id="btn-login-submit">
+            Continuer
+          </button>
         </Form>
       </Body>
     </Container>

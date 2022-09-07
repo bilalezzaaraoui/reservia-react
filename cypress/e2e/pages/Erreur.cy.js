@@ -11,7 +11,7 @@ describe("Affichage de la page d'erreur", () => {
   });
 
   it("Url d'une activitée avec un faux id", () => {
-    cy.visit("http://localhost:3001/activity/gbrbg");
+    cy.visit("http://localhost:3000/activity/gbrbg");
 
     cy.wait(200);
 
@@ -19,7 +19,7 @@ describe("Affichage de la page d'erreur", () => {
   });
 
   it("Url d'un hébergment avec une fausse recherche", () => {
-    cy.visit("http://localhost:3001/accommodation/gbrbg");
+    cy.visit("http://localhost:3000/accommodation/gbrbg");
 
     cy.wait(200);
 
@@ -27,7 +27,7 @@ describe("Affichage de la page d'erreur", () => {
   });
 
   it("Url d'un hébergment avec une faux filtre", () => {
-    cy.visit("http://localhost:3001/accommodation/filter=ok");
+    cy.visit("http://localhost:3000/accommodation/filter=ok");
 
     cy.wait(200);
 
@@ -37,7 +37,7 @@ describe("Affichage de la page d'erreur", () => {
 
 describe("Affichage de la page d'erreur pour les routes protégées", () => {
   it("Rediriction du panier vers la page erreur quand il est vide", () => {
-    cy.visit("http://localhost:3001/panier");
+    cy.visit("http://localhost:3000/panier");
 
     cy.wait(200);
 
@@ -45,7 +45,7 @@ describe("Affichage de la page d'erreur pour les routes protégées", () => {
   });
 
   it("Rediriction du panier vers la page erreur quand il est vide", () => {
-    cy.visit("http://localhost:3001/panier");
+    cy.visit("http://localhost:3000/panier");
 
     cy.wait(200);
 
@@ -53,7 +53,7 @@ describe("Affichage de la page d'erreur pour les routes protégées", () => {
   });
 
   it("Rediriction de la page 'mes-reservation' vers la page erreur quand l'utilisateur n'est pas connecter", () => {
-    cy.visit("http://localhost:3001/mes-reservation");
+    cy.visit("http://localhost:3000/mes-reservation");
 
     cy.wait(200);
 
@@ -61,7 +61,7 @@ describe("Affichage de la page d'erreur pour les routes protégées", () => {
   });
 
   it("Rediriction de la page 'modifier-mes-infos-personnelles' vers la page erreur quand l'utilisateur n'est pas connecter", () => {
-    cy.visit("http://localhost:3001/modifier-mes-infos-personnelles");
+    cy.visit("http://localhost:3000/modifier-mes-infos-personnelles");
 
     cy.wait(200);
 

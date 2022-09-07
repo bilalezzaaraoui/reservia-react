@@ -22,7 +22,7 @@ const Profil = (props) => {
   return (
     <Container>
       <Btn onClick={() => setShow(!show)}>
-        <span>{prenom}</span>
+        <span id="user-profil-name">{prenom}</span>
         <GiHamburgerMenu />
       </Btn>
       {show && (
@@ -36,6 +36,7 @@ const Profil = (props) => {
             <li>
               <Link
                 to="/modifier-mes-infos-personnelles"
+                id="modify-info"
                 onClick={() => setShow(false)}
               >
                 Modifier mes informations <br /> personnelles

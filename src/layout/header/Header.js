@@ -132,6 +132,7 @@ const Header = () => {
                   >
                     <span
                       onClick={() => dispatch(ModalAction.openLoginModal())}
+                      className="connect-link"
                     >
                       Se connecter
                     </span>
@@ -146,6 +147,7 @@ const Header = () => {
                   >
                     <span
                       onClick={() => dispatch(ModalAction.openSubscribeModal())}
+                      className="subscribe-link"
                     >
                       S'inscrire
                     </span>

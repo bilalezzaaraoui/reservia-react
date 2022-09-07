@@ -1,0 +1,26 @@
+;FFMETADATA1
+[CHAPTER]
+TIMEBASE=1/1000
+START=71
+END=716
+title=Récuperation des données de Firebase Rendu des 6 hébergements fourni par la base de données
+[CHAPTER]
+TIMEBASE=1/1000
+START=767
+END=1384
+title=Récuperation des données de Firebase Rendu des 6 hébergements fourni par la base de données
+[CHAPTER]
+TIMEBASE=1/1000
+START=1344
+END=2011
+title=Récuperation des données de Firebase Rendu des 6 acitvités fourni par la base de données
+[CHAPTER]
+TIMEBASE=1/1000
+START=2040
+END=2682
+title=Affichage de la modal de recherche Rendu de la modal
+[CHAPTER]
+TIMEBASE=1/1000
+START=2693
+END=3328
+title=Affichage de la modal de recherche Rendu de la modal avec de la data trouvé
