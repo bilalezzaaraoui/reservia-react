@@ -31,7 +31,7 @@ const OrderSuccesfull = () => {
           <FaCheck />
         </div>
         <p style={{ marginTop: "1rem" }}>
-          Votre inscription à été prise en compte
+          Votre réservation a été prise en compte
         </p>
         <p style={{ marginTop: "1rem", textAlign: "center" }}>
           Vous allez être rediriger vers la page d'accueil dans{" "}

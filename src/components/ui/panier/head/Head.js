@@ -13,7 +13,7 @@ const Head = () => {
 };
 
 const Container = styled.div`
-  padding: 0 3rem;
+  padding: 0.5rem 3rem;
   box-shadow: rgb(235 235 235) 0px 1px 0px !important;
   display: flex;
   align-items: center;

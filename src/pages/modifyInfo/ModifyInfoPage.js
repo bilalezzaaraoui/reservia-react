@@ -243,6 +243,10 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 
+  form {
+    width: 50%;
+  }
+
   @media (max-width: 768px) {
     form {
       width: 100%;
