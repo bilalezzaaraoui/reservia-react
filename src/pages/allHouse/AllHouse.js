@@ -11,6 +11,7 @@ const AllHouse = () => {
 const Container = styled.main`
   flex: 1;
   display: flex;
+  background-color: red;
 `;
 
 export default AllHouse;
